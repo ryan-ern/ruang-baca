@@ -5,6 +5,7 @@ export default function Waveup (props){
                 width: "100%",
                 height: "100%",
                 zIndex: "-1",
+                top:"0",
                 margin: "0",
                 position: "fixed",
                 left: "0",

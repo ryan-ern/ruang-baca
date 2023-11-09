@@ -12,7 +12,7 @@ function Layout() {
     }, []);
 
     return (
-        <div id="layout-wrapper" style={{ overflowX: 'hidden' }}>
+        <div style={{ overflowX: 'hidden' }}>
             <Row>
                 <Col>
                     <Navigation />

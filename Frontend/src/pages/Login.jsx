@@ -1,11 +1,10 @@
-import Row from "react-bootstrap/Row";
-import { Button, Card, Col, Form } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Container  } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../assets/styles/login.css"
 import Waveup from "../components/background/Wavetop";
+import "../assets/styles/index.css"
 
-const Login = () => {
+export default function Login (){
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -26,94 +25,83 @@ const Login = () => {
 
     return (
         <>
-            <Waveup color="#FFFFFF"/>
-            <Row className="py-lg-5 py-5">
-                <Col>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Card className="w-20 m-3 mb-0 border-0 shadow-lg p-3 pb-0 bg-white rounded-4 mb-0">
-                            <Card.Body className="p-sm-3">
-                                <div className="text-center">
-                                    <h5 className="fs-3xl">
-                                        <strong>Selamat Datang di RUANG BACA</strong>
-                                        <br />
-                                        <strong>SMK NEGERI 7 BANDAR LAMPUNG</strong>
-                                    </h5>
-                                    <p className="text-muted">
-                      Input username & password untuk masuk
-                                    </p>
-                                </div>
-                                <div className="p-2 mt-4 ">
-                                    <Form action="#" onSubmit={handleSubmit}>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>
-                          Username <span className="text-danger">*</span>
-                                            </Form.Label>
-                                            <div className="position-relative">
-                                                <Form.Control
-                                                    type="text"
-                                                    className="form-control bg-light border-light password-input"
-                                                    placeholder="masukkan username"
-                                                    id="username"
-                                                    name="username"
-                                                    value={formData.username}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </Form.Group>
+            <Waveup color="#e0f8f2" />
+            <div className="my-5 pt-sm-5">
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col md={8} lg={6} xl={5}>
+                            <Card className="overflow-hidden p-5 border-0 shadow-lg rounded-4">
+                                <Card.Body className="p-sm-2">
+                                    <div className="text-center">
+                                        <h5 className="fs-3xl">
+                                            <strong>Selamat Datang di RUANG BACA</strong>
+                                            <br />
+                                            <strong>SMK NEGERI 7 BANDAR LAMPUNG</strong>
+                                        </h5>
+                                        <p className="text-muted">
+                                            Silahkan Sign In
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <Form action="#" onSubmit={handleSubmit}>
+                                            <Form.Group className="mb-4">
+                                                <Form.Label>
+                                                    Username<span className="text-danger">*</span>
+                                                </Form.Label>
+                                                <div className="position-relative">
+                                                    <Form.Control
+                                                        type="text"
+                                                        className="form-control bg-light border-light password-input"
+                                                        placeholder="Masukkan username"
+                                                        id="username"
+                                                        name="username"
+                                                        value={formData.username}
+                                                        required
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </Form.Group>
 
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>
-                          Password <span className="text-danger">*</span>
-                                            </Form.Label>
-                                            <div className="position-relative auth-pass-inputgroup mb-3">
-                                                <Form.Control
-                                                    className="form-control bg-light border-light pe-5 password-input"
-                                                    placeholder="masukkan password"
-                                                    type="password"
-                                                    id="password"
-                                                    name="password"
-                                                    value={formData.password}
-                                                    onChange={handleChange}
-                                                />
+                                            <Form.Group className="">
+                                                <Form.Label>
+                                                    Password<span className="text-danger">*</span>
+                                                </Form.Label>
+                                                <div className="position-relative auth-pass-inputgroup mb-3">
+                                                    <Form.Control
+                                                        className="form-control bg-light border-light mb-5 password-input"
+                                                        placeholder="Masukkan password"
+                                                        type="password"
+                                                        id="password"
+                                                        name="password"
+                                                        required
+                                                        value={formData.password}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div>
+                                            </Form.Group>
 
-                                                <button
-                                                    className="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
-                                                    type="button"
-                                                    id="password-addon"
+                                            <div className="pb-4">
+                                                <Button
+                                                    className="btn custom-button w-100 rounded-pill py-2"
+                                                    type="submit"
+                                                    variant="success"
                                                 >
-                                                    <i className="ri-eye-fill align-middle"></i>
-                                                </button>
+                                                    Sign In
+                                                </Button>
                                             </div>
-                                        </Form.Group>
-
-                                        <div className="mt-4">
-                                            <Button
-                                                className="btn custom-button w-100 rounded-pill"
-                                                type="submit"
-                                            >
-                          Sign In
-                                            </Button>
-                                        </div>
-                                        <div className="text-center mt-3">
-                                            <p>
-                                                <Link to="/register">Sign Up</Link>
-                                            </p>
-                                        </div>
-                                    </Form>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </div>
-                </Col>
-            </Row>
+                                            <div className="text-center">
+                                                <p>
+                                                    <Link to="/register" className="nav-link">Sign Up</Link>
+                                                </p>
+                                            </div>
+                                        </Form>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </>
     );
-};
-
-export default Login;
+}
