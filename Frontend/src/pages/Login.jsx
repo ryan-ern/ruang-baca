@@ -1,10 +1,12 @@
 import { Button, Card, Col, Form, Row, Container  } from "react-bootstrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../components/background/Wavetop";
 import "../assets/styles/index.css"
 
-export default function Login (){
+export default function Login() {
+    const navigate = useNavigate();
+    
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -12,7 +14,7 @@ export default function Login (){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        window.location.href = "/panel";
+        navigate("/panel")
     };
 
     const handleChange = (e) => {
@@ -30,7 +32,7 @@ export default function Login (){
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5}>
-                            <Card className="overflow-hidden p-5 border-0 shadow-lg rounded-4">
+                            <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                                 <Card.Body className="p-sm-2">
                                     <div className="text-center">
                                         <h5 className="fs-3xl">

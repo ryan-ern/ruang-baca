@@ -1,21 +1,18 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import {Container, Nav, Navbar} from "react-bootstrap";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function Navigation() {
     return (
         <>
             <div className="m-2">
                 <Navbar
-                    style={{ backgroundColor: "#E0F8F2", fontFamily: "Montserrat" }}
-                    variant="light"
+                    style={{ backgroundColor: "#e0f8f2"}}
                     fixed="top"
                     collapseOnSelect
                     expand="lg"
-                    className="bg-body-tertiary"
                 >
                     <Container>
-                        <Navbar.Brand href="#home">RUANG BACA</Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">

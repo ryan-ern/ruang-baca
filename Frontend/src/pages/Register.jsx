@@ -3,15 +3,16 @@ import Row from "react-bootstrap/Row";
 import { Button, Card, Col, Form } from "react-bootstrap";
 import Waveup from "../components/background/Wavetop";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register (){
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         password: "",
         nisn: "",
         nama: "",
-        jurusan: ["Teknik Komputer & Jaringan"],
+        jurusan: "",
         whatsapp: "",
     });
 
@@ -19,7 +20,7 @@ export default function Register (){
         e.preventDefault();
         // Tambahkan logika untuk pengiriman data formulir jika diperlukan
         // Kemudian arahkan pengguna ke halaman beranda
-        window.location.href = "/"; // Navigasi ke halaman beranda
+        navigate("/") // Navigasi ke halaman beranda
     };
 
     const handleChange = (e) => {
@@ -32,42 +33,35 @@ export default function Register (){
 
     return (
         <>
-            <Waveup color="#ffffff" />
-            <Container className="py-5">
-                <Row className="py-lg-5">
-                    <Col>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Card className="w-20 mb-0 border-0 shadow-lg bg-white rounded-4 custom-card">
+            <Waveup color="#e0f8f2" />
+            <div className="my-5 pt-sm-5">
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col md={10} lg={10} xl={8}>
+                            <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                                 <Card.Body className="p-sm-3">
                                     <div className="text-center">
-                                        <h5 className="fs-3xl" style={{ fontFamily: "Montserrat" }}>
+                                        <h5>
                                             <strong>
-                        Silahkan Mendaftar untuk Mengakses RUANG BACA
+                                                Silahkan Mendaftar untuk Mengakses RUANG BACA
                                             </strong>
                                         </h5>
                                     </div>
                                     <div className="p-2 mt-4">
                                         <Form action="#" onSubmit={handleSubmit}>
-                                            <Row className="g-2">
-                                                <Col md>
+                                            <Row>
+                                                <Col>
                                                     <Form.Group
                                                         className="mb-3"
-                                                        style={{ marginRight: "10px" }}
                                                     >
                                                         <Form.Label>
-                              NISN <span className="text-danger">*</span>
+                                                            NISN <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
-                                                                placeholder="masukkan NISN"
+                                                                placeholder="Masukkan NISN"
                                                                 id="nisn"
                                                                 name="nisn"
                                                                 value={formData.nisn}
@@ -77,19 +71,42 @@ export default function Register (){
                                                     </Form.Group>
                                                 </Col>
 
-                                                <Col md>
+                                                <Col>
                                                     <Form.Group
                                                         className="mb-3"
                                                         style={{ marginRight: "10px" }}
                                                     >
                                                         <Form.Label>
-                              Username <span className="text-danger">*</span>
+                                                            Jurusan <span className="text-danger">*</span>
+                                                        </Form.Label>
+                                                        <div className="position-relative">
+                                                            <Form.Select
+                                                                className="form-control bg-light border-light password-input"
+                                                                onChange={handleChange}
+                                                            >
+                                                                <option defaultChecked>Pilih Jurusan</option>
+                                                                <option value={1}>Teknik Komputer & Jaringan</option>
+                                                                <option value={2}>Pemasaran</option>
+                                                                <option value={3}>Akuntansi</option>
+                                                            </Form.Select>
+                                                        </div>
+                                                    </Form.Group>
+                                                </Col>
+                                            </Row>
+
+                                            <Row>
+                                                <Col>
+                                                    <Form.Group
+                                                        className="mb-3"
+                                                    >
+                                                        <Form.Label>
+                                                            Username <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
-                                                                placeholder="masukkan username"
+                                                                placeholder="Masukkan Username"
                                                                 id="username"
                                                                 name="username"
                                                                 value={formData.username}
@@ -98,66 +115,20 @@ export default function Register (){
                                                         </div>
                                                     </Form.Group>
                                                 </Col>
-                                            </Row>
-
-                                            <Row className="g-2">
-                                                <Col md>
+                                                
+                                                <Col>
                                                     <Form.Group
                                                         className="mb-3"
                                                         style={{ marginRight: "10px" }}
                                                     >
                                                         <Form.Label>
-                              Nama Lengkap{" "}
-                                                            <span className="text-danger">*</span>
+                                                            WhatsApp <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
-                                                                placeholder="masukkan nama lengkap"
-                                                                id="nama"
-                                                                name="nama"
-                                                                value={formData.nama}
-                                                                onChange={handleChange}
-                                                            />
-                                                        </div>
-                                                    </Form.Group>
-                                                </Col>
-
-                                                <Col md>
-                                                    <Form.Group
-                                                        className="mb-3"
-                                                        style={{ marginRight: "10px" }}
-                                                    >
-                                                        <Form.Label>
-                              Jurusan <span className="text-danger">*</span>
-                                                        </Form.Label>
-                                                        <div className="position-relative">
-                                                            <Form.Select
-                                                                className="form-control bg-light border-light password-input"
-                                                                onChange={handleChange}
-                                                            >
-                                                                <option>{formData.jurusan}</option>
-                                                            </Form.Select>
-                                                        </div>
-                                                    </Form.Group>
-                                                </Col>
-                                            </Row>
-
-                                            <Row className="g-2">
-                                                <Col md>
-                                                    <Form.Group
-                                                        className="mb-3"
-                                                        style={{ marginRight: "10px" }}
-                                                    >
-                                                        <Form.Label>
-                              WhatsApp <span className="text-danger">*</span>
-                                                        </Form.Label>
-                                                        <div className="position-relative">
-                                                            <Form.Control
-                                                                type="text"
-                                                                className="form-control bg-light border-light password-input"
-                                                                placeholder="masukkan nomor whatsapp"
+                                                                placeholder="Masukkan Nomor Whatsapp"
                                                                 id="whatsapp"
                                                                 name="whatsapp"
                                                                 value={formData.whatsapp}
@@ -166,19 +137,44 @@ export default function Register (){
                                                         </div>
                                                     </Form.Group>
                                                 </Col>
+                                            </Row>
 
-                                                <Col md>
+                                            <Row>
+                                                <Col>
+                                                    <Form.Group
+                                                        className="mb-3"
+                                                    >
+                                                        <Form.Label>
+                                                            Nama Lengkap{" "}
+                                                            <span className="text-danger">*</span>
+                                                        </Form.Label>
+                                                        <div className="position-relative">
+                                                            <Form.Control
+                                                                type="text"
+                                                                className="form-control bg-light border-light password-input"
+                                                                placeholder="Masukkan Nama Lengkap"
+                                                                id="nama"
+                                                                name="nama"
+                                                                value={formData.nama}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </div>
+                                                    </Form.Group>
+                                                </Col>
+                                                
+
+                                                <Col>
                                                     <Form.Group
                                                         className="mb-3"
                                                         style={{ marginRight: "10px" }}
                                                     >
                                                         <Form.Label>
-                              Password <span className="text-danger">*</span>
+                                                            Password <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative auth-pass-inputgroup mb-3">
                                                             <Form.Control
                                                                 className="form-control bg-light border-light pe-5 password-input"
-                                                                placeholder="masukkan password"
+                                                                placeholder="Masukkan Password"
                                                                 type="password"
                                                                 id="password"
                                                                 name="password"
@@ -202,23 +198,24 @@ export default function Register (){
                                                 <Button
                                                     className="btn custom-button w-50 rounded-pill"
                                                     type="submit"
+                                                    variant="success"
                                                 >
-                          Sign Up
+                                                    Sign Up
                                                 </Button>
                                             </div>
                                             <div className="text-center mt-3">
                                                 <p>
-                                                    <Link to="/">Sign In</Link>
+                                                    <Link to="/" className="nav-link">Sign In</Link>
                                                 </p>
                                             </div>
                                         </Form>
                                     </div>
                                 </Card.Body>
                             </Card>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </>
     );
 }
