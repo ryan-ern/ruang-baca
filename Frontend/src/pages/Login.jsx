@@ -2,7 +2,6 @@ import { Button, Card, Col, Form, Row, Container  } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../components/background/Wavetop";
-import "../assets/styles/index.css"
 
 export default function Login() {
     const navigate = useNavigate();
@@ -27,7 +26,7 @@ export default function Login() {
 
     return (
         <>
-            <Waveup color="#e0f8f2" />
+            <Waveup color="#e0f8f2" bg="#ffffff"/>
             <div className="my-5 pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">

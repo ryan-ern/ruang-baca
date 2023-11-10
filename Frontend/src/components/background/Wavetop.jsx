@@ -9,6 +9,7 @@ export default function Waveup (props){
                 margin: "0",
                 position: "fixed",
                 left: "0",
+                backgroundColor: props.bg
             }}
         >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

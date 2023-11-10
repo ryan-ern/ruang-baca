@@ -33,7 +33,7 @@ export default function Register (){
 
     return (
         <>
-            <Waveup color="#e0f8f2" />
+            <Waveup color="#e0f8f2" bg="#ffffff"/>
             <div className="my-5 pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
@@ -61,6 +61,7 @@ export default function Register (){
                                                             <Form.Control
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
+                                                                required
                                                                 placeholder="Masukkan NISN"
                                                                 id="nisn"
                                                                 name="nisn"
@@ -83,8 +84,9 @@ export default function Register (){
                                                             <Form.Select
                                                                 className="form-control bg-light border-light password-input"
                                                                 onChange={handleChange}
+                                                                required={formData.jurusan === ""}
                                                             >
-                                                                <option defaultChecked>Pilih Jurusan</option>
+                                                                <option value={""}>Pilih Jurusan</option>
                                                                 <option value={1}>Teknik Komputer & Jaringan</option>
                                                                 <option value={2}>Pemasaran</option>
                                                                 <option value={3}>Akuntansi</option>
@@ -104,6 +106,7 @@ export default function Register (){
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
+                                                                required
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan Username"
@@ -126,6 +129,7 @@ export default function Register (){
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
+                                                                required
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan Nomor Whatsapp"
@@ -150,6 +154,7 @@ export default function Register (){
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
+                                                                required
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan Nama Lengkap"
@@ -173,6 +178,7 @@ export default function Register (){
                                                         </Form.Label>
                                                         <div className="position-relative auth-pass-inputgroup mb-3">
                                                             <Form.Control
+                                                                required
                                                                 className="form-control bg-light border-light pe-5 password-input"
                                                                 placeholder="Masukkan Password"
                                                                 type="password"

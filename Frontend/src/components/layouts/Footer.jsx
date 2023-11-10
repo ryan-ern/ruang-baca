@@ -2,13 +2,13 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 export default function Footer() {
     return (
-        <div className='md-auto py-3 bg-white'>
+        <div className='md-auto py-3' style={{backgroundColor: '#e0f8f2'}}>
             <Container>
                 <Row>
                     <Col className="text-center text-black">
-                        <hr />
-                        <span>&copy; Ruang Baca - </span>
-                        <span>{new Date().getFullYear()}</span>                       
+                        <b>
+                            <span>&copy;{new Date().getFullYear()} | Perpustakaan SMK Negeri 7 Bandar Lampung</span>
+                        </b>    
                     </Col>
                 </Row>
             </Container>

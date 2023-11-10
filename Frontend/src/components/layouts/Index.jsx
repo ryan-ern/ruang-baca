@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navigation from './Header';
 import Footer from './Footer';
-import "../../assets/styles/index.css"
 import { Row, Col, Container } from 'react-bootstrap';
 
 function Layout() {
@@ -20,7 +19,7 @@ function Layout() {
             </Row>
             <Row>
                 <Col>
-                    <Container className='mb-5 mt-5 text-white align-items-center' style={{ minHeight: '70vh' }}>
+                    <Container className='mb-5 mt-5 align-items-center' style={{ minHeight: '80vh' }}>
                         <Outlet />
                     </Container>    
                 </Col>

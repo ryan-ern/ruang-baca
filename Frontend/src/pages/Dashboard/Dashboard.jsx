@@ -1,10 +1,11 @@
 import Cardjurusan from "./Cardjurusan";
 import Waveup from "../../components/background/Wavetop";
 import Breadcrumb from "../../components/Breadcrumb";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import { Button, Col } from "react-bootstrap";
+import { Button, Col, Row, Container } from "react-bootstrap";
 import { useState } from "react";
+import IMAGES from "../../assets/images";
+import "../../assets/styles/dashboard.css"
+import Wavebot from "../../components/background/Wavebot";
 
 export default function Dashboard  () {
     const [query, setQuery] = useState("");
@@ -20,10 +21,13 @@ export default function Dashboard  () {
     return (
         <>
             <Waveup color="#B6D8CF" />
+            <Wavebot color="#B6D8CF"/>
             <div className="py-4">
-                <Container className="">
+                <Container>
                     <Row>
-                        <Col xs={1}>logo</Col>
+                        <Col xs={1}>
+                            <img src={IMAGES.logo} alt="Logo SMKN 7 Bandar Lampung" width={50} />
+                        </Col>
                         <Col>
                             <div
                                 style={{
@@ -32,10 +36,8 @@ export default function Dashboard  () {
                                     alignItems: "center",
                                 }}
                             >
-                                <h5
-                                    className="fs-3xl text-center"
-                                >
-                  RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
+                                <h5 className="text-center">
+                                    RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
                                 </h5>
                             </div>
                         </Col>
@@ -60,8 +62,8 @@ export default function Dashboard  () {
                                             placeholder="cari disini"
                                         />
                                         <span className="input-group-addon">
-                                            <Button type="submit" class="btn btn-primary">
-                        cari
+                                            <Button type="submit" className="btn btn-primary">
+                                                cari
                                             </Button>
                                         </span>
                                     </div>

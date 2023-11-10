@@ -4,7 +4,7 @@ import {
 
 import Layout from './components/layouts/Index'
 
-import Login from './pages/login'
+import Login from './pages/Login'
 import Register from './pages/register'
 import Dashboard from './pages/Dashboard/Dashboard'
 
@@ -18,9 +18,11 @@ export default function RoutesApp() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/panel" element={(
-                        <Layout />
+                    <Layout />
                 )}>
                     <Route index element={<Dashboard/>} />
+                    <Route path="/panel/peminjaman" element={<Dashboard/>} />
+                    <Route path="/panel/pengembalian" element={<Dashboard/>} />
                 </Route> 
                 {/* Not Found */}
                 {/* <Route path="/404" element={<Page404 />} />
