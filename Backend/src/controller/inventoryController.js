@@ -18,7 +18,8 @@ class inventoryController{
                 payload.halaman,
                 payload.stok,
                 name,
-                payload.sinopsis
+                payload.sinopsis,
+                payload.jurusan
             )
 
             const response = {
@@ -28,6 +29,24 @@ class inventoryController{
             }
             return res.status(200).send(response)
         }catch (err){
+            const message = err.message.replace(/['"]+/g, '')
+            const response ={
+                status : 400, 
+                message : message,
+            }
+            return res.status(400).send(response)
+        }
+    }
+    static async getAllBook(req, res){
+        try{
+            const allBook = await inventoryService.getAllBookAdmin()
+            const response = {
+                status:200, 
+                message: 'Anda Admin',
+                data : allBook,
+            }
+            return res.status(200).send(response)
+        }catch(err){
             const message = err.message.replace(/['"]+/g, '')
             const response ={
                 status : 400, 
