@@ -4,7 +4,7 @@ import Navigation from './Header';
 import Footer from './Footer';
 import { Row, Col, Container } from 'react-bootstrap';
 
-function Layout() {
+export default function Layout() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -31,4 +31,3 @@ function Layout() {
     );
 }
 
-export default Layout;

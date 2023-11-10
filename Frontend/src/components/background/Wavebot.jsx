@@ -1,4 +1,4 @@
-const Wavebot = (props) => {
+export default function Wavebot (props) {
     return (
         <div
             style={{
@@ -18,6 +18,4 @@ const Wavebot = (props) => {
             </svg>
         </div>
     );
-};
-
-export default Wavebot;
+}
