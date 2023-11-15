@@ -1,7 +1,7 @@
 import { Button, Card, Col, Form, Row, Container  } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Waveup from "../components/background/Wavetop";
+import Waveup from "../../components/background/Wavetop";
 
 export default function Login() {
     const navigate = useNavigate();
