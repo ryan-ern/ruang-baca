@@ -15,7 +15,11 @@ app.use(cookieParser())
 
 app.use(cors({
   credential:true,
-  origin:"http://localhost:7000"
+  origin:[
+    "http://localhost:7000",
+    "http://192.168.100.58:4000",
+    "http://172.16.36.47:4000"
+]
 }))
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))

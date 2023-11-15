@@ -4,6 +4,7 @@ const userUtil = require('../util/userUtil')
 const dashboard = require('../controller/dashboardController')
 const accountControl = require('../controller/accountControlController')
 const inventory = require('../controller/inventoryController')
+const borrow =  require('../controller/borrowController')
 const upload = require('../helper/multer')
 
 const routes = express.Router()
@@ -22,5 +23,9 @@ routes.post('/user/:username', userUtil.isLogin, userUtil.isAdmin, accountContro
 //menu inventory for admin and super admin
 routes.post('/addBook', userUtil.isLogin, userUtil.isAdmin, upload.single('file'), inventory.addBook)
 routes.get('/inventory', userUtil.isLogin, userUtil.isAdmin, inventory.getAllBook)
+routes.post('/editBook', userUtil.isLogin, userUtil.isAdmin, )
+
+//borrow book
+routes.post('/addBorrow/:isbn', userUtil.isLogin, borrow.addborrow)
 
 module.exports = routes

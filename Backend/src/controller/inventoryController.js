@@ -55,6 +55,14 @@ class inventoryController{
             return res.status(400).send(response)
         }
     }
+    static async editBook(req, res){
+        try{
+            const payload = req.body
+            const book =  awai 
+        }catch(err){
+
+        }
+    }
 }
 
 module.exports = inventoryController
