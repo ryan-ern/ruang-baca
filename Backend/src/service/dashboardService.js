@@ -1,6 +1,14 @@
 const Database = require('../database/databaseConnect')
 
 class dashboardService{
+    static async allBook(){
+        await Database.createConnection()
+        const query = {
+            text: 'SELECT isbn, judul, penerbit, tahun_terbit, jumlah_halaman, stok_buku, cover, sinopsis, jurusan from buku ORDER BY jurusan ASC'
+        }
+        const buku = await Database.query(query)
+        return buku
+    }
     static async allUserForSuper(){
         await Database.createConnection()
         const query = {
@@ -26,7 +34,6 @@ class dashboardService{
             values: ['siswa']
         }
         const count = await Database.query(query)
-        console.log
         return count
     }
     static async countUserSuper(){
@@ -36,7 +43,14 @@ class dashboardService{
             values: ['siswa', 'admin']
         }
         const count = await Database.query(query)
-        console.log
+        return count
+    }
+    static async countBook(){
+        await Database.createConnection()
+        const query = {
+            text: 'SELECT COUNT(*) FROM buku',
+        }
+        const count = await Database.query(query)
         return count
     }
 }

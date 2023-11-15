@@ -2,6 +2,35 @@ const accountControlService = require("../service/accountControlService")
 const jwt = require('jsonwebtoken')
 
 class accountControlController{
+    static async seeAllUser(req, res){
+        try{
+            const decodedToken = jwt.verify(accesstoken, process.env.JWT_TOKEN)
+            if(decodedToken.role == 'admin'){
+                const allUser = await dashboardService.allUser()
+                const response = {
+                    status:200, 
+                    message: 'Anda Admin',
+                    data : allUser,
+                }
+                return res.status(200).send(response)
+            }else{
+                const allUser = await dashboardService.allUserForSuper()
+                const response = {
+                    status:200, 
+                    message: 'Anda Super!!!!!!!!',
+                    data : allUser,
+                }
+                return res.status(200).send(response)
+            }
+        }catch(err){
+            const message = err.message.replace(/['"]+/g, '')
+            const response ={
+                status : 400, 
+                message : message,
+            }
+            return res.status(400).send(response)
+        }
+    }
     static async addAdmin(req, res){
         const payload = req.body
         try{
