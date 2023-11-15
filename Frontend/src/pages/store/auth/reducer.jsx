@@ -12,7 +12,7 @@ const init_state = {
     loading: false,
 }
 
-const AuthReducer = (state = init_state, action) => {
+const authReducer = (state = init_state, action) => {
     switch (action.type) {
     case LOGIN:
         state = {
@@ -51,4 +51,4 @@ const AuthReducer = (state = init_state, action) => {
     }
     return state;
 }
-export default AuthReducer
+export default authReducer
