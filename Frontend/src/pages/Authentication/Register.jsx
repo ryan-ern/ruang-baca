@@ -5,7 +5,7 @@ import Waveup from "../../components/background/Wavetop";
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../store/auth/actions";
+import { register } from "../../store/auth/actions";
 
 export default function Register() {
     const dispatch = useDispatch()
@@ -52,6 +52,7 @@ export default function Register() {
                                                                 className="form-control bg-light border-light password-input"
                                                                 required
                                                                 placeholder="Masukkan NISN"
+                                                                autoComplete="nisn"
                                                                 id="nisn"
                                                                 name="nisn"
                                                                 value={account.nisn}
@@ -78,6 +79,7 @@ export default function Register() {
                                                                     setAccount({ ...account, jurusan: e.target.value });
                                                                 }}
                                                                 required={account.jurusan === ""}
+                                                                autoComplete="jurusan"
                                                             >
                                                                 <option value={""}>Pilih Jurusan</option>
                                                                 <option value={account.jurusan = "TKJ"}>
@@ -103,6 +105,7 @@ export default function Register() {
                                                                 type="text"
                                                                 className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan Username"
+                                                                autoComplete="username"
                                                                 id="username"
                                                                 name="username"
                                                                 value={account.username || ''}
@@ -129,6 +132,7 @@ export default function Register() {
                                                                 className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan Nomor Whatsapp"
                                                                 id="whatsapp"
+                                                                autoComplete="whatsapp"
                                                                 name="whatsapp"
                                                                 value={account.wa || ''}
                                                                 onChange={(e) => {
@@ -154,6 +158,7 @@ export default function Register() {
                                                                 className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan Nama Lengkap"
                                                                 id="nama"
+                                                                autoComplete="nama"
                                                                 name="nama"
                                                                 value={account.name || ''}
                                                                 onChange={(e) => {
@@ -179,6 +184,7 @@ export default function Register() {
                                                                 placeholder="Masukkan Password"
                                                                 type="password"
                                                                 id="password"
+                                                                autoComplete="password"
                                                                 name="password"
                                                                 value={account.password || ''}
                                                                 onChange={(e) => {

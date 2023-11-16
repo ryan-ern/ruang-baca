@@ -6,6 +6,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/register";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Peminjaman from "./pages/Peminjaman";
+import { Authenticated } from "./middleware/auth.middleware";
 
 export default function RoutesApp() {
     return (
@@ -14,7 +15,11 @@ export default function RoutesApp() {
                 <Route path="" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/panel" element={<Layout />}>
+                <Route path="/panel" element={
+                    <Authenticated>
+                        <Layout />
+                    </Authenticated>
+                }>
                     <Route index element={<Dashboard />} />
                     <Route path="/panel/peminjaman" element={<Peminjaman />} />
                     <Route path="/panel/pengembalian" element={<Pengembalian />} />

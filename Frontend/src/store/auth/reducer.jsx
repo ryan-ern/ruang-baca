@@ -4,6 +4,7 @@ import {
 } from './actionTypes'
 
 const init_state = {
+    check: false,
     response: {
         message: ''
     },
@@ -60,7 +61,8 @@ const authReducer = (state = init_state, action) => {
     case LOGOUT_SUCCESS:
         state = { ...init_state };
         state = {
-            ...state
+            ...state,
+            check: true,
         }
         break;
     default:

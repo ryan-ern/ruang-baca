@@ -1,9 +1,9 @@
-import TablePeminjaman from "../components/Tablepinjam";
-import Wavebot from "../components/background/Wavebot";
-import Waveup from "../components/background/Wavetop";
+import Wavebot from "../../components/background/Wavebot";
+import Waveup from "../../components/background/Wavetop";
 import { Button, Col, Row, Container } from "react-bootstrap";
-import IMAGES from "../assets/images";
+import IMAGES from "../../assets/images";
 import { useState } from "react";
+import TableKembali from "./Tablekembali";
 
 export default function Peminjaman() {
     const [query, setQuery] = useState("");
@@ -73,7 +73,7 @@ export default function Peminjaman() {
                             </div>
                         </Col>
                     </Row>
-                    <TablePeminjaman />
+                    <TableKembali />
                 </Container>
             </div>
         </>

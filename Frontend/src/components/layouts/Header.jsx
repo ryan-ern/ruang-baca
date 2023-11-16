@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import "../../assets/styles/header.css";
 import IMAGES from "../../assets/images";
 import { useDispatch } from "react-redux";
-import { logout } from "../../pages/store/auth/actions";
+import { logout } from "../../store/auth/actions";
 
 export default function Navigation() {
     const location = useLocation();

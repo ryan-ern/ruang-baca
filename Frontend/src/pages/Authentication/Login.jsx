@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../../components/background/Wavetop";
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from "../store/auth/actions";
+import { login } from "../../store/auth/actions";
 
 export default function Login() {
     const dispatch = useDispatch()
@@ -56,6 +56,7 @@ export default function Login() {
                                                                 placeholder="Masukkan username"
                                                                 id="username"
                                                                 name="username"
+                                                                autoComplete="username"
                                                                 value={account.username || ''}
                                                                 required
                                                                 onChange={(e) => {
@@ -76,6 +77,7 @@ export default function Login() {
                                                                 type="password"
                                                                 id="password"
                                                                 name="password"
+                                                                autoComplete="current-password"
                                                                 value={account.password || ''}
                                                                 required
                                                                 onChange={(e) => {

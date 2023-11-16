@@ -1,6 +1,6 @@
 import {call, put, takeEvery} from 'redux-saga/effects'
-import { URL_DELETE_LOGOUT, URL_POST_LOGIN, URL_POST_REGISTER } from "../../../helper/urlHelper";
-import axios from '../../../helper/apiHelper';
+import { URL_DELETE_LOGOUT, URL_POST_LOGIN, URL_POST_REGISTER } from "../../helper/urlHelper";
+import axios from '../../helper/apiHelper';
 import { loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
 import { LOGIN, LOGOUT, REGISTER } from './actionTypes';
 // import Cookies from 'js-cookie';

@@ -1,5 +1,5 @@
 import "../../assets/styles/common.css";
-import Cardbuku from "../../components/Cardbuku";
+import Cardbuku from "./Cardbuku";
 import Waveup from "../../components/background/Wavetop";
 import Breadcrumb from "../../components/Breadcrumb";
 import { Button, Col, Row, Container } from "react-bootstrap";
@@ -7,7 +7,7 @@ import { useState } from "react";
 import IMAGES from "../../assets/images";
 import "../../assets/styles/dashboard.css";
 import Wavebot from "../../components/background/Wavebot";
-import Carouselcard from "../../components/Carouselcard";
+import Carouselcard from "./Carouselcard";
 
 export default function Dashboard() {
     const [query, setQuery] = useState("");
