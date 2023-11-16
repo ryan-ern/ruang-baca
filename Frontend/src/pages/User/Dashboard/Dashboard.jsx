@@ -1,11 +1,15 @@
-import Wavebot from "../../components/background/Wavebot";
-import Waveup from "../../components/background/Wavetop";
+import "../../../assets/styles/common.css";
+import Cardbuku from "./Cardbuku";
+import Waveup from "../../../components/background/Wavetop";
+import Breadcrumb from "../../../components/Breadcrumb";
 import { Button, Col, Row, Container } from "react-bootstrap";
-import IMAGES from "../../assets/images";
 import { useState } from "react";
-import TableKembali from "./Tablekembali";
+import IMAGES from "../../../assets/images";
+import "../../../assets/styles/dashboard.css";
+import Wavebot from "../../../components/background/Wavebot";
+import Carouselcard from "./Carouselcard";
 
-export default function Peminjaman() {
+export default function Dashboard() {
     const [query, setQuery] = useState("");
 
     const handleInputChange = (e) => {
@@ -73,7 +77,17 @@ export default function Peminjaman() {
                             </div>
                         </Col>
                     </Row>
-                    <TableKembali />
+                    <Row>
+                        <Breadcrumb title="" pageTitle="Buku Berdasarkan Jurusan" />
+                    </Row>
+                    <Row>
+                        <Carouselcard />
+                    </Row>
+
+                    <Row>
+                        <p className="mb-0 mt-3">Buku Populer</p>
+                        <Cardbuku />
+                    </Row>
                 </Container>
             </div>
         </>

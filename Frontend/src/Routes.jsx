@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Layout from "./components/layouts/Index";
-import Pengembalian from "./pages/Pengembalian";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/register";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Peminjaman from "./pages/Peminjaman";
+import Pengembalian from "./pages/User/Pengembalian/Pengembalian";
+import Login from "./pages/Authentication/Login";
+import Register from "./pages/Authentication/register";
+import Dashboard from "./pages/User/Dashboard/Dashboard";
+import Peminjaman from "./pages/User/Peminjaman/Peminjaman";
 import { Authenticated } from "./middleware/auth.middleware";
 
 export default function RoutesApp() {

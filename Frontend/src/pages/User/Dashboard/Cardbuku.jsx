@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap"; // Menggunakan komponen Card dari react-bootstrap
-import IMAGES from "../../assets/images";
+import IMAGES from "../../../assets/images";
 
 export default function Cardbuku() {
     const handleClick = (index) => {

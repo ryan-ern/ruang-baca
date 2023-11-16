@@ -1,8 +1,8 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import "../assets/styles/common.css";
+import "../../../assets/styles/common.css";
 import { Card, Button } from "react-bootstrap";
-import IMAGES from "../../assets/images";
+import IMAGES from "../../../assets/images";
 
 export default function Carouselcard() {
     const handleClick = (index) => {

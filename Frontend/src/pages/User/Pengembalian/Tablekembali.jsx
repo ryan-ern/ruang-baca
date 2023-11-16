@@ -4,8 +4,8 @@
 // } from "../../BaseUi/UiAccordions/Accordion";
 import React from "react";
 import { Table, Button, Card, Col, Row, Container } from "react-bootstrap";
-import "../assets/styles/common.css";
-import StatusBadge from "../../components/Statusbadge";
+import "../../../assets/styles/common.css";
+import StatusBadge from "../../../components/Statusbadge";
 import { Link } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
 // import { DefaultTables } from "./BasicTableCode";
