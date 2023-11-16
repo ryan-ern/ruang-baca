@@ -1,7 +1,7 @@
 import {
     LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
     LOGOUT, LOGOUT_SUCCESS, 
-    REGISTER, REGISTER_SUCCESS, REGISTER_FAILED
+    REGISTER, REGISTER_SUCCESS, REGISTER_FAILED, AUTH_INFO, AUTH_INFO_SUCCESS, AUTH_INFO_FAILED
 } from "./actionTypes";
 
 /**
@@ -40,9 +40,26 @@ export const loginFailed = (message) => ({
 })
 
 /**
+ * Auth
+ */
+export const authInfo = () => ({
+    type: AUTH_INFO,
+    payload: null
+})
+
+export const authInfoSuccess = (respons) => ({
+    type: AUTH_INFO_SUCCESS,
+    payload: respons
+})
+
+export const authInfoFailed = (message) => ({
+    type: AUTH_INFO_FAILED,
+    payload: message
+})
+
+/**
  * Logout
  */
-
 export const logout = (navigate) => ({
     type: LOGOUT,
     payload: navigate

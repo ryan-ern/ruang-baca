@@ -1,8 +1,9 @@
 import {call, put, takeEvery} from 'redux-saga/effects'
-import { URL_DELETE_LOGOUT, URL_POST_LOGIN, URL_POST_REGISTER } from "../../helper/urlHelper";
+import { URL_DELETE_LOGOUT, URL_GET_PROFILE, URL_POST_LOGIN, URL_POST_REGISTER } from "../../helper/urlHelper";
 import axios from '../../helper/apiHelper';
-import { loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
-import { LOGIN, LOGOUT, REGISTER } from './actionTypes';
+import { authInfoFailed, authInfoSuccess, loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
+import { AUTH_INFO, LOGIN, LOGOUT, REGISTER } from './actionTypes';
+import Cookies from 'js-cookie';
 
 
 export function* loginSaga({ payload: { account, navigate } }) {
@@ -18,7 +19,6 @@ export function* loginSaga({ payload: { account, navigate } }) {
 }
 
 export function* registerSaga({ payload: { account, navigate } }) {
-    console.log(account)
     try {
         const response = yield call(axios.post, URL_POST_REGISTER, account)
         yield put(registerSuccess(response.data));
@@ -30,10 +30,25 @@ export function* registerSaga({ payload: { account, navigate } }) {
 
 }
 
+export function* authInfoSaga() {
+    const acctoken = Cookies.get('acctoken');
+    if (!acctoken) {
+        yield put(authInfoFailed())
+        return
+    }
+    try {
+        const response = yield call(axios.get, URL_GET_PROFILE)
+        yield put(authInfoSuccess(response.data))
+    } catch (err) {
+        yield put(authInfoFailed(err))
+    }
+}
+
 export function* logoutSaga({ payload: navigate }) {
     try {
         yield call(axios.delete, URL_DELETE_LOGOUT)
         yield put(logoutSuccess())
+        Cookies.remove('acctoken')
     } catch (err) {
         //
     }
@@ -43,7 +58,8 @@ export function* logoutSaga({ payload: navigate }) {
 export function* authSaga() {
     yield takeEvery(LOGIN, loginSaga),
     yield takeEvery(REGISTER, registerSaga),
-    yield takeEvery(LOGOUT, logoutSaga)
+    yield takeEvery(LOGOUT, logoutSaga),
+    yield takeEvery(AUTH_INFO, authInfoSaga)
 }
 
 export default authSaga;

@@ -3,13 +3,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import "../../assets/styles/header.css";
 import IMAGES from "../../assets/images";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/actions";
 
 export default function Navigation() {
     const location = useLocation();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const auth = useSelector((state) => state.auth);
+    const features = auth?.response.feature || [];
 
     const removeActivation = (items) => {
         for (let i = 0; i < items.length; ++i) {
@@ -58,27 +60,30 @@ export default function Navigation() {
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto" id="navigation">
                                 <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <Link to="/panel" className="nav-link">
-                      Beranda
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    {features.includes('Dashboard Siswa')?(
+                                        <li className="nav-item">
+                                            <Link to="/panel" className="nav-link">
+                                            Beranda
+                                            </Link>
+                                        </li>
+                                    ) : null}
 
-                                <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <Link to="/panel/peminjaman" className="nav-link">
-                      Peminjaman
-                                        </Link>
-                                    </li>
-                                </ul>
+                                    {features.includes('Peminjaman') ? (
 
-                                <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <Link to="/panel/pengembalian" className="nav-link">
-                      Pengembalian
-                                        </Link>
-                                    </li>
+                                        <li className="nav-item">
+                                            <Link to="/panel/peminjaman" className="nav-link">
+                                            Peminjaman
+                                            </Link>
+                                        </li>
+                                    ) : null}
+                                    
+                                    {features.includes('Pengembalian') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/pengembalian" className="nav-link">
+                                            Pengembalian
+                                            </Link>
+                                        </li>
+                                    ) : null}
                                 </ul>
                             </Nav>
                             <Navbar.Text className="d-flex">

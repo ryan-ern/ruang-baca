@@ -1,6 +1,6 @@
 import {
     LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
-    LOGOUT, LOGOUT_SUCCESS, REGISTER, REGISTER_SUCCESS, REGISTER_FAILED
+    LOGOUT, LOGOUT_SUCCESS, REGISTER, REGISTER_SUCCESS, REGISTER_FAILED, AUTH_INFO, AUTH_INFO_SUCCESS, AUTH_INFO_FAILED
 } from './actionTypes'
 
 const init_state = {
@@ -54,6 +54,27 @@ const authReducer = (state = init_state, action) => {
             loading: false,
             isLogin: false,
             response: action.payload,
+        }
+        break;
+    case AUTH_INFO:
+        state = {
+            ...state
+        }
+        break;
+    case AUTH_INFO_SUCCESS:
+        state = {
+            ...state,
+            check: true,
+            isLogin: true,
+            response: action.payload
+        }
+        break;
+    case AUTH_INFO_FAILED:
+        state = { ...init_state };
+        state = {
+            ...state,
+            check: true,
+            isLogin: false,
         }
         break;
     case LOGOUT:

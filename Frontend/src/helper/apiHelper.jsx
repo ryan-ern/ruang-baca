@@ -5,7 +5,8 @@ import Cookies from 'js-cookie';
 const axios = axiosDefault.create({
     baseURL: "https://d1de-116-206-39-78.ngrok-free.app",
     headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "ngrok-skip-browser-warning": "69420"
     },
 });
 

@@ -1,11 +1,11 @@
-import  useEffect from 'react';
-import  useSelector  from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export function UseFeature(props) {
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth);
-    const features = auth.info?.rule?.features || [];
+    const features = auth?.response.feature || [];
     const allowed = features.includes(props.allow);
     useEffect(() => {
         if (!allowed) navigate('/not-found');
