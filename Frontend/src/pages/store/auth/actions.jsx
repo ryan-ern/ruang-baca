@@ -1,7 +1,24 @@
 import {
     LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
-    LOGOUT, LOGOUT_SUCCESS
+    LOGOUT, LOGOUT_SUCCESS, 
+    REGISTER, REGISTER_SUCCESS, REGISTER_FAILED
 } from "./actionTypes";
+
+/**
+ * 
+ */
+export const register = (account, navigate) => ({
+    type: REGISTER,
+    payload: {account,navigate}
+})
+export const registerSuccess = (respons) => ({
+    type: REGISTER_SUCCESS,
+    payload: respons
+})
+export const registerFailed = (message) => ({
+    type: REGISTER_FAILED,
+    payload: message
+})
 
 /**
  * Login

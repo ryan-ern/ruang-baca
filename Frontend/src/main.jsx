@@ -1,11 +1,12 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./main.css"
+import store from './pages/store'
 import RoutesApp from './Routes.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
+    <Provider store={store}>
         <RoutesApp />
-    </React.StrictMode>,
+    </Provider>,
 )

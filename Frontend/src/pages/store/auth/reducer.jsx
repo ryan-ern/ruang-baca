@@ -1,10 +1,9 @@
 import {
     LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
-    LOGOUT, LOGOUT_SUCCESS
+    LOGOUT, LOGOUT_SUCCESS, REGISTER, REGISTER_SUCCESS, REGISTER_FAILED
 } from './actionTypes'
 
 const init_state = {
-    message: '',
     response: {
         message: ''
     },
@@ -14,11 +13,30 @@ const init_state = {
 
 const authReducer = (state = init_state, action) => {
     switch (action.type) {
+    case REGISTER:
+        state = {
+            ...state,
+            loading: true,
+        }
+        break;
+    case REGISTER_SUCCESS:
+        state = {
+            ...state,
+            loading: false,
+            response: action.payload,
+        }
+        break;
+    case REGISTER_FAILED:
+        state = {
+            ...state,
+            loading: false,
+            response: action.payload,
+        }
+        break;
     case LOGIN:
         state = {
             ...state,
             loading: true,
-            message: '',
         }
         break;
     case LOGIN_SUCCESS:
@@ -33,7 +51,7 @@ const authReducer = (state = init_state, action) => {
         state = {
             ...state,
             loading: false,
-            isLogin: true,
+            isLogin: false,
             response: action.payload,
         }
         break;

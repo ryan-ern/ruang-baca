@@ -2,7 +2,7 @@ import axiosDefault from 'axios';
 
 // Set default axios settings.
 const axios = axiosDefault.create({
-    baseURL: import.meta.env.REACT_APP_AXIOS_BASE_URL,
+    baseURL: "https://54da-116-206-39-100.ngrok-free.app",
 });
 
 // Set access token.
