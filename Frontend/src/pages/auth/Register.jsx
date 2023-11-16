@@ -3,33 +3,21 @@ import Row from "react-bootstrap/Row";
 import { Button, Card, Col, Form } from "react-bootstrap";
 import Waveup from "../../components/background/Wavetop";
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
+import { register } from "../store/auth/actions";
 
 export default function Register() {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [account, setAccount] = useState({
         username: "",
         password: "",
         nisn: "",
-        nama: "",
+        name: "",
         jurusan: "",
-        whatsapp: "",
+        wa: "",
     });
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Tambahkan logika untuk pengiriman data formulir jika diperlukan
-        // Kemudian arahkan pengguna ke halaman beranda
-        navigate("/"); // Navigasi ke halaman beranda
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
     return (
         <>
@@ -48,7 +36,10 @@ export default function Register() {
                                         </h5>
                                     </div>
                                     <div className="p-2 mt-4">
-                                        <Form action="#" onSubmit={handleSubmit}>
+                                        <Form action="#" onSubmit={(e) => {
+                                            e.preventDefault();
+                                            dispatch(register(account, navigate));
+                                        }}>
                                             <Row className="g-2">
                                                 <Col md>
                                                     <Form.Group className="mb-3">
@@ -63,8 +54,10 @@ export default function Register() {
                                                                 placeholder="Masukkan NISN"
                                                                 id="nisn"
                                                                 name="nisn"
-                                                                value={formData.nisn}
-                                                                onChange={handleChange}
+                                                                value={account.nisn}
+                                                                onChange={(e) => {
+                                                                    setAccount({ ...account, nisn: e.target.value });
+                                                                }}
                                                             />
                                                         </div>
                                                     </Form.Group>
@@ -81,15 +74,17 @@ export default function Register() {
                                                         <div className="position-relative">
                                                             <Form.Select
                                                                 className="form-control bg-light border-light password-input"
-                                                                onChange={handleChange}
-                                                                required={formData.jurusan === ""}
+                                                                onChange={(e) => {
+                                                                    setAccount({ ...account, jurusan: e.target.value });
+                                                                }}
+                                                                required={account.jurusan === ""}
                                                             >
                                                                 <option value={""}>Pilih Jurusan</option>
-                                                                <option value={1}>
+                                                                <option value={account.jurusan = "TKJ"}>
                                   Teknik Komputer & Jaringan
                                                                 </option>
-                                                                <option value={2}>Pemasaran</option>
-                                                                <option value={3}>Akuntansi</option>
+                                                                <option value={account.jurusan = "PM"}>Pemasaran</option>
+                                                                <option value={account.jurusan = "AK"}>Akuntansi</option>
                                                             </Form.Select>
                                                         </div>
                                                     </Form.Group>
@@ -110,8 +105,10 @@ export default function Register() {
                                                                 placeholder="Masukkan Username"
                                                                 id="username"
                                                                 name="username"
-                                                                value={formData.username}
-                                                                onChange={handleChange}
+                                                                value={account.username || ''}
+                                                                onChange={(e) => {
+                                                                    setAccount({ ...account, username: e.target.value });
+                                                                }}
                                                             />
                                                         </div>
                                                     </Form.Group>
@@ -133,8 +130,10 @@ export default function Register() {
                                                                 placeholder="Masukkan Nomor Whatsapp"
                                                                 id="whatsapp"
                                                                 name="whatsapp"
-                                                                value={formData.whatsapp}
-                                                                onChange={handleChange}
+                                                                value={account.wa || ''}
+                                                                onChange={(e) => {
+                                                                    setAccount({ ...account, wa: e.target.value });
+                                                                }}
                                                             />
                                                         </div>
                                                     </Form.Group>
@@ -156,8 +155,10 @@ export default function Register() {
                                                                 placeholder="Masukkan Nama Lengkap"
                                                                 id="nama"
                                                                 name="nama"
-                                                                value={formData.nama}
-                                                                onChange={handleChange}
+                                                                value={account.name || ''}
+                                                                onChange={(e) => {
+                                                                    setAccount({ ...account, name: e.target.value });
+                                                                }}
                                                             />
                                                         </div>
                                                     </Form.Group>
@@ -179,8 +180,10 @@ export default function Register() {
                                                                 type="password"
                                                                 id="password"
                                                                 name="password"
-                                                                value={formData.password}
-                                                                onChange={handleChange}
+                                                                value={account.password || ''}
+                                                                onChange={(e) => {
+                                                                    setAccount({ ...account, password: e.target.value });
+                                                                }}
                                                             />
 
                                                             <button

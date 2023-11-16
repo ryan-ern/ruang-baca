@@ -6,7 +6,6 @@ import { LOGIN, REGISTER } from './actionTypes';
 
 
 export function* loginSaga({ payload: { account, navigate } }) {
-    console.log(account)
     try {
         const response = yield call(axios.post, URL_POST_LOGIN, account)
         yield put(loginSuccess(response.data));
@@ -18,6 +17,7 @@ export function* loginSaga({ payload: { account, navigate } }) {
 }
 
 export function* registerSaga({ payload: { account, navigate } }) {
+    console.log(account)
     try {
         const response = yield call(axios.post, URL_POST_REGISTER, account)
         yield put(registerSuccess(response.data));
