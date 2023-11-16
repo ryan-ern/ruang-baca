@@ -2,11 +2,11 @@
 //   AccordionsCode,
 //   AccordionsHeader,
 // } from "../../BaseUi/UiAccordions/Accordion";
-import React from "react";
-import { Table, Button, Card, Col, Row, Container } from "react-bootstrap";
+
+import { Table, Card, Col, Row, Container } from "react-bootstrap";
 import "../../../assets/styles/common.css";
-import StatusBadge from "../../../components/Statusbadge";
-import { Link } from "react-router-dom";
+import StatusBadge from "../../../components/Statusbadge"
+
 import Pagination from "react-bootstrap/Pagination";
 // import { DefaultTables } from "./BasicTableCode";
 
@@ -20,7 +20,13 @@ export default function TableKembali() {
                             <Card.Header className="bg-white border-0 mb-2">
                                 <Row>
                                     <Col> Daftar Pengembalian</Col>
-                                    <Col className="d-flex justify-content-end">search</Col>
+                                    <Col className="d-flex justify-content-end">
+                                        <input
+                                            type="search"
+                                            className="rounded-pill"
+                                            placeholder="cari disini"
+                                        />
+                                    </Col>
                                 </Row>
                             </Card.Header>
 

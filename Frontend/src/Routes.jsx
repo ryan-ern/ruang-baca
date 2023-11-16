@@ -1,12 +1,23 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Layout from "./components/layouts/Index";
-import Pengembalian from "./pages/User/Pengembalian/Pengembalian";
+import { Authenticated } from "./middleware/auth.middleware";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/register";
+/**
+ * User
+ */
+import Pengembalian from "./pages/User/Pengembalian/Pengembalian";
 import Dashboard from "./pages/User/Dashboard/Dashboard";
 import Peminjaman from "./pages/User/Peminjaman/Peminjaman";
-import { Authenticated } from "./middleware/auth.middleware";
+
+/**
+ * Admin
+ */
+
+/**
+ * Superadmin
+ */
 
 export default function RoutesApp() {
     return (
