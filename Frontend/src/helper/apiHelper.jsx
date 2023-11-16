@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 // Set default axios settings.
 const axios = axiosDefault.create({
-    baseURL: "http://192.168.198.216:8000",
+    baseURL: "https://d1de-116-206-39-78.ngrok-free.app",
     headers: {
         "Content-Type": "application/x-www-form-urlencoded"
     },

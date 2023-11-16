@@ -1,3 +1,7 @@
 .nav-link.active {
     font-weight: 600;
 }
+
+.drop-profile {
+    background-color: none;
+}

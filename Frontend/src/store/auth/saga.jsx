@@ -3,15 +3,12 @@ import { URL_DELETE_LOGOUT, URL_POST_LOGIN, URL_POST_REGISTER } from "../../help
 import axios from '../../helper/apiHelper';
 import { loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
 import { LOGIN, LOGOUT, REGISTER } from './actionTypes';
-// import Cookies from 'js-cookie';
 
 
 export function* loginSaga({ payload: { account, navigate } }) {
     try {
         const response = yield call(axios.post, URL_POST_LOGIN, account)
-        // Cookies.set('acctoken', response.data.acctoken)
         document.cookie = `acctoken=${response.data.acctoken}; path=/`;
-        console.log(document.cookie.acctoken)
         yield put(loginSuccess(response.data));
         navigate('/panel');
     } catch (err) {
