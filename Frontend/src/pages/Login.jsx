@@ -1,11 +1,11 @@
-import { Button, Card, Col, Form, Row, Container  } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Container } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../components/background/Wavetop";
 
 export default function Login() {
     const navigate = useNavigate();
-    
+
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -13,7 +13,7 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate("/panel")
+        navigate("/panel");
     };
 
     const handleChange = (e) => {
@@ -26,7 +26,7 @@ export default function Login() {
 
     return (
         <>
-            <Waveup color="#e0f8f2" bg="#ffffff"/>
+            <Waveup color="#e0f8f2" bg="#ffffff" />
             <div className="my-5 pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
@@ -39,15 +39,13 @@ export default function Login() {
                                             <br />
                                             <strong>SMK NEGERI 7 BANDAR LAMPUNG</strong>
                                         </h5>
-                                        <p className="text-muted">
-                                            Silahkan Sign In
-                                        </p>
+                                        <p className="text-muted">Silahkan Sign In</p>
                                     </div>
                                     <div>
                                         <Form action="#" onSubmit={handleSubmit}>
                                             <Form.Group className="mb-4">
                                                 <Form.Label>
-                                                    Username<span className="text-danger">*</span>
+                                                  Username<span className="text-danger">*</span>
                                                 </Form.Label>
                                                 <div className="position-relative">
                                                     <Form.Control
@@ -65,7 +63,7 @@ export default function Login() {
 
                                             <Form.Group className="">
                                                 <Form.Label>
-                                                    Password<span className="text-danger">*</span>
+                                                  Password<span className="text-danger">*</span>
                                                 </Form.Label>
                                                 <div className="position-relative auth-pass-inputgroup mb-3">
                                                     <Form.Control
@@ -83,16 +81,17 @@ export default function Login() {
 
                                             <div className="pb-4">
                                                 <Button
-                                                    className="btn custom-button w-100 rounded-pill py-2"
+                                                    className="btn custom-button w-100 rounded-pill"
                                                     type="submit"
                                                     variant="success"
                                                 >
-                                                    Sign In
+                                                  Sign In
                                                 </Button>
                                             </div>
                                             <div className="text-center">
                                                 <p>
-                                                    <Link to="/register" className="nav-link">Sign Up</Link>
+                                                    <Link to="/register" className="nav-link">Sign Up
+                                                    </Link>
                                                 </p>
                                             </div>
                                         </Form>

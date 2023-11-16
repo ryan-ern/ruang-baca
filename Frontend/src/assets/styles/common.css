@@ -271,3 +271,10 @@
   border-radius: 4px;
   cursor: default; /* Mencegah kursor berubah menjadi ikon klik */
 }
+
+.not-found {
+  font-size: 10em;
+  margin-bottom: 20px;
+  color: #333;
+  z-index: -1;
+}
