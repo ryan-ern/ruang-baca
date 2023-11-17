@@ -38,7 +38,18 @@ export default function ModalDetail({ show, onHide, data }) {
                                 </Row>
                             </Row>
                         </Col>
-                        
+                    </Row>
+                    <Row>
+                        <Col>
+                            <h5>
+                                Sinopsis
+                            </h5>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            {data?.sinopsis}
+                        </Col>
                     </Row>
                 </Modal.Body>
             </Modal>
