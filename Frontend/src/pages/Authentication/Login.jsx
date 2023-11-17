@@ -17,7 +17,7 @@ export default function Login() {
 
     useEffect(() => {
         if (auth.isLogin) navigate('/panel');
-    })
+    }, [])
 
     return (
         <>

@@ -1,7 +1,7 @@
 import {call, put, takeEvery} from 'redux-saga/effects'
-import { URL_DELETE_LOGOUT, URL_GET_PROFILE, URL_POST_LOGIN, URL_POST_REGISTER } from "../../helper/urlHelper";
+import { URL_DELETE_LOGOUT, URL_GET_AUTH, URL_POST_LOGIN, URL_POST_REGISTER } from "../../helper/urlHelper";
 import axios from '../../helper/apiHelper';
-import { authInfoFailed, authInfoSuccess, loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
+import { authInfo, authInfoFailed, authInfoSuccess, loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
 import { AUTH_INFO, LOGIN, LOGOUT, REGISTER } from './actionTypes';
 import Cookies from 'js-cookie';
 
@@ -11,6 +11,7 @@ export function* loginSaga({ payload: { account, navigate } }) {
         const response = yield call(axios.post, URL_POST_LOGIN, account)
         document.cookie = `acctoken=${response.data.acctoken}; path=/`;
         yield put(loginSuccess(response.data));
+        yield put(authInfo())
         navigate('/panel');
     } catch (err) {
         const response = err.response.data;
@@ -37,7 +38,7 @@ export function* authInfoSaga() {
         return
     }
     try {
-        const response = yield call(axios.get, URL_GET_PROFILE)
+        const response = yield call(axios.get, URL_GET_AUTH)
         yield put(authInfoSuccess(response.data))
     } catch (err) {
         yield put(authInfoFailed(err))
