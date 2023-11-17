@@ -2,13 +2,14 @@ const userService = require ('../service/userService')
 const service = require('../service/accountControlService')
 const jwt = require ('jsonwebtoken')
 const tokenization = require('../helper/tokenization')
+const userUtil = require('../util/userUtil')
 
 class userController{
     static async register(req, res){
         const payload = req.body
         try{
             const nisn = await userService.findNisn(payload.nisn)
-            const username = await userService.findNisn(payload.username)
+            const username = await service.findUsername(payload.username)
             if (nisn) throw new Error('NISN already exist')
             if (username) throw new Error ('Username already exist')
 
@@ -24,13 +25,10 @@ class userController{
                 wa: payload.wa,
                 role : 'siswa'
             }
-            
-            const expLong = "1y"
-            const expShort= "5m"
             const accesstoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expShort})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_short})
             const refreshtoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expLong})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_long})
             
             const user = await userService.insertUserToDatabase(
                 payload.nisn, 
@@ -46,12 +44,7 @@ class userController{
                 status:201, 
                 message: 'Register Success',
                 acctoken : accesstoken,
-                retoken : refreshtoken,
             }
-            res.cookie('accesstoken', accesstoken, {
-                maxAge: 300000, 
-                httpOnly: true })
-            
             return res.status(201).send(response)
         }catch(err){
             const message = err.message.replace(/['"]+/g, '')
@@ -64,8 +57,6 @@ class userController{
     }
     static async login(req, res){
         const payload = req.body
-        const expLong = "1y"
-        const expShort= "5m"
         try{
             const nisn = await service.findUsername(payload.username)
             if (!nisn) throw new Error('Username not Exist')
@@ -73,20 +64,17 @@ class userController{
             if (!comparePassword) throw new Error('Password not match')            
             const payloadData = {
                 nisn: nisn.nisn,
-                name: nisn.name,
+                name: nisn.nama,
                 username: nisn.username,
                 jurusan: nisn.jurusan,
                 wa: nisn.wa,
                 role : nisn.role
             }
             const accesstoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expShort})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_short})
             const refreshtoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expLong})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_long})
             const user = await userService.updateToken(nisn.nisn, accesstoken, refreshtoken)
-            res.cookie('accesstoken', accesstoken, {
-                maxAge: 3600000, 
-                httpOnly: true })
 
             const response = {
                 status:200, 
@@ -100,23 +88,19 @@ class userController{
                 try{
                     const nisn = await service.findUsername(payload.username)
                     const refreshtoken = nisn.refresh_token
-                    const expirationTimestamp = await tokenization.isExpired(refreshtoken)
+                    await tokenization.isExpired(refreshtoken)
                     const accesstoken = refreshtoken
                     const payloadData = {
                         nisn: nisn.nisn,
-                        name: nisn.name,
+                        name: nisn.nama,
                         username: nisn.username,
                         jurusan: nisn.jurusan,
                         wa: nisn.wa,
                         role : nisn.role
                     }
                     refreshtoken = jwt.sign(payloadData, 
-                        process.env.JWT_TOKEN, {expiresIn: expLong})
+                        process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_long})
                     const user = await userService.updateToken(nisn.nisn, accesstoken, refreshtoken)
-
-                    res.cookie('accesstoken', accesstoken, {
-                        maxAge: 3600000, 
-                        httpOnly: true })
         
                     const response = {
                         status:200, 
@@ -131,20 +115,17 @@ class userController{
                         const nisn = await service.findUsername(payload.username)
                         const payloadData = {
                             nisn: nisn.nisn,
-                            name: nisn.name,
+                            name: nisn.nama,
                             username: nisn.username,
                             jurusan: nisn.jurusan,
                             wa: nisn.wa,
                             role : nisn.role
                         }
                         const accesstoken = jwt.sign(payloadData, 
-                            process.env.JWT_TOKEN, {expiresIn: expShort})
+                            process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_short})
                         const refreshtoken = jwt.sign(payloadData, 
-                            process.env.JWT_TOKEN, {expiresIn: expLong})
+                            process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_long})
                         const user = await userService.updateToken(nisn.nisn, accesstoken, refreshtoken)
-                        res.cookie('accesstoken', accesstoken, {
-                            maxAge: 3600000, 
-                            httpOnly: true })
             
                         const response = {
                             status:200, 
@@ -173,16 +154,68 @@ class userController{
             }
         }
     }
-    static async profile(req, res){
+    static async logout(req,res){
         try{
-            const token = req.cookies.accesstoken
+            const token = req.headers.authorization
+
+            if (!token) throw new Error('Error while getting token')
+        
             const decodedToken = jwt.verify(token, process.env.JWT_TOKEN)
+            
+            await userService.logout(decodedToken.username)
             const response = {
                 status:200, 
-                message: 'Success',
-                data : decodedToken,
+                message: 'Logout Success',
             }
+            
             return res.status(200).send(response)
+        }catch(err){
+            const message = err.message.replace(/['"]+/g, '')
+            const response ={
+                status : 400, 
+                message : message,
+            }
+            return res.status(400).send(response)
+        }
+    }
+    static async profile(req, res){
+        try{
+            const token = req.headers.authorization
+            if(!token) throw new Error ("Error while get token")
+            const decodedToken = jwt.verify(token, process.env.JWT_TOKEN)
+            const admin = await userUtil.isAdminCheck(token)
+            const sadmin = await userUtil.isSuperCheck(token)
+            if(!decodedToken) throw new Error ("Error while decoding the code")
+            if (admin == "Super Admin" || sadmin == "Admin"){
+                const feature = [
+                    "Dashboard Admin",
+                    "Inventory",
+                    "Validasi Peminjaman",
+                    "Validasi pengembalian",
+                    "Kontrol Akun",
+                    "Denda"
+                ]
+                const response = {
+                    status:200, 
+                    message: 'Success',
+                    feature : feature,
+                    data : decodedToken,
+                }
+                return res.status(200).send(response)
+            }else{
+                const feature = [
+                    "Dashboard Siswa",
+                    "Peminjaman",
+                    "Pengembalian"
+                ]
+                const response = {
+                    status:200, 
+                    message: 'Success',
+                    feature : feature,
+                    data : decodedToken,
+                }
+                return res.status(200).send(response)
+            }
         }catch(err){
                 const message = err.message.replace(/['"]+/g, '')
                 const response ={

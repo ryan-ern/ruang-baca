@@ -1,11 +1,13 @@
 const accountControlService = require("../service/accountControlService")
 const jwt = require('jsonwebtoken')
+const dashboardService = require("../service/dashboardService")
 
 class accountControlController{
     static async seeAllUser(req, res){
+        const accesstoken=req.headers.authorization
         try{
             const decodedToken = jwt.verify(accesstoken, process.env.JWT_TOKEN)
-            if(decodedToken.role == 'admin'){
+            if(decodedToken.role == 'Admin'){
                 const allUser = await dashboardService.allUser()
                 const response = {
                     status:200, 
@@ -48,13 +50,10 @@ class accountControlController{
                 wa: payload.wa,
                 role : 'admin'
             }
-
-            const expLong = "1y"
-            const expShort= "5m"
             const accesstoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expShort})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_short})
             const refreshtoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expLong})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_long})
             
             const user = await accountControlService.insertAdminToDatabase(
                 payload.nisn, 
@@ -118,11 +117,9 @@ class accountControlController{
                 wa: payload.wa,
                 role : username.role
             }
-
-            const expLong = "1y"
             const accesstoken = username.refresh_token
             const refreshtoken = jwt.sign(payloadData, 
-                process.env.JWT_TOKEN, {expiresIn: expLong})
+                process.env.JWT_TOKEN, {expiresIn: process.env.exp_time_long})
 
             const user = await accountControlService.editUser(
                 req.params.username,
@@ -134,13 +131,33 @@ class accountControlController{
                 payload.wa,
                 accesstoken,
                 refreshtoken)
-            console.log(user)
             const response = {
                 status : 200,
                 message : 'Update user success',
                 data : user
             }
 
+            return res.status(200).send(response)
+        }catch(err){
+            const message = err.message.replace(/['"]+/g, '')
+            const response ={
+                status : 400, 
+                message : message,
+            }
+            return res.status(400).send(response)
+        }
+    }
+    static async deleteUser(req,res){
+        try{
+            const username = await accountControlService.findUsername(req.params.username)
+            if(!username) throw new Error ('User not Found')
+
+            const data = await accountControlService.deleteUser(req.params.username)
+
+            const response = {
+                status : 200,
+                message : data,
+            }
             return res.status(200).send(response)
         }catch(err){
             const message = err.message.replace(/['"]+/g, '')

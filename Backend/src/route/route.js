@@ -9,17 +9,20 @@ const upload = require('../helper/multer')
 
 const routes = express.Router()
 
-//login & sign UP
+//User do
 routes.post('/register', user.register)
 routes.post('/login', user.login)
+routes.delete('/logout',userUtil.isLogin, user.logout)
+routes.get('/profile', userUtil.isLogin, user.profile)
 //Dashboard for siswa and admin
 routes.get('/dashboard', userUtil.isLogin, dashboard.dashboardSiswa)
-routes.get('/dashboardAdmin', userUtil.isLogin, userUtil.isAdmin, dashboard.dashboardAdmin)
+//routes.get('/dashboardAdmin', userUtil.isLogin, userUtil.isAdmin, dashboard.dashboardAdmin)
 //menu userControl for admin and super admin
 routes.get('/userControl', userUtil.isLogin, userUtil.isAdmin, accountControl.seeAllUser)
 routes.post('/addAdmin', userUtil.isLogin, userUtil.isSuper, accountControl.addAdmin)
 routes.get('/user/:username', userUtil.isLogin, userUtil.isAdmin, accountControl.seeUser)
 routes.post('/user/:username', userUtil.isLogin, userUtil.isAdmin, accountControl.editUser)
+routes.delete('/user/:username', userUtil.isLogin, userUtil.isAdmin, accountControl.deleteUser)
 //menu inventory for admin and super admin
 routes.post('/addBook', userUtil.isLogin, userUtil.isAdmin, upload.single('file'), inventory.addBook)
 routes.get('/inventory', userUtil.isLogin, userUtil.isAdmin, inventory.getAllBook)

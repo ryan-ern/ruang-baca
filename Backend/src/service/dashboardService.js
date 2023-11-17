@@ -7,6 +7,7 @@ class dashboardService{
             text: 'SELECT isbn, judul, penerbit, tahun_terbit, jumlah_halaman, stok_buku, cover, sinopsis, jurusan from buku ORDER BY jurusan ASC'
         }
         const buku = await Database.query(query)
+        await Database.close
         return buku
     }
     static async allUserForSuper(){
@@ -16,6 +17,7 @@ class dashboardService{
             values: ['siswa', 'admin']
         }
         const user = await Database.query(query)
+        await Database.close
         return user
     }
     static async allUser(){
@@ -25,6 +27,7 @@ class dashboardService{
             values: ['siswa']
         }
         const user = await Database.query(query)
+        await Database.close
         return user
     }
     static async countUser(){
@@ -34,6 +37,7 @@ class dashboardService{
             values: ['siswa']
         }
         const count = await Database.query(query)
+        await Database.close
         return count
     }
     static async countUserSuper(){
@@ -43,6 +47,7 @@ class dashboardService{
             values: ['siswa', 'admin']
         }
         const count = await Database.query(query)
+        await Database.close
         return count
     }
     static async countBook(){
@@ -51,6 +56,7 @@ class dashboardService{
             text: 'SELECT COUNT(*) FROM buku',
         }
         const count = await Database.query(query)
+        await Database.close
         return count
     }
 }

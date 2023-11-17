@@ -4,7 +4,7 @@ class borrowController{
     static async addborrow(req, res){
         try{
             const isbn = req.params.isbn
-            const token = req.cookies.accesstoken
+            const token = req.headers.authorization
             const decodedToken = jwt.verify(token, process.env.JWT_TOKEN)
             const user = decodedToken.nisn
             const book = await borrowService.addBorrow(user, isbn)
@@ -22,6 +22,13 @@ class borrowController{
                 message : message,
             }
             return res.status(400).send(response)
+        }
+    }
+    static async acceptBorrow(req, res){
+        try{
+
+        }catch(err){
+            
         }
     }
 }
