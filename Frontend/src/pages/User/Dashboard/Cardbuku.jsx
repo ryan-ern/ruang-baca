@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap"; // Menggunakan komponen Card dari react-bootstrap
 import IMAGES from "../../../assets/images";
+import { useDispatch, useSelector } from "react-redux";
+import { dashboard } from "../../../store/dashboard/actions";
 
 export default function Cardbuku() {
     const handleClick = (index) => {
     // Fungsi yang akan dijalankan saat card diklik
         console.log(`Card dengan index ${index} diklik!`);
     };
+
+    const dispatch = useDispatch()
+    const data = useSelector((state) => state.book)
+    useEffect(() => {
+        dispatch(dashboard())
+    }, [])
 
     const cardsData = [
         {
