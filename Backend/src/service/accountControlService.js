@@ -17,6 +17,7 @@ class accountControlService{
             values: [nisn, nama, username, jurusan, password, wa, 'admin', new Date(), new Date(), accesstoken, refreshtoken]
         }
         const user = await Database.query(query)
+        await Database.close
         return user[0]
         
     }
@@ -27,6 +28,7 @@ class accountControlService{
             values: [username]
         }
         const user = await Database.query(query)
+        await Database.close
         return user[0]
     }
     static async findUsernameForEdit(username){
@@ -36,6 +38,7 @@ class accountControlService{
             values: [username]
         }
         const user = await Database.query(query)
+        await Database.close
         return user[0]
     }
     static async findUsername(username){
@@ -45,6 +48,7 @@ class accountControlService{
             values: [username]
         }
         const user = await Database.query(query)
+        await Database.close
         return user[0]
     }
     static async editUser(
@@ -64,7 +68,19 @@ class accountControlService{
             values: [nisn, name, username, jurusan, password, wa, new Date(), accesstoken, refreshtoken, id]
         }
         const user = await Database.query(query)
+        await Database.close
         return user
+    }
+    static async deleteUser(username){
+        await Database.createConnection()
+        const query = {
+            text: 'Delete from account WHERE username = $1',
+            values: [username]
+        }
+        await Database.query(query)
+        const message = `Delete ${username} is success`
+        await Database.close
+        return message
     }
 }
 

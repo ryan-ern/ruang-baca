@@ -8,6 +8,9 @@ class Database{
           database: process.env.db_database,
           password: process.env.db_password,
           port: process.env.db_port,
+          idleTimeoutMillis: 1,
+          max: 10,
+          connectionTimeoutMillis: 2000,
         });
     
       await this.client.connect();

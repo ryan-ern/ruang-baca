@@ -17,6 +17,7 @@ class userServices{
             values: [nisn, nama, username, jurusan, password, wa, 'siswa', new Date(), new Date(), accesstoken, refreshtoken]
         }
         const user = await Database.query(query)
+        await Database.close
         return user[0]
         
     }
@@ -27,6 +28,7 @@ class userServices{
             values: [nisn]
         }
         const user = await Database.query(query)
+        await Database.close
         return user[0]
     }
     static async updateToken(nisn, accesstoken, refreshtoken){
@@ -36,6 +38,17 @@ class userServices{
             values: [accesstoken, refreshtoken, nisn]
         }
         const user = await Database.query(query)
+        await Database.close
+        return user[0]
+    }
+    static async logout(username){
+        await Database.createConnection()
+        const query = {
+            text: 'UPDATE account set access_token=NULL WHERE username= $1 ',
+            values: [username]
+        }
+        const user = await Database.query(query)
+        await Database.close
         return user[0]
     }
 }

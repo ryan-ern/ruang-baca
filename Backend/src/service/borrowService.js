@@ -8,7 +8,17 @@ class borrowService{
             values: [nisn, isbn, 'PROSES', new Date(), new Date()]
         }
         const borrow = await Database.query(query)
+        await Database.close
         return borrow[0]
+    }
+    static async acceptBorrow(id){
+        await Database.createConnection
+        const future = new Date(currentDate)
+        future.setDate(currentDate.getDate() + 3)
+        const query ={
+            text:'UPDATE borrow SET status = $1, updated_at = $2, due_data = $3',
+            values: ['SUKSES', new Date(), future]
+        }
     }
 }
 
