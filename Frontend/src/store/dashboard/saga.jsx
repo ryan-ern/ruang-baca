@@ -7,7 +7,6 @@ import { GET_DASHBOARD } from './actionTypes';
 export function* getBookSaga() {
     try {
         const response = yield call(axios.get, URL_GET_DASHBOARD)
-        console.log(response.data)
         yield put(dashboardSuccess(response.data))
     } catch (err) {
         yield put(dashboardFailed(err))

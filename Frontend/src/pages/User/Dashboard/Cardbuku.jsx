@@ -1,129 +1,26 @@
-import React, { useEffect } from "react";
-import { Card, Button } from "react-bootstrap"; // Menggunakan komponen Card dari react-bootstrap
-import IMAGES from "../../../assets/images";
+import { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { dashboard } from "../../../store/dashboard/actions";
+import ModalDetail from "./modal";
 
 export default function Cardbuku() {
+    const dispatch = useDispatch();
+
+    const books = useSelector((state) => state.book.response.data);
+    useEffect(() => {
+        dispatch(dashboard());
+    }, []);
+
+    const [selectedBook, setSelectedBook] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
     const handleClick = (index) => {
-    // Fungsi yang akan dijalankan saat card diklik
-        console.log(`Card dengan index ${index} diklik!`);
+        setSelectedBook(books[index]);
+        setShowModal(true);
     };
 
-    const dispatch = useDispatch()
-    const data = useSelector((state) => state.book)
-    useEffect(() => {
-        dispatch(dashboard())
-    }, [])
-
-    const cardsData = [
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-        {
-            title: "Loneliness is My Best Friend",
-            author: "Alvi Syahrin",
-            imageSrc: IMAGES.buku1,
-        },
-    // Tambahkan kartu lain sesuai kebutuhan
-    ];
+    const handleClose = () => setShowModal(false);
 
     return (
         <div
@@ -133,7 +30,7 @@ export default function Cardbuku() {
                 justifyContent: "flex-start",
             }}
         >
-            {cardsData.map((card, index) => (
+            {books?.map((book, index) => (
                 <Card
                     key={index}
                     text="black"
@@ -143,7 +40,7 @@ export default function Cardbuku() {
                     <Card.Body className="cardbuku-body">
                         <Card.Img
                             className=""
-                            src={card.imageSrc}
+                            src={book.cover}
                             style={{
                                 borderRadius: "6px",
                                 maxHeight: "120px",
@@ -151,13 +48,14 @@ export default function Cardbuku() {
                                 width: "100%",
                             }}
                         />
-                        <Card.Text className="cardbuku-judul">{card.title}</Card.Text>
+                        <Card.Text className="cardbuku-judul">{book.judul}</Card.Text>
                         <Card.Text className="cardbuku-text-author">
-                            {card.author}
+                            {book.penerbit}
                         </Card.Text>
                     </Card.Body>
                 </Card>
             ))}
+            <ModalDetail show={showModal} onHide={handleClose} data={selectedBook} />
         </div>
     );
 }
