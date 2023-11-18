@@ -12,6 +12,7 @@ import Dashboard from "./pages/User/Dashboard/Dashboard";
 import Peminjaman from "./pages/User/Peminjaman/Peminjaman";
 import Page404 from "./components/Page404";
 import { UseFeature } from "./middleware/features.middleware";
+import Profil from "./pages/User/Profil/Profil";
 
 /**
  * Admin
@@ -44,6 +45,7 @@ export default function RoutesApp() {
                         <Route path="/panel/pengembalian" element={<UseFeature allow="Pengembalian" />}>
                             <Route index element={<Pengembalian />}/>    
                         </Route>
+                        <Route path="/panel/profil" element={<Profil/>}/>                       
                     </Route>
                     {/* Not Found */}
                     {/* <Route path="/404" element={<Page404 />} />*/}

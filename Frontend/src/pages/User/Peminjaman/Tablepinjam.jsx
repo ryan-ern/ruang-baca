@@ -2,11 +2,11 @@
 //   AccordionsCode,
 //   AccordionsHeader,
 // } from "../../BaseUi/UiAccordions/Accordion";
-import React from "react";
+// import React from "react";
 import { Table, Button, Card, Col, Row, Container } from "react-bootstrap";
 import "../../../assets/styles/common.css";
 import StatusBadge from "../../../components/Statusbadge";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import { DefaultTables } from "./BasicTableCode";
 
 export default function TablePeminjaman() {
