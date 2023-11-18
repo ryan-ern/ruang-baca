@@ -1,15 +1,15 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, } from "react-router-dom";
 import { useEffect } from "react";
 import "../../assets/styles/header.css";
 import IMAGES from "../../assets/images";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/auth/actions";
+import {  useSelector } from "react-redux";
+// import { logout } from "../../store/auth/actions";
 
 export default function Navigation() {
     const location = useLocation();
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const dispatch = useDispatch()
+    // const navigate = useNavigate()
     const auth = useSelector((state) => state.auth);
     const features = auth?.response.feature || [];
 
@@ -67,6 +67,11 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
+                                    <li className="nav-item">
+                                        <Link to="/panel" className="nav-link">
+                                            Beranda A
+                                        </Link>
+                                    </li>
 
                                     {features.includes('Peminjaman') ? (
 
@@ -76,6 +81,11 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
+                                    <li className="nav-item">
+                                        <Link to="/panel/peminjaman" className="nav-link">
+                                            Peminjaman 
+                                        </Link>
+                                    </li>
                                     
                                     {features.includes('Pengembalian') ? (
                                         <li className="nav-item">
@@ -87,10 +97,11 @@ export default function Navigation() {
                                 </ul>
                             </Nav>
                             <Navbar.Text className="d-flex">
-                                <a href="#profile" className="nav-link" onClick={(e) => {
+                                {/* <a href="#profile" className="nav-link" onClick={(e) => {
                                     e.preventDefault();
                                     dispatch(logout(navigate));
-                                }}>
+                                }}> */}
+                                <Link to="/panel/profil" className="nav-link">
                                     <img
                                         src={IMAGES.profil}
                                         width="30"
@@ -98,8 +109,10 @@ export default function Navigation() {
                                         className="d-inline-block align-top rounded-circle me-2"
                                         alt="React Vite logo"
                                     />
-                                        Dean
-                                </a>
+                                    Dean
+                                    
+                                        
+                                </Link>
                             </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
