@@ -6,3 +6,5 @@ export const URL_GET_AUTH = '/profile'
 export const URL_GET_PROFILE = '/profile'
 
 export const URL_GET_DASHBOARD = '/dashboard'
+
+export const URL_GET_INVENTORY = '/inventory'
