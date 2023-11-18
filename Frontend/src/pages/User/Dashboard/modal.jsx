@@ -8,7 +8,7 @@ export default function ModalDetail({ show, onHide, data }) {
                 <Modal.Body>
                     <Row>
                         <Col lg="3">
-                            <img src={data?.cover} alt={data?.judul} />
+                            <img src={data?.cover} alt={data?.judul} width="155px"/>
                         </Col>
                         <Col lg="9">
                             <Row>
