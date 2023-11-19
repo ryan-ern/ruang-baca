@@ -8,3 +8,4 @@ export const URL_GET_PROFILE = '/profile'
 export const URL_GET_DASHBOARD = '/dashboard'
 
 export const URL_GET_INVENTORY = '/inventory'
+export const URL_POST_INVENTORY = '/addBook'

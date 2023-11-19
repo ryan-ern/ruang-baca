@@ -14,6 +14,7 @@ import Page404 from "./components/Page404";
 import { UseFeature } from "./middleware/features.middleware";
 import Profil from "./pages/User/Profil/Profil";
 import Inventory from "./pages/Admin/Inventory/Inventory";
+import { useSelector } from "react-redux";
 
 /**
  * Admin
@@ -24,6 +25,9 @@ import Inventory from "./pages/Admin/Inventory/Inventory";
  */
 
 export default function RoutesApp() {
+    const role = useSelector((state) => state?.auth?.response?.data?.role)
+    const dashboardElement = role === 'admin' || role === 'Super Admin' ? <Inventory /> : <Dashboard />;
+    const featureAllow = role === 'admin' || role === 'Super Admin' ? "Dashboard Admin" : "Dashboard Siswa";
     return (
         <BrowserRouter>
             <AuthStatus>
@@ -37,22 +41,8 @@ export default function RoutesApp() {
                             <Layout />
                         </Authenticated>
                     }>
-                        {/* <Route path="/panel" element={<UseFeature allow={"Dashboard Siswa"} />}>
-                            <Route index element={<Dashboard />}/>    
-                        </Route>
-                        <Route
-                            path="/panel"
-                            element={
-                                <UseFeature
-                                    allow={isAdmin ? "Dashboard Admin" : "Dashboard Siswa"}
-                                />
-                            }
-                        >
-                            <Route index element={isAdmin ? <Inventory /> : <Dashboard />} />
-                        </Route> */}
-
-                        <Route path="/panel" element={<UseFeature allow={"Dashboard Admin"} />}>
-                            <Route index element={<Inventory />}/>    
+                        <Route path="/panel" element={<UseFeature allow={featureAllow} />}>
+                            <Route index element={dashboardElement}/>    
                         </Route>
                         <Route path="/panel/peminjaman" element={<UseFeature allow="Peminjaman" />}>
                             <Route index element={<Peminjaman />}/>    
@@ -60,9 +50,21 @@ export default function RoutesApp() {
                         <Route path="/panel/pengembalian" element={<UseFeature allow="Pengembalian" />}>
                             <Route index element={<Pengembalian />}/>    
                         </Route>
-                        {/* <Route path="/panel/inventory" element={<UseFeature allow="Inventory" />}>
+                        <Route path="/panel/inventory" element={<UseFeature allow="Inventory" />}>
                             <Route index element={<Inventory />}/>    
-                        </Route> */}
+                        </Route>
+                        <Route path="/panel/borrow-validation" element={<UseFeature allow="Validasi Peminjaman" />}>
+                            <Route index element={<Inventory />}/>    
+                        </Route>
+                        <Route path="/panel/return-validation" element={<UseFeature allow="Validasi Pengembalian" />}>
+                            <Route index element={<Inventory />}/>    
+                        </Route>
+                        <Route path="/panel/account-control" element={<UseFeature allow="Kontrol Akun" />}>
+                            <Route index element={<Inventory />}/>    
+                        </Route>
+                        <Route path="/panel/penalty-settings" element={<UseFeature allow="Denda" />}>
+                            <Route index element={<Inventory />}/>    
+                        </Route>
                         <Route path="/panel/profil" element={<Profil/>}/>                       
                     </Route>
                     {/* Not Found */}

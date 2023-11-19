@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { dashboard } from "../../../store/dashboard/actions";
-import ModalDetail from "./modal";
+import ModalDetailBuku from "../../../components/modal";
 
 export default function Cardbuku() {
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export default function Cardbuku() {
                     </Card.Body>
                 </Card>
             ))}
-            <ModalDetail show={showModal} onHide={handleClose} data={selectedBook} />
+            <ModalDetailBuku show={showModal} onHide={handleClose} data={selectedBook} />
         </div>
     );
 }

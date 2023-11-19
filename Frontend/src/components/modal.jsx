@@ -1,6 +1,6 @@
 import { Modal, Button, Row, Col } from "react-bootstrap";
 
-export default function ModalDetail({ show, onHide, data }) {
+export default function ModalDetailBuku({ show, onHide, data }) {
     return (
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg'>

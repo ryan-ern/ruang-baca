@@ -67,25 +67,14 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
-                                    <li className="nav-item">
-                                        <Link to="/panel" className="nav-link">
-                                            Beranda A
-                                        </Link>
-                                    </li>
 
                                     {features.includes('Peminjaman') ? (
-
                                         <li className="nav-item">
                                             <Link to="/panel/peminjaman" className="nav-link">
                                             Peminjaman
                                             </Link>
                                         </li>
                                     ) : null}
-                                    <li className="nav-item">
-                                        <Link to="/panel/peminjaman" className="nav-link">
-                                            Peminjaman 
-                                        </Link>
-                                    </li>
                                     
                                     {features.includes('Pengembalian') ? (
                                         <li className="nav-item">
@@ -94,13 +83,46 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
+
+                                    {features.includes('Inventory') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/inventory" className="nav-link">
+                                            inventaris
+                                            </Link>
+                                        </li>
+                                    ) : null}
+
+                                    {features.includes('Validasi Peminjaman') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/borrow-validation" className="nav-link">
+                                            Validasi Peminjaman
+                                            </Link>
+                                        </li>
+                                    ) : null}
+                                    {features.includes('Validasi Pengembalian') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/return-validation" className="nav-link">
+                                            Validasi Pengembalian
+                                            </Link>
+                                        </li>
+                                    ) : null}
+                                    {features.includes('Kontrol Akun') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/account-control" className="nav-link">
+                                            Kontrol Akun
+                                            </Link>
+                                        </li>
+                                    ) : null}
+                                    {features.includes('Denda') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/penalty-settings" className="nav-link">
+                                            Pengaturan Denda
+                                            </Link>
+                                        </li>
+                                    ) : null}
                                 </ul>
                             </Nav>
                             <Navbar.Text className="d-flex">
-                                {/* <a href="#profile" className="nav-link" onClick={(e) => {
-                                    e.preventDefault();
-                                    dispatch(logout(navigate));
-                                }}> */}
                                 <Link to="/panel/profil" className="nav-link">
                                     <img
                                         src={IMAGES.profil}

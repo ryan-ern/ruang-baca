@@ -1,20 +1,22 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
-import { inventory } from '../../../store/inventory/actions';
+// import { inventory } from '../../../store/inventory/actions';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
+import ModalInventory from './modal';
+import ModalDetailBuku from '../../../components/modal';
 
 export default function Inventory() {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const inv = useSelector((state) => state.inventory)
 
-    useEffect(() => {
-        dispatch(inventory())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(inventory())
+    // }, [])
 
     const columns = useMemo(
         () => [
@@ -51,9 +53,15 @@ export default function Inventory() {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: () => (
+                Cell: ({row}) => (
                     <div>
-                        <Button variant='success'>detail</Button>
+                        <Button
+                            variant='success'
+                            onClick={() => {
+                                setSelectedBook(row.original);
+                                setShowModalDetail(true);
+                            }}
+                        >detail</Button>
                     </div>
                 ),
             },
@@ -91,6 +99,19 @@ export default function Inventory() {
     
     const { globalFilter } = state
 
+    const [showModal, setShowModal] = useState(false);
+    const [showModalDetail, setShowModalDetail] = useState(false);
+    const [selectedBook, setSelectedBook] = useState(null);
+    const addModal = () => {
+        setShowModal(true);
+    };
+
+    const handleClose = () => {
+        setShowModal(false)
+        setShowModalDetail(false)
+    };
+
+
     return (
         <Container>
             <Waveup color="#B6D8CF" />
@@ -101,9 +122,16 @@ export default function Inventory() {
                         <CardBody>
                             <Row className="mb-2">
                                 <Col sm="3">
-                                    <div className="mb-2 d-inline-block justify-content-end">
+                                    <div className="mb-2 d-inline-block">
                                         <div className="position-relative">
                                             <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data buku" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col sm="3">
+                                    <div className="mb-2 d-inline-block">
+                                        <div className="position-relative">
+                                            <Button onClick={addModal}>Tambah Buku</Button>
                                         </div>
                                     </div>
                                 </Col>
@@ -190,6 +218,8 @@ export default function Inventory() {
                     </Card>
                 </Col>
             </Row>
+            <ModalInventory show={showModal} onHide={handleClose} />
+            <ModalDetailBuku show={showModalDetail} onHide={handleClose} data={selectedBook} />
         </Container>
     )
 }
