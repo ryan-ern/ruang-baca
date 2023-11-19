@@ -38,5 +38,6 @@ module.exports = {
         'jsx-a11y/no-static-element-interactions': 'off',
         'react-refresh/only-export-components': 'off',
         'react-hooks/exhaustive-deps': 'off',
+        'react/jsx-key': 'off',
     },
 }

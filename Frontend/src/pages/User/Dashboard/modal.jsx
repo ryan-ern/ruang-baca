@@ -25,6 +25,10 @@ export default function ModalDetail({ show, onHide, data }) {
                                     <Col>{data?.isbn}</Col>
                                 </Row>
                                 <Row>
+                                    <Col>Penulis</Col>
+                                    <Col>{data?.penulis}</Col>
+                                </Row>
+                                <Row>
                                     <Col>Tahun Terbit</Col>
                                     <Col>{data?.tahun_terbit}</Col>
                                 </Row>

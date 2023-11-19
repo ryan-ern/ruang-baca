@@ -60,7 +60,7 @@ export default function Navigation() {
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto" id="navigation">
                                 <ul className="navbar-nav">
-                                    {features.includes('Dashboard Siswa')?(
+                                    {features.includes('Dashboard Siswa')|| features.includes('Dashboard Admin')?(
                                         <li className="nav-item">
                                             <Link to="/panel" className="nav-link">
                                             Beranda

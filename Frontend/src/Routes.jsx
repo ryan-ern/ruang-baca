@@ -13,6 +13,7 @@ import Peminjaman from "./pages/User/Peminjaman/Peminjaman";
 import Page404 from "./components/Page404";
 import { UseFeature } from "./middleware/features.middleware";
 import Profil from "./pages/User/Profil/Profil";
+import Inventory from "./pages/Admin/Inventory/Inventory";
 
 /**
  * Admin
@@ -36,8 +37,22 @@ export default function RoutesApp() {
                             <Layout />
                         </Authenticated>
                     }>
-                        <Route path="/panel" element={<UseFeature allow="Dashboard Siswa" />}>
+                        {/* <Route path="/panel" element={<UseFeature allow={"Dashboard Siswa"} />}>
                             <Route index element={<Dashboard />}/>    
+                        </Route>
+                        <Route
+                            path="/panel"
+                            element={
+                                <UseFeature
+                                    allow={isAdmin ? "Dashboard Admin" : "Dashboard Siswa"}
+                                />
+                            }
+                        >
+                            <Route index element={isAdmin ? <Inventory /> : <Dashboard />} />
+                        </Route> */}
+
+                        <Route path="/panel" element={<UseFeature allow={"Dashboard Admin"} />}>
+                            <Route index element={<Inventory />}/>    
                         </Route>
                         <Route path="/panel/peminjaman" element={<UseFeature allow="Peminjaman" />}>
                             <Route index element={<Peminjaman />}/>    
@@ -45,6 +60,9 @@ export default function RoutesApp() {
                         <Route path="/panel/pengembalian" element={<UseFeature allow="Pengembalian" />}>
                             <Route index element={<Pengembalian />}/>    
                         </Route>
+                        {/* <Route path="/panel/inventory" element={<UseFeature allow="Inventory" />}>
+                            <Route index element={<Inventory />}/>    
+                        </Route> */}
                         <Route path="/panel/profil" element={<Profil/>}/>                       
                     </Route>
                     {/* Not Found */}

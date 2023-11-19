@@ -4,8 +4,13 @@ import Waveup from "../../../components/background/Wavetop";
 // import { Link } from "react-router-dom";
 import "../../../assets/styles/common.css";
 import IMAGES from "../../../assets/images";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../store/auth/actions";
+import { useNavigate } from "react-router-dom";
 
-export default function Profil(){
+export default function Profil() {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     return(
         <>
             <Waveup color="#B6D8CF" />
@@ -162,6 +167,7 @@ export default function Profil(){
                                                         className="rounded-pill ps-2 pe-2 btn-prf"
                                                         type="submit"
                                                         variant="danger"
+                                                        onClick={(e) => { e.preventDefault(); dispatch(logout(navigate))}}
                                                     >
                                                     Logout
                                                     </Button>

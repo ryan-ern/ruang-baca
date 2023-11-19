@@ -50,7 +50,7 @@ export default function Cardbuku() {
                         />
                         <Card.Text className="cardbuku-judul">{book.judul}</Card.Text>
                         <Card.Text className="cardbuku-text-author">
-                            {book.penerbit}
+                            {book.penulis}
                         </Card.Text>
                     </Card.Body>
                 </Card>
