@@ -56,7 +56,7 @@ export default function RoutesApp() {
                         <Route path="/panel/borrow-validation" element={<UseFeature allow="Validasi Peminjaman" />}>
                             <Route index element={<Inventory />}/>    
                         </Route>
-                        <Route path="/panel/return-validation" element={<UseFeature allow="Validasi Pengembalian" />}>
+                        <Route path="/panel/return-validation" element={<UseFeature allow="Validasi pengembalian" />}>
                             <Route index element={<Inventory />}/>    
                         </Route>
                         <Route path="/panel/account-control" element={<UseFeature allow="Kontrol Akun" />}>

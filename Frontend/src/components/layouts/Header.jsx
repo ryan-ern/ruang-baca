@@ -99,7 +99,7 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
-                                    {features.includes('Validasi Pengembalian') ? (
+                                    {features.includes('Validasi pengembalian') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/return-validation" className="nav-link">
                                             Validasi Pengembalian
