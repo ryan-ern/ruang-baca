@@ -8,7 +8,7 @@ export default function ModalDetailBuku({ show, onHide, data }) {
                 <Modal.Body>
                     <Row>
                         <Col lg="3">
-                            <img src={data?.cover} alt={data?.judul} width="155px"/>
+                            <img src={data?.cover || data?.file} alt={data?.judul} width="155px" />
                         </Col>
                         <Col lg="9">
                             <Row>

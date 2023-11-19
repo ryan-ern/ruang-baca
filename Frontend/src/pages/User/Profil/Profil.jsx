@@ -4,13 +4,27 @@ import Waveup from "../../../components/background/Wavetop";
 // import { Link } from "react-router-dom";
 import "../../../assets/styles/common.css";
 import IMAGES from "../../../assets/images";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { putProfil } from "../../../store/actions";
 
 export default function Profil() {
+    const profile = useSelector((state) => state.auth.response.data)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [editMode, setEditMode] = useState(false)
+    const [data, setData] = useState({
+        nisn: "",
+        name: "",
+        username: "",
+        jurusan: "",
+        wa: "",
+    });
+    const handleClick = () => {
+        setEditMode(!editMode)
+    }
     return(
         <>
             <Waveup color="#B6D8CF" />
@@ -22,67 +36,91 @@ export default function Profil() {
                             <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4 mt-2">
                                 <Card.Body className="p-sm-3">
                                     <Row>
-                                        <Col lg={8}>
+                                        <Col lg={8} sm={5} xs={6}>
                                             <div className="pic-profil">
                                                 <img
                                                     src={IMAGES.profil}
                                                     width="100"
                                                     height="100"
                                                     className="d-inline-block align-top rounded-circle me-2"
-                                            
                                                 />
                                             </div>
                                         </Col>
                                         <Col className="button-profil">
-                                            <Button
-                                                className="btn-table custom-button rounded-pill"
-                                                type="submit"
-                                                variant="success"
-                                            >
+                                            {editMode ?
+                                                <Button
+                                                    className="btn-table rounded-pill"
+                                                    type="submit"
+                                                    variant="outline-dark"
+                                                >
+                                                Ganti Foto
+                                                </Button>
+                                                :
+                                                <Button
+                                                    className="btn-table custom-button rounded-pill"
+                                                    type="submit"
+                                                    variant="success"
+                                                    onClick={handleClick}
+                                                >
                                                 Edit Profil
-                                            </Button></Col>
+                                                </Button>
+                                            }
+                                        </Col>
                                     </Row>
                                     <div className="p-2 mt-4">
-                                        <Form action="#" >
+                                        <Form action="#"  onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const formData = new FormData();
+                                            formData.append('nisn', data.nisn || profile.nisn);
+                                            formData.append('name', data.name || profile.name);
+                                            formData.append('username', data.username || profile.username);
+                                            formData.append('jurusan', data.jurusan || profile.jurusan);
+                                            formData.append('wa', data.wa || profile.wa);
+                                            dispatch(putProfil(formData));
+                                            setEditMode(false)
+                                        }}>
                                             <Row className="g-2">
                                                 <Col md>
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>
                                                             NISN 
-                                                            {/* <span className="text-danger">*</span> */}
+                                                            <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 type="text"
-                                                                className="form-control bg-light border-light password-input"
+                                                                className="form-control bg-light border-light"
                                                                 required
                                                                 placeholder=""
+                                                                defaultValue={profile.nisn}
+                                                                onChange={(e) => setData({...data, nisn: e.target.value})}
                                                                 autoComplete="nisn"
                                                                 id="nisn"
                                                                 name="nisn"
-                                                                disabled
+                                                                disabled={!editMode}
                                                             />
                                                         </div>
                                                     </Form.Group>
                                                 </Col>
-                                                
 
                                                 <Col md>
                                                     <Form.Group className="mb-3">
                                                         <Form.Label>
                                                         Username 
-                                                            {/* <span className="text-danger">*</span> */}
+                                                            <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 required
                                                                 type="text"
-                                                                className="form-control bg-light border-light password-input"
+                                                                className="form-control bg-light border-light"
                                                                 placeholder=""
                                                                 autoComplete="username"
                                                                 id="username"
                                                                 name="username"
-                                                                disabled
+                                                                onChange={(e) => setData({...data, username: e.target.value})}
+                                                                defaultValue={profile.username}
+                                                                disabled={!editMode}
                                                             />
                                                         </div>
                                                     </Form.Group>
@@ -92,19 +130,21 @@ export default function Profil() {
                                             <Row className="g-2">
                                                 <Col md><Form.Group className="mb-3">
                                                     <Form.Label>
-                                                            Nama Lengkap{" "}
-                                                        {/* <span className="text-danger">*</span> */}
+                                                            Nama Lengkap
+                                                        <span className="text-danger">*</span>
                                                     </Form.Label>
                                                     <div className="position-relative">
                                                         <Form.Control
                                                             required
                                                             type="text"
-                                                            className="form-control bg-light border-light password-input"
+                                                            className="form-control bg-light border-light "
                                                             placeholder=""
                                                             id="nama"
                                                             autoComplete="nama"
+                                                            onChange={(e) => setData({...data, name: e.target.value})}
+                                                            defaultValue={profile.name}
                                                             name="nama"
-                                                            disabled
+                                                            disabled={!editMode}
                                                         />
                                                     </div>
                                                 </Form.Group>
@@ -117,19 +157,21 @@ export default function Profil() {
                                                         style={{ marginRight: "10px" }}
                                                     >
                                                         <Form.Label>
-                                                        WhatsApp <span className="text-danger">*</span>
+                                                            WhatsApp
+                                                            <span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 required
                                                                 type="text"
-                                                                className="form-control bg-light border-light password-input"
+                                                                className="form-control bg-light border-light "
                                                                 placeholder=""
+                                                                defaultValue={profile.wa}
+                                                                onChange={(e) => setData({...data, wa: e.target.value})}
                                                                 id="whatsapp"
                                                                 autoComplete="whatsapp"
                                                                 name="whatsapp"
-                                                                disabled
-                                                                
+                                                                disabled={!editMode}
                                                             />
                                                         </div>
                                                     </Form.Group>
@@ -142,17 +184,19 @@ export default function Profil() {
                                                     style={{ marginRight: "10px" }}
                                                 >
                                                     <Form.Label>
-                                                            Jurusan <span className="text-danger">*</span>
+                                                        Jurusan
+                                                        <span className="text-danger">*</span>
                                                     </Form.Label>
                                                     <div className="position-relative">
                                                         <Form.Select
-                                                            className="form-control bg-light border-light password-input"
-                                                            disabled
+                                                            className="form-control bg-light border-light "
+                                                            disabled={!editMode}
                                                             autoComplete="jurusan"
+                                                            onChange={(e) => setData({ ...data, jurusan: e.target.value })}
                                                         >
-                                                            <option value={""}>Pilih Jurusan</option>
+                                                            <option defaultValue={""}>{profile.jurusan}</option>
                                                             <option>
-                                                                        Teknik Komputer & Jaringan
+                                                            Teknik Komputer & Jaringan
                                                             </option>
                                                             <option >Pemasaran</option>
                                                             <option >Akuntansi</option>
@@ -163,17 +207,26 @@ export default function Profil() {
                                                 </Col>
 
                                                 <Col className="button-profil">
-                                                    <Button
-                                                        className="rounded-pill ps-2 pe-2 btn-prf"
-                                                        type="submit"
-                                                        variant="danger"
-                                                        onClick={(e) => { e.preventDefault(); dispatch(logout(navigate))}}
-                                                    >
-                                                    Logout
-                                                    </Button>
+                                                    {editMode ?
+                                                        <Button
+                                                            className="rounded-pill ps-4 pe-4 mt-5"
+                                                            type="submit"
+                                                            variant="success"
+                                                        >
+                                                            Simpan
+                                                        </Button>
+                                                        :
+                                                        <Button
+                                                            className="rounded-pill ps-4 pe-4 mt-5"
+                                                            type="submit"
+                                                            variant="danger"
+                                                            onClick={(e) => { e.preventDefault(); dispatch(logout(navigate))}}
+                                                        >
+                                                            Logout
+                                                        </Button>
+                                                    }
                                                 </Col>
                                             </Row>
-                                            
                                         </Form>
                                     </div>
                                 </Card.Body>

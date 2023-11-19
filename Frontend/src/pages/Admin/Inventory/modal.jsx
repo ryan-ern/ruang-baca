@@ -74,16 +74,16 @@ export default function ModalInventory({ show, onHide }) {
                                     />
                                 </Col>
                                 <Col>
-                                    <label>Jumlah Halaman</label>
-                                    <input
-                                        type="number"
-                                        name="halaman"
-                                        placeholder="Masukkan Jumlah Halaman"
+                                    <label>Penulis</label>
+                                    <input type="text"
                                         className="form-control"
-                                        value={data.halaman}
-                                        onChange={(e) => setData({...data, halaman: e.target.value})}
+                                        placeholder="Masukkan Penulis Buku"
+                                        name='penulis'
+                                        value={data.penulis}
+                                        onChange={(e) => setData({...data, penulis: e.target.value})}
                                     />
                                 </Col>
+                                
                             </Row>
                             <Row>
                                 <Col>
@@ -98,16 +98,17 @@ export default function ModalInventory({ show, onHide }) {
                                     />
                                 </Col>
                                 <Col>
-                                    <label>Stok Buku</label>
+                                    <label>Jumlah Halaman</label>
                                     <input
                                         type="number"
-                                        name="stok"
-                                        placeholder="Masukkan Stok Buku"
+                                        name="halaman"
+                                        placeholder="Masukkan Jumlah Halaman"
                                         className="form-control"
-                                        value={data.stok}
-                                        onChange={(e) => setData({...data, stok: e.target.value})}
+                                        value={data.halaman}
+                                        onChange={(e) => setData({...data, halaman: e.target.value})}
                                     />
                                 </Col>
+                                
                             </Row>
                             <Row>
                                 <Col>
@@ -122,18 +123,17 @@ export default function ModalInventory({ show, onHide }) {
                                     />
                                 </Col>
                                 <Col>
-                                    <label>Cover Buku</label>
+                                    <label>Stok Buku</label>
                                     <input
-                                        type="file"
-                                        accept="image/png"
-                                        name="file"
-                                        placeholder="Masukkan Cover Buku"
+                                        type="number"
+                                        name="stok"
+                                        placeholder="Masukkan Stok Buku"
                                         className="form-control"
-                                        onChange={(e) => {
-                                            const selectedFile = e.target.files[0];
-                                            setData({ ...data, file: selectedFile });}}
+                                        value={data.stok}
+                                        onChange={(e) => setData({...data, stok: e.target.value})}
                                     />
                                 </Col>
+                                
                             </Row>
                             <Row>
                                 <Col>
@@ -163,13 +163,26 @@ export default function ModalInventory({ show, onHide }) {
                                 <Col>
                                     <label>Sinopsis</label>
                                     <textarea
-                                        rows="4"
-                                        cols="50"
-                                        className="form-control"
+                                        rows="5"
+                                        cols="40"
+                                        // className="form-control"
                                         placeholder="Masukkan Sinopsis Buku"
                                         name='sinopsis'
                                         value={data.sinopsis}
                                         onChange={(e) => setData({...data, sinopsis: e.target.value})}
+                                    ></textarea>
+                                </Col>
+                                <Col>
+                                    <label>Cover Buku</label>
+                                    <input
+                                        type="file"
+                                        accept="image/png"
+                                        name="file"
+                                        placeholder="Masukkan Cover Buku"
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            const selectedFile = e.target.files[0];
+                                            setData({ ...data, file: selectedFile });}}
                                     />
                                 </Col>
                             </Row>
