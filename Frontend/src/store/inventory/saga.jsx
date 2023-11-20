@@ -1,14 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "../../helper/apiHelper";
 import { URL_GET_INVENTORY, URL_POST_INVENTORY } from "../../helper/urlHelper";
-import {inventory, inventoryFailed, inventorySuccess, postInventoryFailed, postInventorySuccess} from './actions'
+import {inventoryFailed, inventorySuccess, postInventoryFailed, postInventorySuccess} from './actions'
 import { GET_INVENTORY, POST_INVENTORY } from "./actionTypes";
 
 export function* postInventorySaga({payload: {data, onHide}}) {
     try {
         yield call(axios.post, URL_POST_INVENTORY, data)
         yield put(postInventorySuccess())
-        yield put(inventory())
         yield call(onHide)
     } catch (err) {
         yield put(postInventoryFailed(err.response.message))

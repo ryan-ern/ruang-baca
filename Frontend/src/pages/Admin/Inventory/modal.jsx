@@ -12,6 +12,7 @@ export default function ModalInventory({ show, onHide }) {
         file: '',
         isbn: '',
         penerbit: '',
+        penulis: '',
         tahunTerbit: '',
         halaman: '',
         stok: '',
@@ -27,14 +28,15 @@ export default function ModalInventory({ show, onHide }) {
                 file: '',
                 isbn: '',
                 penerbit: '',
+                penulis: '',
                 tahunTerbit: '',
                 halaman: '',
                 stok: '',
                 sinopsis: '',
                 jurusan: '',
             })
-            dispatch(inventory())
         }
+        dispatch(inventory())
     }, [show])
     return (
         <>
@@ -53,6 +55,7 @@ export default function ModalInventory({ show, onHide }) {
                             formData.append('judul', data.judul);
                             formData.append('file', data.file);
                             formData.append('isbn', data.isbn);
+                            formData.append('penulis', data.penulis);
                             formData.append('penerbit', data.penerbit);
                             formData.append('tahunTerbit', data.tahunTerbit);
                             formData.append('halaman', data.halaman);
@@ -68,7 +71,7 @@ export default function ModalInventory({ show, onHide }) {
                                         type="text"
                                         name="judul"
                                         placeholder="Masukkan Judul Buku"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         value={data.judul}
                                         onChange={(e) => setData({...data, judul: e.target.value})}
                                     />
@@ -76,8 +79,8 @@ export default function ModalInventory({ show, onHide }) {
                                 <Col>
                                     <label>Penulis</label>
                                     <input type="text"
-                                        className="form-control"
-                                        placeholder="Masukkan Penulis Buku"
+                                        className="form-control bg-light"
+                                        placeholder="Masukkan Penulis Buku "
                                         name='penulis'
                                         value={data.penulis}
                                         onChange={(e) => setData({...data, penulis: e.target.value})}
@@ -92,7 +95,7 @@ export default function ModalInventory({ show, onHide }) {
                                         type="text"
                                         name="isbn"
                                         placeholder="Masukkan ISBN Buku"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         value={data.isbn}
                                         onChange={(e) => setData({...data, isbn: e.target.value})}
                                     />
@@ -103,7 +106,7 @@ export default function ModalInventory({ show, onHide }) {
                                         type="number"
                                         name="halaman"
                                         placeholder="Masukkan Jumlah Halaman"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         value={data.halaman}
                                         onChange={(e) => setData({...data, halaman: e.target.value})}
                                     />
@@ -117,7 +120,7 @@ export default function ModalInventory({ show, onHide }) {
                                         type="text"
                                         name="penerbit"
                                         placeholder="Masukkan Penerbit Buku"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         value={data.penerbit}
                                         onChange={(e) => setData({...data, penerbit: e.target.value})}
                                     />
@@ -128,7 +131,7 @@ export default function ModalInventory({ show, onHide }) {
                                         type="number"
                                         name="stok"
                                         placeholder="Masukkan Stok Buku"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         value={data.stok}
                                         onChange={(e) => setData({...data, stok: e.target.value})}
                                     />
@@ -140,7 +143,7 @@ export default function ModalInventory({ show, onHide }) {
                                     <label>Tahun Terbit</label>
                                     <input
                                         type="number"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         name="tahunTerbit"
                                         value={data.tahunTerbit}
                                         onChange={(e) => {
@@ -152,7 +155,7 @@ export default function ModalInventory({ show, onHide }) {
                                     <label>Jurusan</label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         name="jurusan"
                                         value={data.jurusan}
                                         onChange={(e) => setData({...data, jurusan: e.target.value})}
@@ -165,7 +168,7 @@ export default function ModalInventory({ show, onHide }) {
                                     <textarea
                                         rows="5"
                                         cols="40"
-                                        // className="form-control"
+                                        className="bg-light"
                                         placeholder="Masukkan Sinopsis Buku"
                                         name='sinopsis'
                                         value={data.sinopsis}
@@ -179,7 +182,7 @@ export default function ModalInventory({ show, onHide }) {
                                         accept="image/png"
                                         name="file"
                                         placeholder="Masukkan Cover Buku"
-                                        className="form-control"
+                                        className="form-control bg-light"
                                         onChange={(e) => {
                                             const selectedFile = e.target.files[0];
                                             setData({ ...data, file: selectedFile });}}

@@ -2,14 +2,10 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useLocation, } from "react-router-dom";
 import { useEffect } from "react";
 import "../../assets/styles/header.css";
-import IMAGES from "../../assets/images";
-import {  useSelector } from "react-redux";
-// import { logout } from "../../store/auth/actions";
+import { useSelector } from "react-redux";
 
 export default function Navigation() {
     const location = useLocation();
-    // const dispatch = useDispatch()
-    // const navigate = useNavigate()
     const auth = useSelector((state) => state.auth);
     const features = auth?.response.feature || [];
 
@@ -125,15 +121,13 @@ export default function Navigation() {
                             <Navbar.Text className="d-flex">
                                 <Link to="/panel/profil" className="nav-link">
                                     <img
-                                        src={IMAGES.profil}
+                                        src={auth?.response?.data?.profile}
                                         width="30"
                                         height="30"
                                         className="d-inline-block align-top rounded-circle me-2"
                                         alt="React Vite logo"
                                     />
-                                    Dean
-                                    
-                                        
+                                    {auth?.response?.data?.name}
                                 </Link>
                             </Navbar.Text>
                         </Navbar.Collapse>

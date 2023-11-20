@@ -6,7 +6,7 @@ const axios = axiosDefault.create({
     baseURL: import.meta.env.VITE_BASE_URL,
     headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "ngrok-skip-browser-warning": "69420"
+        "ngrok-skip-browser-warning": "69420", 
     },
 });
 
