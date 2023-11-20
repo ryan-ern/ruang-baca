@@ -15,6 +15,7 @@ import { UseFeature } from "./middleware/features.middleware";
 import Profil from "./pages/User/Profil/Profil";
 import Inventory from "./pages/Admin/Inventory/Inventory";
 import { useSelector } from "react-redux";
+import DashboardAdmin from "./pages/Admin/Dashboard/Dashboard";
 
 /**
  * Admin
@@ -26,7 +27,7 @@ import { useSelector } from "react-redux";
 
 export default function RoutesApp() {
     const role = useSelector((state) => state?.auth?.response?.data?.role)
-    const dashboardElement = role === 'admin' || role === 'Super Admin' ? <Inventory /> : <Dashboard />;
+    const dashboardElement = role === 'admin' || role === 'Super Admin' ? <DashboardAdmin /> : <Dashboard />;
     const featureAllow = role === 'admin' || role === 'Super Admin' ? "Dashboard Admin" : "Dashboard Siswa";
     return (
         <BrowserRouter>

@@ -341,3 +341,29 @@
         margin-bottom: 20px;
     }
 }
+
+.cardadmin {
+    color: #ffffff;
+    background-color: #009688;
+    border-radius: 12px;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
+    border: 0;
+    margin-bottom: 20px;
+    min-height: 180px;
+}
+
+@media (max-width: 990px) {
+    .cardadmin {
+        min-height: 150px;
+    }
+}
+
+.cardadmin-footer {
+    color: #ffffff;
+    background-color: #8ec9c3;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}

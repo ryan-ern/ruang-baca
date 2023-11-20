@@ -11,6 +11,10 @@ const IMAGES = {
     pemasaran: new URL("./pemasaran.png", import.meta.url).href,
     buku1: new URL("./buku1.jpeg", import.meta.url).href,
     profil: new URL("./imageprofil.jpg", import.meta.url).href,
+    peminjaman1: new URL("./1.png", import.meta.url).href,
+    pengembalian1: new URL("./2.png", import.meta.url).href,
+    databuku1: new URL("./3.png", import.meta.url).href,
+    pengguna1: new URL("./4.png", import.meta.url).href,
 };
 
 export default IMAGES;
