@@ -1,6 +1,6 @@
 import { Modal, Button, Row, Col } from "react-bootstrap";
 
-export default function ModalDetailBuku({ show, onHide, data }) {
+export default function ModalDetailBuku({ show, onHide, data, inv }) {
     return (
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg'>
@@ -15,9 +15,12 @@ export default function ModalDetailBuku({ show, onHide, data }) {
                                 <Col>
                                     <h4>{data?.judul}</h4>
                                 </Col>
-                                <Col lg="3">
-                                    <Button>Pinjam</Button>
-                                </Col>
+                                {inv ? null :
+                                    <Col lg="3">
+                                        <Button>Pinjam</Button>
+                                    </Col>
+                                }
+                                
                             </Row>
                             <Row>
                                 <Row>

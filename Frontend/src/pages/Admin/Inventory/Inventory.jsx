@@ -10,6 +10,7 @@ import Wavebot from '../../../components/background/Wavebot';
 import ModalInventory from './modal';
 import ModalDetailBuku from '../../../components/modal';
 import Top from './top';
+// import { inventory } from '../../../store/inventory/actions';
 
 export default function Inventory() {
     // const dispatch = useDispatch()
@@ -62,7 +63,7 @@ export default function Inventory() {
                                 setSelectedBook(row.original);
                                 setShowModalDetail(true);
                             }}
-                            className='px-2 mx-2'
+                            className='px-2 mx-2 mt-2'
                         >detail</Button>
                         <Button
                             variant='warning'
@@ -70,7 +71,7 @@ export default function Inventory() {
                                 setSelectedBook(row.original);
                                 setShowModal(true);
                             }}
-                            className='px-2 mx-2'
+                            className='px-3 mx-2 mt-2'
                         >Edit</Button>
                     </div>
                 ),
@@ -222,7 +223,7 @@ export default function Inventory() {
                 </Col>
             </Row>
             <ModalInventory show={showModal} onHide={handleClose} editdata={selectedBook} />
-            <ModalDetailBuku show={showModalDetail} onHide={handleClose} data={selectedBook} />
+            <ModalDetailBuku show={showModalDetail} onHide={handleClose} data={selectedBook} inv={true} />
         </Container>
     )
 }

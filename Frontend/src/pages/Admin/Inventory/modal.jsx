@@ -243,13 +243,17 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         />
                                     }
                                 </Col>
+                                {editdata? <span className="fs-6 text-body-secondary text-capitalize">
+                                                    Keterangan: <br/>
+                                                    Tidak Dapat Mengubah ISBN, Silahkan Hapus Data dan Tambahkan buku Kembali
+                                </span> : null}
                             </Row>
                             <Row>
                                 <Col>
                                     <div className="float-end mt-2">
                                         <div className="d-flex flex-wrap gap-2">
-                                            <button onClick={onHide} type="button" className="btn btn-danger">Batal</button>
-                                            <button type="submit" className="btn btn-success">
+                                            <button onClick={onHide} type="button" className="btn btn-danger px-3">Batal</button>
+                                            <button type="submit" className="btn btn-success px-3">
                                                 {editdata ? <span>Edit Data</span> : <span>Tambahkan</span>}
                                             </button>
                                         </div>
