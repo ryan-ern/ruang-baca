@@ -4,20 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
-import { inventory } from '../../../store/inventory/actions';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import ModalInventory from './modal';
-import ModalDetailBuku from '../../../components/modal';
-import Top from './top';
+import { account, deleteAccount } from '../../../store/account/actions';
+import ModalEditAccount from './modal';
 
-export default function Inventory() {
+export default function Account() {
     const dispatch = useDispatch()
-    const inv = useSelector((state) => state.inventory)
+    const acc = useSelector((state) => state.account)
 
-    useEffect(() => {
-        dispatch(inventory())
-    }, [])
+   
 
     const columns = useMemo(
         () => [
@@ -26,28 +22,23 @@ export default function Inventory() {
                 accessor: (_, index) => index + 1
             },
             {
-                Header: 'Judul Buku',
-                accessor: 'judul',
+                Header: 'NISN',
+                accessor: 'nisn',
                 Cell: ({value}) => (value)
             },
             {
-                Header: 'ISBN',
-                accessor: 'isbn',
+                Header: 'Username',
+                accessor: 'username',
                 Cell: ({value}) => (value),
             },
             {
-                Header: 'Penerbit',
-                accessor: 'penerbit',
+                Header: 'Nama',
+                accessor: 'name',
                 Cell: ({value}) => (value),
             },
             {
-                Header: 'Tahun Terbit',
-                accessor: 'tahun_terbit',
-                Cell: ({value}) => (value),
-            },
-            {
-                Header: 'Stok',
-                accessor: 'stok_buku',
+                Header: 'Jurusan',
+                accessor: 'jurusan',
                 Cell: ({value}) => (value),
             },
             {
@@ -57,21 +48,26 @@ export default function Inventory() {
                 Cell: ({row}) => (
                     <div>
                         <Button
-                            variant='success'
-                            onClick={() => {
-                                setSelectedBook(row.original);
-                                setShowModalDetail(true);
-                            }}
-                            className='px-2 mx-2 mt-2'
-                        >detail</Button>
-                        <Button
                             variant='warning'
                             onClick={() => {
                                 setSelectedBook(row.original);
                                 setShowModal(true);
                             }}
-                            className='px-3 mx-2 mt-2'
+                            className='px-2 mx-2 mt-2'
                         >Edit</Button>
+                        <Button
+                            variant='success'
+                            onClick={() => {
+                                setSelectedBook(row.original);
+                                // setShowModal(true);
+                            }}
+                            className='px-3 mx-2 mt-2'
+                        >Blokir</Button>
+                        <Button
+                            variant='danger'
+                            onClick={() => { handleclick(row.original.username)}}
+                            className='px-3 mx-2 mt-2'
+                        >Hapus</Button>
                     </div>
                 ),
             },
@@ -80,8 +76,8 @@ export default function Inventory() {
     )
     
     const data = useMemo(
-        () => (inv.response?.data || []),
-        [inv.response.data],
+        () => (acc.response?.data || []),
+        [acc.response.data],
     );
 
     const {
@@ -110,13 +106,19 @@ export default function Inventory() {
     const { globalFilter } = state
 
     const [showModal, setShowModal] = useState(false);
-    const [showModalDetail, setShowModalDetail] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
+
+    const handleclick = (data) => {
+        dispatch(deleteAccount(data))
+    };
 
     const handleClose = () => {
         setShowModal(false)
-        setShowModalDetail(false)
     };
+
+    useEffect(() => {
+        dispatch(account())
+    }, [])
 
 
     return (
@@ -131,12 +133,12 @@ export default function Inventory() {
                                 <Col sm="3">
                                     <div className="mb-2 d-inline-block">
                                         <div className="position-relative">
-                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data buku" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data pengguna" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                         </div>
                                     </div>
                                 </Col>
                                 <Col sm="3">
-                                    <Top/>
+                                    {/* <Top/> */}
                                 </Col>
                             </Row>
                             <Row>
@@ -162,7 +164,7 @@ export default function Inventory() {
                                                 <tbody>
                                                     <tr>
                                                         <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(inv.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                            {(acc.loading) ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -221,8 +223,7 @@ export default function Inventory() {
                     </Card>
                 </Col>
             </Row>
-            <ModalInventory show={showModal} onHide={handleClose} editdata={selectedBook} />
-            <ModalDetailBuku show={showModalDetail} onHide={handleClose} data={selectedBook} inv={true} />
+            <ModalEditAccount show={showModal} onHide={handleClose} editdata={selectedBook} />
         </Container>
     )
 }

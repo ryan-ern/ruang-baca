@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { editInventory, inventory, postInventory } from "../../../store/inventory/actions";
+import { editInventory, postInventory } from "../../../store/inventory/actions";
 
 export default function ModalInventory({ show, onHide, editdata }) {
     const dispatch = useDispatch()
@@ -54,7 +54,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
             });
             setCover(false)
         }
-        dispatch(inventory())
+        // dispatch(inventory())
     }, [show])
     return (
         <>

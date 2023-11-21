@@ -12,3 +12,7 @@ export const URL_POST_INVENTORY = '/addBook'
 export const URL_EDIT_INVENTORY = '/editBook/:isbn'
 
 export const URL_PUT_PROFIL = '/profile'
+
+export const URL_GET_ACCOUNT = '/userControl'
+export const URL_DELETE_ACCOUNT = '/user/:username'
+export const URL_EDIT_ACCOUNT = '/user/:username'

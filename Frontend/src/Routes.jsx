@@ -16,6 +16,7 @@ import Profil from "./pages/User/Profil/Profil";
 import Inventory from "./pages/Admin/Inventory/Inventory";
 import { useSelector } from "react-redux";
 import DashboardAdmin from "./pages/Admin/Dashboard/Dashboard";
+import Account from "./pages/Admin/Account/Account";
 
 /**
  * Admin
@@ -61,7 +62,7 @@ export default function RoutesApp() {
                             <Route index element={<Inventory />}/>    
                         </Route>
                         <Route path="/panel/account-control" element={<UseFeature allow="Kontrol Akun" />}>
-                            <Route index element={<Inventory />}/>    
+                            <Route index element={<Account />}/>    
                         </Route>
                         <Route path="/panel/penalty-settings" element={<UseFeature allow="Denda" />}>
                             <Route index element={<Inventory />}/>    

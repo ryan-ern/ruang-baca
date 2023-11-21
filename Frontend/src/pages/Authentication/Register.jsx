@@ -128,15 +128,20 @@ export default function Register() {
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 required
-                                                                type="text"
+                                                                type="tel"
+                                                                pattern="^\+62\d{9,15}$"
                                                                 className="form-control bg-light border-light password-input"
-                                                                placeholder="Masukkan Nomor Whatsapp"
+                                                                placeholder="628123456789"
                                                                 id="whatsapp"
                                                                 autoComplete="whatsapp"
                                                                 name="whatsapp"
                                                                 value={account.wa || ''}
                                                                 onChange={(e) => {
-                                                                    setAccount({ ...account, wa: e.target.value });
+                                                                    // Remove non-numeric characters from the input
+                                                                    const sanitizedValue = e.target.value.replace(/\D/g, '');
+                                                                    // Format the phone number as +62xxxxxxxxxxx
+                                                                    const formattedValue = sanitizedValue.length > 2 ? `+62${sanitizedValue.slice(2)}` : sanitizedValue;
+                                                                    setAccount({ ...account, wa: formattedValue });
                                                                 }}
                                                             />
                                                         </div>
