@@ -9,6 +9,7 @@ import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
 import ModalInventory from './modal';
 import ModalDetailBuku from '../../../components/modal';
+import Top from './top';
 
 export default function Inventory() {
     // const dispatch = useDispatch()
@@ -61,7 +62,16 @@ export default function Inventory() {
                                 setSelectedBook(row.original);
                                 setShowModalDetail(true);
                             }}
+                            className='px-2 mx-2'
                         >detail</Button>
+                        <Button
+                            variant='warning'
+                            onClick={() => {
+                                setSelectedBook(row.original);
+                                setShowModal(true);
+                            }}
+                            className='px-2 mx-2'
+                        >Edit</Button>
                     </div>
                 ),
             },
@@ -102,9 +112,6 @@ export default function Inventory() {
     const [showModal, setShowModal] = useState(false);
     const [showModalDetail, setShowModalDetail] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
-    const addModal = () => {
-        setShowModal(true);
-    };
 
     const handleClose = () => {
         setShowModal(false)
@@ -129,11 +136,7 @@ export default function Inventory() {
                                     </div>
                                 </Col>
                                 <Col sm="3">
-                                    <div className="mb-2 d-inline-block">
-                                        <div className="position-relative">
-                                            <Button onClick={addModal}>Tambah Buku</Button>
-                                        </div>
-                                    </div>
+                                    <Top/>
                                 </Col>
                             </Row>
                             <Row>
@@ -218,7 +221,7 @@ export default function Inventory() {
                     </Card>
                 </Col>
             </Row>
-            <ModalInventory show={showModal} onHide={handleClose} />
+            <ModalInventory show={showModal} onHide={handleClose} editdata={selectedBook} />
             <ModalDetailBuku show={showModalDetail} onHide={handleClose} data={selectedBook} />
         </Container>
     )

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Modal, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { inventory, postInventory } from "../../../store/inventory/actions";
+import { useDispatch } from "react-redux";
+import { editInventory, inventory, postInventory } from "../../../store/inventory/actions";
 
-export default function ModalInventory({ show, onHide }) {
+export default function ModalInventory({ show, onHide, editdata }) {
     const dispatch = useDispatch()
-    const create = useSelector((state) => state.inventory.create)
-
+    const [cover, setCover] = useState(false)
     const [data, setData] = useState({
         judul: '',
         file: '',
@@ -21,7 +20,25 @@ export default function ModalInventory({ show, onHide }) {
         
     })
 
+    const handleClick = () => {
+        setCover(true)
+    }
+
     useEffect(() => {
+        if (editdata) {
+            setData({
+                judul: editdata.judul || '',
+                file: editdata.cover || '',
+                isbn: editdata.isbn || '',
+                penerbit: editdata.penerbit || '',
+                penulis: editdata.penulis || '',
+                tahunTerbit: editdata.tahun_terbit || '',
+                halaman: editdata.jumlah_halaman || '',
+                stok: editdata.stok_buku || '',
+                sinopsis: editdata.sinopsis || '',
+                jurusan: editdata.jurusan || '',
+            });
+        }
         if (!show) {
             setData({
                 judul: '',
@@ -34,7 +51,8 @@ export default function ModalInventory({ show, onHide }) {
                 stok: '',
                 sinopsis: '',
                 jurusan: '',
-            })
+            });
+            setCover(false)
         }
         dispatch(inventory())
     }, [show])
@@ -42,16 +60,17 @@ export default function ModalInventory({ show, onHide }) {
         <>
             <Modal show={show} onHide={onHide} centered size='lg'>
                 {/* <Modal.Header closeButton /> */}
-                <Modal.Body>
+                <Modal.Body style={{backgroundColor: '#e0f8f2', borderRadius: '10px'}}>
                     <Container>
                         <Row>
                             <Col>
-                                <h4>Tambah Data</h4>
+                                {editdata? <h4>Edit Data</h4> : <h4>Tambah Data</h4>}
                             </Col>
                         </Row>
                         <form onSubmit={(e) => {
                             e.preventDefault();
                             const formData = new FormData();
+                            console.log(data.judul)
                             formData.append('judul', data.judul);
                             formData.append('file', data.file);
                             formData.append('isbn', data.isbn);
@@ -62,7 +81,12 @@ export default function ModalInventory({ show, onHide }) {
                             formData.append('stok', data.stok);
                             formData.append('sinopsis', data.sinopsis);
                             formData.append('jurusan', data.jurusan);
-                            dispatch(postInventory(formData, onHide));
+                            // console.log(Object.fromEntries(formData))
+                            editdata ?
+                                dispatch(editInventory(data.isbn, formData, onHide))
+                                :
+                                dispatch(postInventory(formData, onHide));
+                            setCover(false)
                         }}>
                             <Row>
                                 <Col>
@@ -71,8 +95,9 @@ export default function ModalInventory({ show, onHide }) {
                                         type="text"
                                         name="judul"
                                         placeholder="Masukkan Judul Buku"
-                                        className="form-control bg-light"
-                                        value={data.judul}
+                                        className="form-control bg-light mb-4"
+                                        defaultValue={data.judul}
+                                        required
                                         onChange={(e) => setData({...data, judul: e.target.value})}
                                     />
                                 </Col>
@@ -82,7 +107,8 @@ export default function ModalInventory({ show, onHide }) {
                                         className="form-control bg-light"
                                         placeholder="Masukkan Penulis Buku "
                                         name='penulis'
-                                        value={data.penulis}
+                                        defaultValue={data.penulis}
+                                        required
                                         onChange={(e) => setData({...data, penulis: e.target.value})}
                                     />
                                 </Col>
@@ -95,9 +121,9 @@ export default function ModalInventory({ show, onHide }) {
                                         type="text"
                                         name="isbn"
                                         placeholder="Masukkan ISBN Buku"
-                                        className="form-control bg-light"
-                                        value={data.isbn}
-                                        onChange={(e) => setData({...data, isbn: e.target.value})}
+                                        className="form-control bg-light mb-4"
+                                        disabled
+                                        defaultValue={data.isbn}
                                     />
                                 </Col>
                                 <Col>
@@ -107,7 +133,8 @@ export default function ModalInventory({ show, onHide }) {
                                         name="halaman"
                                         placeholder="Masukkan Jumlah Halaman"
                                         className="form-control bg-light"
-                                        value={data.halaman}
+                                        defaultValue={data.halaman}
+                                        required
                                         onChange={(e) => setData({...data, halaman: e.target.value})}
                                     />
                                 </Col>
@@ -120,8 +147,9 @@ export default function ModalInventory({ show, onHide }) {
                                         type="text"
                                         name="penerbit"
                                         placeholder="Masukkan Penerbit Buku"
-                                        className="form-control bg-light"
-                                        value={data.penerbit}
+                                        className="form-control bg-light mb-4"
+                                        defaultValue={data.penerbit}
+                                        required
                                         onChange={(e) => setData({...data, penerbit: e.target.value})}
                                     />
                                 </Col>
@@ -132,7 +160,8 @@ export default function ModalInventory({ show, onHide }) {
                                         name="stok"
                                         placeholder="Masukkan Stok Buku"
                                         className="form-control bg-light"
-                                        value={data.stok}
+                                        defaultValue={data.stok}
+                                        required
                                         onChange={(e) => setData({...data, stok: e.target.value})}
                                     />
                                 </Col>
@@ -143,9 +172,11 @@ export default function ModalInventory({ show, onHide }) {
                                     <label>Tahun Terbit</label>
                                     <input
                                         type="number"
-                                        className="form-control bg-light"
+                                        className="form-control bg-light mb-4"
                                         name="tahunTerbit"
-                                        value={data.tahunTerbit}
+                                        placeholder="Masukkan Tahun Terbit"
+                                        defaultValue={data.tahunTerbit}
+                                        required
                                         onChange={(e) => {
                                             const year = e.target.value.slice(0, 4);
                                             setData({ ...data, tahunTerbit: year });}}
@@ -156,8 +187,10 @@ export default function ModalInventory({ show, onHide }) {
                                     <input
                                         type="text"
                                         className="form-control bg-light"
+                                        placeholder="Masukkan Jurusan Buku"
                                         name="jurusan"
-                                        value={data.jurusan}
+                                        defaultValue={data.jurusan}
+                                        required
                                         onChange={(e) => setData({...data, jurusan: e.target.value})}
                                     />
                                 </Col>
@@ -171,22 +204,44 @@ export default function ModalInventory({ show, onHide }) {
                                         className="bg-light"
                                         placeholder="Masukkan Sinopsis Buku"
                                         name='sinopsis'
-                                        value={data.sinopsis}
+                                        defaultValue={data.sinopsis}
+                                        required
                                         onChange={(e) => setData({...data, sinopsis: e.target.value})}
                                     ></textarea>
                                 </Col>
                                 <Col>
                                     <label>Cover Buku</label>
-                                    <input
-                                        type="file"
-                                        accept="image/png"
-                                        name="file"
-                                        placeholder="Masukkan Cover Buku"
-                                        className="form-control bg-light"
-                                        onChange={(e) => {
-                                            const selectedFile = e.target.files[0];
-                                            setData({ ...data, file: selectedFile });}}
-                                    />
+                                    {editdata ? 
+                                        !cover ?
+                                            <div>
+                                                <img src={data.file} alt={data.judul} width="100px" />
+                                                <button onClick={handleClick} className="btn btn-warning mx-5 px-3">Edit Cover</button>
+                                            </div>
+                                            :
+                                            <input
+                                                type="file"
+                                                accept="image/png"
+                                                name="file"
+                                                placeholder="Masukkan Cover Buku"
+                                                className="form-control bg-light"
+                                                required
+                                                onChange={(e) => {
+                                                    const selectedFile = e.target.files[0];
+                                                    setData({ ...data, file: selectedFile });}}
+                                            />
+                                        :
+                                        <input
+                                            type="file"
+                                            accept="image/png"
+                                            name="file"
+                                            placeholder="Masukkan Cover Buku"
+                                            className="form-control bg-light"
+                                            required
+                                            onChange={(e) => {
+                                                const selectedFile = e.target.files[0];
+                                                setData({ ...data, file: selectedFile });}}
+                                        />
+                                    }
                                 </Col>
                             </Row>
                             <Row>
@@ -194,9 +249,8 @@ export default function ModalInventory({ show, onHide }) {
                                     <div className="float-end mt-2">
                                         <div className="d-flex flex-wrap gap-2">
                                             <button onClick={onHide} type="button" className="btn btn-danger">Batal</button>
-                                            <button disabled={create.loading} type="submit" className="btn btn-success">
-                                                <span>Tambahkan</span>
-                                                {(create.loading) ? '...' : null}
+                                            <button type="submit" className="btn btn-success">
+                                                {editdata ? <span>Edit Data</span> : <span>Tambahkan</span>}
                                             </button>
                                         </div>
                                     </div>

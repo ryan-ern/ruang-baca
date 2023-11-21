@@ -9,5 +9,6 @@ export const URL_GET_DASHBOARD = '/dashboard'
 
 export const URL_GET_INVENTORY = '/inventory'
 export const URL_POST_INVENTORY = '/addBook'
+export const URL_EDIT_INVENTORY = '/editBook/:isbn'
 
 export const URL_PUT_PROFIL = '/profile'

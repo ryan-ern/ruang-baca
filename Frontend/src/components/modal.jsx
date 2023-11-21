@@ -26,7 +26,7 @@ export default function ModalDetailBuku({ show, onHide, data }) {
                                 </Row>
                                 <Row>
                                     <Col>Penulis</Col>
-                                    <Col>{data?.penulis}</Col>
+                                    <Col>{data?.penulis || "-"}</Col>
                                 </Row>
                                 <Row>
                                     <Col>Tahun Terbit</Col>

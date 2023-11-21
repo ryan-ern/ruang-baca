@@ -74,7 +74,6 @@ export default function Profil() {
                                                                 required
                                                                 onChange={(e) => {
                                                                     const selectedFile = e.target.files[0];
-                                                                    console.log(selectedFile)
                                                                     setData({ ...data, file: selectedFile })
                                                                 }}
                                                                 autoComplete="file"

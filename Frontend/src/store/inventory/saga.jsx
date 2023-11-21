@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "../../helper/apiHelper";
-import { URL_GET_INVENTORY, URL_POST_INVENTORY } from "../../helper/urlHelper";
-import {inventoryFailed, inventorySuccess, postInventoryFailed, postInventorySuccess} from './actions'
-import { GET_INVENTORY, POST_INVENTORY } from "./actionTypes";
+import { URL_EDIT_INVENTORY, URL_GET_INVENTORY, URL_POST_INVENTORY } from "../../helper/urlHelper";
+import {editInventoryFailed, editInventorySuccess, inventoryFailed, inventorySuccess, postInventoryFailed, postInventorySuccess} from './actions'
+import { EDIT_INVENTORY, GET_INVENTORY, POST_INVENTORY } from "./actionTypes";
 
 export function* postInventorySaga({payload: {data, onHide}}) {
     try {
@@ -11,6 +11,15 @@ export function* postInventorySaga({payload: {data, onHide}}) {
         yield call(onHide)
     } catch (err) {
         yield put(postInventoryFailed(err.response.message))
+    }
+}
+export function* editInventorySaga({payload: {isbn, data, onHide}}) {
+    try {
+        yield call(axios.post, URL_EDIT_INVENTORY.replace(':isbn',isbn), data)
+        yield put(editInventorySuccess())
+        yield call(onHide)
+    } catch (err) {
+        yield put(editInventoryFailed(err.response.message))
     }
 }
 
@@ -24,8 +33,9 @@ export function* getInventorySaga() {
 }
 
 export function* inventorySaga() {
-    yield takeEvery(POST_INVENTORY, postInventorySaga)
-    yield takeEvery(GET_INVENTORY, getInventorySaga)
+    yield takeEvery(POST_INVENTORY, postInventorySaga),
+    yield takeEvery(GET_INVENTORY, getInventorySaga),
+    yield takeEvery(EDIT_INVENTORY, editInventorySaga)
 }
 
 export default inventorySaga
