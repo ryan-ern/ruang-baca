@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import { Alert, Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
@@ -12,9 +12,9 @@ import ModalEditAccount from './modal';
 export default function Account() {
     const dispatch = useDispatch()
     const acc = useSelector((state) => state.account)
-
-   
-
+    const editMessage = useSelector((state) => state.account.edit.message)
+    const deleteMessage = useSelector((state) => state.account.delete.message)
+    console.log(deleteMessage)
     const columns = useMemo(
         () => [
             {
@@ -131,6 +131,15 @@ export default function Account() {
                 <Col className='my-5'>
                     <Card className="bg-card">
                         <CardBody>
+                            <Row>
+                                <Col className='text-center'>
+                                    {(editMessage || deleteMessage) ?
+                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                        :
+                                        null
+                                    }
+                                </Col>
+                            </Row>
                             <Row className="mb-2">
                                 <Col sm="3">
                                     <div className="mb-2 d-inline-block">
@@ -138,9 +147,6 @@ export default function Account() {
                                             <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data pengguna" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                         </div>
                                     </div>
-                                </Col>
-                                <Col sm="3">
-                                    {/* <Top/> */}
                                 </Col>
                             </Row>
                             <Row>

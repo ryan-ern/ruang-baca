@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "../../helper/apiHelper";
 import { URL_DELETE_ACCOUNT, URL_EDIT_ACCOUNT, URL_GET_ACCOUNT } from "../../helper/urlHelper";
-import { account, accountFailed, accountSuccess, editAccountSuccess } from "./actions";
+import { account, accountFailed, accountSuccess, deleteAccountSuccess, editAccountSuccess } from "./actions";
 import { DELETE_ACCOUNT, EDIT_ACCOUNT, GET_ACCOUNT } from "./actionTypes";
 
 export function* getAccountSaga() {
@@ -15,7 +15,8 @@ export function* getAccountSaga() {
 }
 export function* deleteAccountSaga(username) {
     try {
-        yield call(axios.delete, URL_DELETE_ACCOUNT.replace(':username', username.payload))
+        const response = yield call(axios.delete, URL_DELETE_ACCOUNT.replace(':username', username.payload))
+        yield put(deleteAccountSuccess(response.data))
         yield put(account())
     }
     catch (err) {
@@ -24,8 +25,8 @@ export function* deleteAccountSaga(username) {
 }
 export function* editAccountSaga({ payload: { username, data, onHide } }) {
     try {
-        yield call(axios.post, URL_EDIT_ACCOUNT.replace(':username', username), data)
-        yield put(editAccountSuccess())
+        const response = yield call(axios.post, URL_EDIT_ACCOUNT.replace(':username', username), data)
+        yield put(editAccountSuccess(response))
         yield call(onHide)
         yield put(account())
     }
