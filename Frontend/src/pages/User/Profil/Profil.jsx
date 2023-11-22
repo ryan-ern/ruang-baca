@@ -1,16 +1,17 @@
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Wavebot from "../../../components/background/Wavebot";
 import Waveup from "../../../components/background/Wavetop";
 // import { Link } from "react-router-dom";
 import "../../../assets/styles/common.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authInfo, logout } from "../../../store/auth/actions";
+import { logout } from "../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { putProfil } from "../../../store/actions";
 
 export default function Profil() {
     const profile = useSelector((state) => state.auth.response.data)
+    const editProfile = useSelector((state) => state.profil.message?.message)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [editMode, setEditMode] = useState(false)
@@ -33,9 +34,6 @@ export default function Profil() {
         setEditMode(false)
         setEditAvatar(false)
     }
-    useEffect(() => {
-        dispatch(authInfo())
-    }, [editMode])
     return(
         <>
             <Waveup color="#B6D8CF" />
@@ -46,6 +44,16 @@ export default function Profil() {
                         <Col md={10} lg={10} xl={8}>
                             <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4 mt-2">
                                 <Card.Body className="p-sm-3">
+                                    {editProfile ?
+                                        <Alert
+                                            variant="success"
+                                            className="text-center"
+                                            dismissible
+                                        >
+                                            {editProfile}
+                                        </Alert>
+                                        :
+                                        null}
                                     <Form action="#"  onSubmit={(e) => {
                                         e.preventDefault();
                                         const formData = new FormData();

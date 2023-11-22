@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Row, Container  } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Container, Alert  } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../../components/background/Wavetop";
@@ -8,7 +8,7 @@ import { login } from "../../store/auth/actions";
 export default function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const auth = useSelector((state) =>state.auth)
+    const auth = useSelector((state) => state.auth)
 
     const [account, setAccount] = useState({
         username: "",
@@ -40,6 +40,10 @@ export default function Login() {
                                             Silahkan Sign In
                                                 </p>
                                             </div>
+                                            {auth.message ?
+                                                <Alert variant="danger">{auth.message}</Alert>
+                                                : null    
+                                            }
                                             <div>
                                                 <Form action="#" onSubmit={(e) => {
                                                     e.preventDefault();

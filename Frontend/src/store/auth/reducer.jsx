@@ -6,8 +6,8 @@ import {
 const init_state = {
     check: false,
     response: {
-        message: ''
     },
+    message: null,
     isLogin: false,
     loading: false,
 }
@@ -53,7 +53,7 @@ const authReducer = (state = init_state, action) => {
             ...state,
             loading: false,
             isLogin: false,
-            response: action.payload,
+            message: action.payload,
         }
         break;
     case AUTH_INFO:

@@ -60,7 +60,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
         <>
             <Modal show={show} onHide={onHide} centered size='lg'>
                 {/* <Modal.Header closeButton /> */}
-                <Modal.Body style={{backgroundColor: '#e0f8f2', borderRadius: '10px'}}>
+                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '10px' }}>
                     <Container>
                         <Row>
                             <Col>
@@ -70,7 +70,6 @@ export default function ModalInventory({ show, onHide, editdata }) {
                         <form onSubmit={(e) => {
                             e.preventDefault();
                             const formData = new FormData();
-                            console.log(data.judul)
                             formData.append('judul', data.judul);
                             formData.append('file', data.file);
                             formData.append('isbn', data.isbn);
@@ -122,8 +121,9 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         name="isbn"
                                         placeholder="Masukkan ISBN Buku"
                                         className="form-control bg-light mb-4"
-                                        disabled
+                                        disabled={editdata}
                                         defaultValue={data.isbn}
+                                        onChange={(e) => setData({...data, isbn: e.target.value})}
                                     />
                                 </Col>
                                 <Col>

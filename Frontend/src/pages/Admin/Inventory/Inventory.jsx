@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import { Alert, Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
-import { inventory } from '../../../store/inventory/actions';
+import { deleteInventory, inventory } from '../../../store/inventory/actions';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
 import ModalInventory from './modal';
@@ -14,6 +14,8 @@ import Top from './top';
 export default function Inventory() {
     const dispatch = useDispatch()
     const inv = useSelector((state) => state.inventory)
+    const editMessage = useSelector((state) => state.inventory.edit.message)
+    const createMessage = useSelector((state) => state.inventory.create.message)
 
     useEffect(() => {
         dispatch(inventory())
@@ -55,15 +57,15 @@ export default function Inventory() {
                 id: 'actions',
                 disableSortBy: true,
                 Cell: ({row}) => (
-                    <div>
+                    <div className='text-center'>
                         <Button
                             variant='success'
                             onClick={() => {
                                 setSelectedBook(row.original);
                                 setShowModalDetail(true);
                             }}
-                            className='px-2 mx-2 mt-2'
-                        >detail</Button>
+                            className='px-2 mt-2'
+                        >Detail</Button>
                         <Button
                             variant='warning'
                             onClick={() => {
@@ -72,6 +74,13 @@ export default function Inventory() {
                             }}
                             className='px-3 mx-2 mt-2'
                         >Edit</Button>
+                        <Button
+                            variant='danger'
+                            onClick={() => {
+                                if(confirm("Yakin Ingin Menhapus Data Buku Dengan ISBN : "+row.original.isbn))dispatch(deleteInventory(row.original.isbn))
+                            }}
+                            className='px-3 mt-2'
+                        >Delete</Button>
                     </div>
                 ),
             },
@@ -118,7 +127,6 @@ export default function Inventory() {
         setShowModalDetail(false)
     };
 
-
     return (
         <Container>
             <Waveup color="#B6D8CF" />
@@ -137,6 +145,13 @@ export default function Inventory() {
                                 </Col>
                                 <Col sm="3">
                                     <Top/>
+                                </Col>
+                                <Col sm="4">
+                                    {(editMessage || createMessage) ? (
+                                        <Alert dismissible variant='success'>
+                                            {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.isbn) || (createMessage && createMessage.data && createMessage.data.isbn))}`}
+                                        </Alert>
+                                    ) : null}
                                 </Col>
                             </Row>
                             <Row>

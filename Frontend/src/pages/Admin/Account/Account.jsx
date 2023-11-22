@@ -46,7 +46,7 @@ export default function Account() {
                 id: 'actions',
                 disableSortBy: true,
                 Cell: ({row}) => (
-                    <div>
+                    <div className='text-center'>
                         <Button
                             variant='warning'
                             onClick={() => {
@@ -65,7 +65,9 @@ export default function Account() {
                         >Blokir</Button>
                         <Button
                             variant='danger'
-                            onClick={() => { handleclick(row.original.username)}}
+                            onClick={() => {
+                                if (window.confirm("Apakah Anda Yakin Untuk Menghapus Akun :" + row.original.name)) handleclick(row.original.username);
+                            }}
                             className='px-3 mx-2 mt-2'
                         >Hapus</Button>
                     </div>

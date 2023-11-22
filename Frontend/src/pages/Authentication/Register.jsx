@@ -2,14 +2,16 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Button, Card, Col, Form } from "react-bootstrap";
 import Waveup from "../../components/background/Wavetop";
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../store/auth/actions";
 
 export default function Register() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const auth = useSelector((state) => state.auth)
+
     const [account, setAccount] = useState({
         username: "",
         password: "",
@@ -18,7 +20,9 @@ export default function Register() {
         jurusan: "",
         wa: "",
     });
-
+    useEffect(() => {
+        if (auth.isLogin) navigate('/panel');
+    }, [])
     return (
         <>
             <Waveup color="#e0f8f2" bg="#ffffff" />

@@ -4,9 +4,9 @@ export const putProfil = (body) => ({
     type: PUT_PROFILE,
     payload: body
 })
-export const putProfilSuccess = () => ({
+export const putProfilSuccess = (message) => ({
     type: PUT_PROFILE_SUCCESS,
-    payload: null
+    payload: message
 })
 export const putProfilFailed = (message) => ({
     type: PUT_PROFILE_FAILED,

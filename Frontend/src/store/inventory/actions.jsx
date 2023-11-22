@@ -1,4 +1,4 @@
-import { EDIT_INVENTORY, EDIT_INVENTORY_FAILED, EDIT_INVENTORY_SUCCESS, GET_INVENTORY, GET_INVENTORY_FAILED, GET_INVENTORY_SUCCESS, POST_INVENTORY, POST_INVENTORY_SUCCESS } from "./actionTypes";
+import { DELETE_INVENTORY, DELETE_INVENTORY_SUCCESS, EDIT_INVENTORY, EDIT_INVENTORY_FAILED, EDIT_INVENTORY_SUCCESS, GET_INVENTORY, GET_INVENTORY_FAILED, GET_INVENTORY_SUCCESS, POST_INVENTORY, POST_INVENTORY_SUCCESS } from "./actionTypes";
 
 export const inventory = () => ({
     type: GET_INVENTORY,
@@ -19,9 +19,9 @@ export const postInventory = (data, onHide) => ({
     type: POST_INVENTORY,
     payload: {data, onHide}
 })
-export const postInventorySuccess = () => ({
+export const postInventorySuccess = (message) => ({
     type: POST_INVENTORY_SUCCESS,
-    payload: null
+    payload: message
 })
 export const postInventoryFailed = (message) => ({
     type: POST_INVENTORY,
@@ -32,11 +32,20 @@ export const editInventory = (isbn, data, onHide) => ({
     type: EDIT_INVENTORY,
     payload: {isbn, data, onHide}
 })
-export const editInventorySuccess = () => ({
+export const editInventorySuccess = (message) => ({
     type: EDIT_INVENTORY_SUCCESS,
-    payload: null
+    payload: message
 })
 export const editInventoryFailed = (message) => ({
     type: EDIT_INVENTORY_FAILED,
+    payload: message
+})
+
+export const deleteInventory = (isbn) => ({
+    type: DELETE_INVENTORY,
+    payload: {isbn}
+})
+export const deleteInventorySuccess = (message) => ({
+    type: DELETE_INVENTORY_SUCCESS,
     payload: message
 })
