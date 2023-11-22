@@ -14,7 +14,7 @@ export default function Top() {
     return (
         <div className="mb-2 d-inline-block">
             <div className="position-relative">
-                <Button onClick={addModal}>Tambah Buku</Button>
+                <Button variant="success" className="px-3" onClick={addModal}>Tambah Buku</Button>
             </div>
             <ModalInventory show={showModal} onHide={handleClose} />
         </div>
