@@ -16,6 +16,7 @@ export default function Inventory() {
     const inv = useSelector((state) => state.inventory)
     const editMessage = useSelector((state) => state.inventory.edit.message)
     const createMessage = useSelector((state) => state.inventory.create.message)
+    const deleteMessage = useSelector((state) => state.inventory.delete.message)
 
     useEffect(() => {
         dispatch(inventory())
@@ -135,6 +136,16 @@ export default function Inventory() {
                 <Col className='my-5'>
                     <Card className="bg-card">
                         <CardBody>
+                            <Row>
+                                <Col className='text-center'>
+                                    {deleteMessage ? <Alert dismissible variant='danger'>{deleteMessage.message}</Alert> :
+                                        (editMessage || createMessage) ? (
+                                            <Alert dismissible variant={createMessage ? 'success' : 'info'}>
+                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.isbn) || (createMessage && createMessage.data && createMessage.data.isbn))}`}
+                                            </Alert>
+                                        ) : null}
+                                </Col>
+                            </Row>
                             <Row className="mb-2">
                                 <Col sm="3">
                                     <div className="mb-2 d-inline-block">
@@ -145,13 +156,6 @@ export default function Inventory() {
                                 </Col>
                                 <Col sm="3">
                                     <Top/>
-                                </Col>
-                                <Col sm="4">
-                                    {(editMessage || createMessage) ? (
-                                        <Alert dismissible variant='success'>
-                                            {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.isbn) || (createMessage && createMessage.data && createMessage.data.isbn))}`}
-                                        </Alert>
-                                    ) : null}
                                 </Col>
                             </Row>
                             <Row>
