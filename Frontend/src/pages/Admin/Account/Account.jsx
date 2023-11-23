@@ -14,7 +14,6 @@ export default function Account() {
     const acc = useSelector((state) => state.account)
     const editMessage = useSelector((state) => state.account.edit.message)
     const deleteMessage = useSelector((state) => state.account.delete.message)
-    console.log(deleteMessage)
     const columns = useMemo(
         () => [
             {
