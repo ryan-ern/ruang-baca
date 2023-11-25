@@ -101,7 +101,9 @@ async function connectToWhatsApp() {
                 console.log("Connection TimedOut, Reconnecting...");
                 connectToWhatsApp();
             } else {
-                sock.end(`Unknown DisconnectReason: ${reason}|${lastDisconnect.error}`);
+                console.log(`Unknown DisconnectReason: ${reason}|${lastDisconnect.error}`);
+                deleteAuthInfoFolder()
+                connectToWhatsApp();
             }
         } else if (connection === 'open') {
             console.log('opened connection');
@@ -155,54 +157,49 @@ const updateQR = (data) => {
 };
 
 app.post("/send-message", async (req, res) => {
-    //console.log(req);
-    const pesankirim = req.body.message;
-    const number = req.body.number; // start with 08xxxx
-    console.log(number)
-    let numberWA;
+    const data = req.body.data;
     try {
-        if (!number) {
+        if (!data || !data.length) {
             res.status(500).json({
                 status: false,
-                response: 'Nomor WA belum tidak disertakan!'
+                response: 'Data not provided!',
             });
-        }
-        else {
-            numberWA = '62' + number.substring(1) + "@s.whatsapp.net";
-            console.log(await sock.onWhatsApp(numberWA));
-            if (isConnected) {
-                const exists = await sock.onWhatsApp(numberWA);
-                if (exists?.jid || (exists && exists[0]?.jid)) {
-                    sock.sendMessage(exists.jid || exists[0].jid, { text: pesankirim })
-                        .then((result) => {
-                            res.status(200).json({
-                                status: true,
-                                response: result,
-                            });
-                        })
-                        .catch((err) => {
-                            res.status(500).json({
-                                status: false,
-                                response: err,
-                            });
-                        });
-                } else {
-                    res.status(500).json({
-                        status: false,
-                        response: `Nomor ${number} tidak terdaftar.`,
-                    });
+        } else {
+            const messages = [];
+
+            for (const item of data) {
+                const number = item.number;
+                const pesankirim = item.message;
+
+                if (!number || !pesankirim) {
+                    messages.push(`Invalid data for number: ${number}`);
+                    continue;
                 }
-            } else {
-                res.status(500).json({
-                    status: false,
-                    response: `WhatsApp belum terhubung.`,
-                });
+
+                const numberWA = '62' + number.substring(1) + "@s.whatsapp.net";
+
+                if (isConnected) {
+                    const exists = await sock.onWhatsApp(numberWA);
+
+                    if (exists?.jid || (exists && exists[0]?.jid)) {
+                        const result = await sock.sendMessage(exists.jid || exists[0].jid, { text: pesankirim });
+                        messages.push(result);
+                    } else {
+                        messages.push(`Nomor ${number} tidak terdaftar.`);
+                    }
+                } else {
+                    messages.push('WhatsApp belum terhubung.');
+                }
             }
+
+            res.status(200).json({
+                status: true,
+                response: messages,
+            });
         }
     } catch (err) {
         res.status(500).send(err);
     }
-
 });
 
 connectToWhatsApp()
