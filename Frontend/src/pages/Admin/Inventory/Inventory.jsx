@@ -10,6 +10,7 @@ import Wavebot from '../../../components/background/Wavebot';
 import ModalInventory from './modal';
 import ModalDetailBuku from '../../../components/modal';
 import Top from './top';
+import "../../../assets/styles/common.css";
 
 export default function Inventory() {
     const dispatch = useDispatch()
@@ -65,7 +66,7 @@ export default function Inventory() {
                                 setSelectedBook(row.original);
                                 setShowModalDetail(true);
                             }}
-                            className='px-2 mt-2'
+                            className='btn-tbl-detail'
                         >Detail</Button>
                         <Button
                             variant='warning'
@@ -73,14 +74,14 @@ export default function Inventory() {
                                 setSelectedBook(row.original);
                                 setShowModal(true);
                             }}
-                            className='px-3 mx-2 mt-2'
+                            className='btn-tbl-edit'
                         >Edit</Button>
                         <Button
                             variant='danger'
                             onClick={() => {
                                 if(confirm("Yakin Ingin Menhapus Data Buku Dengan ISBN : "+row.original.isbn))dispatch(deleteInventory(row.original.isbn))
                             }}
-                            className='px-3 mt-2'
+                            className='btn-tbl-delete'
                         >Delete</Button>
                     </div>
                 ),
@@ -134,7 +135,7 @@ export default function Inventory() {
             <Wavebot color="#B6D8CF" />
             <Row>
                 <Col className='my-5'>
-                    <Card className="bg-card">
+                    <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
@@ -147,14 +148,14 @@ export default function Inventory() {
                                 </Col>
                             </Row>
                             <Row className="mb-2">
-                                <Col sm="3">
+                                <Col >
                                     <div className="mb-2 d-inline-block">
                                         <div className="position-relative">
                                             <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data buku" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                         </div>
                                     </div>
                                 </Col>
-                                <Col sm="3">
+                                <Col className='d-flex justify-content-end'>
                                     <Top/>
                                 </Col>
                             </Row>
@@ -162,7 +163,7 @@ export default function Inventory() {
                                 <Col>
                                     <div className='table-responsive'>
                                         <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='text-center'>
+                                            <thead className='custom-theader3'>
                                                 {headerGroups.map((headerGroup) => (
                                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                                         {headerGroup.headers.map((column) => {
@@ -178,7 +179,7 @@ export default function Inventory() {
                                                 ))}
                                             </thead>
                                             {page.length === 0 ? (
-                                                <tbody>
+                                                <tbody >
                                                     <tr>
                                                         <td colSpan={headerGroups[0].headers.length} className="text-center">
                                                             {(inv.loading) ? 'Memuat data...' : 'Tidak ada data.'}
@@ -186,7 +187,7 @@ export default function Inventory() {
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-start'>
+                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
                                                     {page.map((row) => {
                                                         prepareRow(row);
                                                         return (

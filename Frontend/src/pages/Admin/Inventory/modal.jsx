@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { editInventory, postInventory } from "../../../store/inventory/actions";
+import "../../../assets/styles/common.css";
 
 export default function ModalInventory({ show, onHide, editdata }) {
     const dispatch = useDispatch()
@@ -58,9 +59,9 @@ export default function ModalInventory({ show, onHide, editdata }) {
     }, [show])
     return (
         <>
-            <Modal show={show} onHide={onHide} centered size='lg'>
+            <Modal show={show} onHide={onHide} centered size='lg' className="custom-modal">
                 {/* <Modal.Header closeButton /> */}
-                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '10px' }}>
+                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px',}} className="p-5">
                     <Container>
                         <Row>
                             <Col>
@@ -87,8 +88,8 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                 dispatch(postInventory(formData, onHide));
                             setCover(false)
                         }}>
-                            <Row>
-                                <Col>
+                            <Row className="g-2">
+                                <Col md>
                                     <label>Judul</label>
                                     <input
                                         type="text"
@@ -100,7 +101,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         onChange={(e) => setData({...data, judul: e.target.value})}
                                     />
                                 </Col>
-                                <Col>
+                                <Col md>
                                     <label>Penulis</label>
                                     <input type="text"
                                         className="form-control bg-light"
@@ -113,8 +114,8 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                 </Col>
                                 
                             </Row>
-                            <Row>
-                                <Col>
+                            <Row className="g-2 mt-3">
+                                <Col md>
                                     <label>ISBN</label>
                                     <input
                                         type="text"
@@ -126,7 +127,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         onChange={(e) => setData({...data, isbn: e.target.value})}
                                     />
                                 </Col>
-                                <Col>
+                                <Col md>
                                     <label>Jumlah Halaman</label>
                                     <input
                                         type="number"
@@ -140,8 +141,8 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                 </Col>
                                 
                             </Row>
-                            <Row>
-                                <Col>
+                            <Row className="g-2 mt-3">
+                                <Col md>
                                     <label>Penerbit</label>
                                     <input
                                         type="text"
@@ -153,7 +154,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         onChange={(e) => setData({...data, penerbit: e.target.value})}
                                     />
                                 </Col>
-                                <Col>
+                                <Col md>
                                     <label>Stok Buku</label>
                                     <input
                                         type="number"
@@ -167,8 +168,8 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                 </Col>
                                 
                             </Row>
-                            <Row>
-                                <Col>
+                            <Row className="g-2 mt-3">
+                                <Col md>
                                     <label>Tahun Terbit</label>
                                     <input
                                         type="number"
@@ -182,7 +183,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                             setData({ ...data, tahunTerbit: year });}}
                                     />
                                 </Col>
-                                <Col>
+                                <Col md>
                                     <label>Jurusan</label>
                                     <input
                                         type="text"
@@ -195,13 +196,13 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                     />
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col>
+                            <Row className="g-2 mt-3">
+                                <Col md>
                                     <label>Sinopsis</label>
                                     <textarea
                                         rows="5"
-                                        cols="40"
-                                        className="bg-light"
+                                        
+                                        className="bg-light responsive-textarea"
                                         placeholder="Masukkan Sinopsis Buku"
                                         name='sinopsis'
                                         defaultValue={data.sinopsis}
@@ -209,7 +210,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         onChange={(e) => setData({...data, sinopsis: e.target.value})}
                                     ></textarea>
                                 </Col>
-                                <Col>
+                                <Col md>
                                     <label>Cover Buku</label>
                                     {editdata ? 
                                         !cover ?
@@ -248,14 +249,14 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                                     Tidak Dapat Mengubah ISBN, Silahkan Hapus Data dan Tambahkan buku Kembali
                                 </span> : null}
                             </Row>
-                            <Row>
-                                <Col>
+                            <Row className="mt-3">
+                                <Col md>
                                     <div className="float-end mt-2">
                                         <div className="d-flex flex-wrap gap-2">
-                                            <button onClick={onHide} type="button" className="btn btn-danger px-3">Batal</button>
-                                            <button type="submit" className="btn btn-success px-3">
+                                            <Button onClick={onHide} type="button" className="btn-table rounded-pill" variant="danger">Batal</Button>
+                                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="sucess">
                                                 {editdata ? <span>Edit Data</span> : <span>Tambahkan</span>}
-                                            </button>
+                                            </Button>
                                         </div>
                                     </div>
                                 </Col>
