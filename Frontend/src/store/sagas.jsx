@@ -4,6 +4,7 @@ import dashboardSaga from './dashboard/saga';
 import inventorySaga from './inventory/saga';
 import profilSaga from './profil/saga';
 import accountSaga from './account/sagas';
+import { borrowSaga } from './borrow/sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
         fork(dashboardSaga),
         fork(inventorySaga),
         fork(profilSaga),
-        fork(accountSaga)
+        fork(accountSaga),
+        fork(borrowSaga)
     ]);
 }

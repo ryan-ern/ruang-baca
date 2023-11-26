@@ -33,7 +33,7 @@ export default function Cardbuku() {
             {books?.length === 0 ? (
                 <Alert className="mt-2">Belum Ada Buku Terdaftar</Alert>
             ) : (
-                books.map((book, index) => (
+                books?.map((book, index) => (
                     <Card
                         key={index}
                         text="black"

@@ -1,86 +1,176 @@
-// import {
-//   AccordionsCode,
-//   AccordionsHeader,
-// } from "../../BaseUi/UiAccordions/Accordion";
-// import React from "react";
-import { Table, Button, Card, Col, Row, Container } from "react-bootstrap";
+import { Card, Col, Row, Container, CardBody } from "react-bootstrap";
 import "../../../assets/styles/common.css";
-import StatusBadge from "../../../components/Statusbadge";
-// import { Link } from "react-router-dom";
-// import { DefaultTables } from "./BasicTableCode";
+// import StatusBadge from "../../../components/Statusbadge";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useMemo } from "react";
+import { borrow } from "../../../store/borrow/actions";
+import { useTable } from "react-table";
 
 export default function TablePeminjaman() {
-    const statuspinjam = "pending";
-    const statuspinjam2 = "approved";
-    const statuspinjam3 = "rejected";
-    return (
-        <div className="my-0 pt-sm-4">
-            <Container>
-                <Row className="justify-content-center">
-                    <Col xxl={12}>
-                        <Card className="overflow-hidden p-4 pt-2 border-0 shadow-lg rounded-4">
-                            <Card.Header className="bg-white border-0 mb-2">
-                                <Row>
-                                    <Col> Daftar Peminjaman</Col>
-                                    <Col className="d-flex justify-content-end">
-                                        <Button
-                                            className="btn-table custom-button rounded-pill"
-                                            type="submit"
-                                            variant="success"
-                                        >
-                      Pengembalian
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Card.Header>
+    const dispatch = useDispatch()
+    const dataPinjam = useSelector((state) => state.borrow)
 
-                            <Card.Body className="p-sm-2">
-                                <div className="table-responsive">
-                                    <Table
-                                        borderless="true"
-                                        className="table align-middle table-nowrap mb-0"
-                                    >
-                                        <thead className="custom-theader">
-                                            <tr>
-                                                <th scope="col">Judul Buku</th>
-                                                <th scope="col">Tanggal Peminjaman</th>
-                                                <th scope="col">Tanggal Pengembalian</th>
-                                                <th scope="col">Status Peminjaman</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="custom-tbody">
-                                            <tr>
-                                                <th scope="row">Loneliness is my Best Friend</th>
-                                                <td>October 15, 2021</td>
-                                                <td>October 15, 2021</td>
-                                                <td className="text-center">
-                                                    <StatusBadge status={statuspinjam} />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Self Healing</th>
-                                                <td>October 15, 2021</td>
-                                                <td>October 7, 2021</td>
-                                                <td className="text-center">
-                                                    <StatusBadge status={statuspinjam2} />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Overthinking</th>
-                                                <td>October 15, 2021</td>
-                                                <td>October 5, 2021</td>
-                                                <td className="text-center">
-                                                    <StatusBadge status={statuspinjam3} />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
-        </div>
+    useEffect(() => {
+        dispatch(borrow())
+    },[])
+
+    // const statuspinjam = "pending";
+    // const statuspinjam2 = "approved";
+    // const statuspinjam3 = "rejected";
+
+    const columns = useMemo(
+        () => [
+            {
+                Header: 'No',
+                accessor: (_,index) => index+1
+            },
+            {
+                Header: 'Judul Buku',
+                accessor: 'judul',
+                Cell: ({value}) => (value)
+            },
+            {
+                Header: 'Judul Buku',
+                accessor: 'judul',
+                Cell: ({value}) => (value)
+            },
+            {
+                Header: 'Tanggal Pinjam',
+                accessor: 'judul',
+                Cell: ({value}) => (value)
+            },
+            {
+                Header: 'Tenggat Pengembalian',
+                accessor: 'judul',
+                Cell: ({value}) => (value)
+            },
+            {
+                Header: 'Status',
+                accessor: 'judul',
+                Cell: ({value}) => (value)
+            }
+        ],
+        [],
+    )
+    const data = useMemo(
+        () => (dataPinjam.response?.data || []),
+        [dataPinjam.response.data]
+    );
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        page,
+        prepareRow,
+        state,
+        gotoPage,
+        pageCount,
+    } = useTable(
+        {
+            columns,
+            data,
+        },
+    )
+    
+    return (
+        <Container>
+            <Row>
+                <Col className='my-5'>
+                    <Card className="bg-card">
+                        <CardBody>
+                            <Row>
+                                <Col className='text-center'>
+                                    {/* {deleteMessage ? <Alert dismissible variant='danger'>{deleteMessage.message}</Alert> :
+                                        (editMessage || createMessage) ? (
+                                            <Alert dismissible variant={createMessage ? 'success' : 'info'}>
+                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.isbn) || (createMessage && createMessage.data && createMessage.data.isbn))}`}
+                                            </Alert>
+                                        ) : null} */}
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <div className='table-responsive'>
+                                        <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
+                                            <thead className='text-center'>
+                                                {headerGroups.map((headerGroup) => (
+                                                    <tr {...headerGroup.getHeaderGroupProps()}>
+                                                        {headerGroup.headers.map((column) => {
+                                                            const sortIcon = column.isSortedDesc ? "🔼": "🔽";
+                                                            return (
+                                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{backgroundColor:'#f3f6f9'}}>
+                                                                    {column.render('Header')}
+                                                                    <span>{column.isSorted ? sortIcon : ''}</span>
+                                                                </th>
+                                                            );
+                                                        })}
+                                                    </tr>
+                                                ))}
+                                            </thead>
+                                            {page.length === 0 ? (
+                                                <tbody>
+                                                    <tr>
+                                                        <td colSpan={headerGroups[0].headers.length} className="text-center">
+                                                            {(dataPinjam.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            ) : (
+                                                <tbody {...getTableBodyProps()} className='text-start'>
+                                                    {page.map((row) => {
+                                                        prepareRow(row);
+                                                        return (
+                                                            <tr {...row.getRowProps()}>
+                                                                {row.cells.map((cell) => (
+                                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                                                ))}
+                                                            </tr>
+                                                        );
+                                                    })}
+                                                </tbody>
+                                            )}
+                                        </table>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row className="align-items-md-center mt-3">
+                                <Col>
+                                    <nav aria-label="Page navigation">
+                                        <ul className="pagination pagination-rounded justify-content-end mb-2">
+                                            {/* First */}
+                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" onClick={() => gotoPage(0)} tabIndex="-1">
+                                                    {'<<'}
+                                                </a>
+                                            </li>
+                                            {/* Previus */}
+                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                            </li>
+                                            {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
+                                                <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
+                                                    <a className="page-link" onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                </li>
+                                            ))}
+                                            {/* Next */}
+                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                            </li>
+                                            {/* Last */}
+                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" onClick={() => gotoPage(pageCount - 1)}>
+                                                    {">>"}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }

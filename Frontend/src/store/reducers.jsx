@@ -4,6 +4,7 @@ import dashboardReducer from "./dashboard/reducer";
 import inventoryReducer from "./inventory/reducer";
 import profilReducer from "./profil/reducer";
 import accountReducer from "./account/reducers";
+import borrowReducer from "./borrow/reducer";
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     inventory: inventoryReducer,
     profil: profilReducer,
     account: accountReducer,
+    borrow: borrowReducer,
 })
 
 export default rootReducer;
