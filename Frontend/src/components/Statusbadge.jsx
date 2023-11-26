@@ -1,22 +1,20 @@
-import React from "react";
-
 const StatusBadge = ({ status }) => {
     let badgeColor = "";
     let badgeText = "";
     let textColor = "";
 
     switch (status) {
-    case "pending":
+    case "PROSES":
         badgeColor = "#fbe1a7"; // Warna untuk status pending
         badgeText = "PROSES";
         textColor = "#B78820"; // Teks untuk status pending
         break;
-    case "approved":
+    case "SUKSES":
         badgeColor = "#C9F7F5"; // Warna untuk status approved
         badgeText = "SUKSES";
         textColor = "#1BC5BD"; // Teks untuk status approved
         break;
-    case "rejected":
+    case "DITOLAK":
         badgeColor = "#F09696"; // Warna untuk status rejected
         badgeText = "DITOLAK";
         textColor = "#5E3C3C"; // Teks untuk status rejected
@@ -28,7 +26,7 @@ const StatusBadge = ({ status }) => {
         break;
     default:
         badgeColor = "gray"; // Warna default jika status tidak dikenali
-        badgeText = "Unknown"; // Teks default jika status tidak dikenali
+        badgeText = "-"; // Teks default jika status tidak dikenali
         break;
     }
 

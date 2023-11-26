@@ -28,7 +28,7 @@ export const borrowAdminFailed = (message) => ({
 })
 
 
-export const postBorrow = ({isbn, navigate}) => ({
+export const postBorrow = (isbn, navigate) => ({
     type: POST_BORROW,
     payload: {isbn, navigate}
 })

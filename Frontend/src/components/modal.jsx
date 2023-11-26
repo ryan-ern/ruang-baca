@@ -1,6 +1,11 @@
-import { Modal, Button, Row, Col } from "react-bootstrap";
+import { Modal, Row, Col } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { postBorrow } from "../store/borrow/actions";
 
 export default function ModalDetailBuku({ show, onHide, data, inv }) {
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
     return (
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg'>
@@ -17,10 +22,14 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                 </Col>
                                 {inv ? null :
                                     <Col lg="3">
-                                        <Button>Pinjam</Button>
+                                        <form action="#" onSubmit={(e) => {
+                                            e.preventDefault();
+                                            dispatch(postBorrow(data.isbn, navigate))
+                                        }}>
+                                            <button type="submit" className="btn btn-success px-3 my-3">Pinjam</button>
+                                        </form>
                                     </Col>
                                 }
-                                
                             </Row>
                             <Row>
                                 <Row>

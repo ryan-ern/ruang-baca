@@ -6,7 +6,6 @@ import ModalDetailBuku from "../../../components/modal";
 
 export default function Cardbuku() {
     const dispatch = useDispatch();
-
     const books = useSelector((state) => state.book.response.data);
     useEffect(() => {
         dispatch(dashboard());
