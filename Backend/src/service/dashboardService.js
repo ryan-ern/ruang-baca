@@ -4,30 +4,30 @@ class dashboardService{
     static async allBook(){
         await Database.createConnection()
         const query = {
-            text: 'SELECT isbn, judul, penerbit, tahun_terbit, jumlah_halaman, stok_buku, cover, sinopsis, jurusan from buku ORDER BY jurusan ASC'
+            text: 'SELECT isbn, judul, penerbit, penulis, tahun_terbit, jumlah_halaman, stok_buku, cover, sinopsis, jurusan from buku ORDER BY jurusan ASC'
         }
         const buku = await Database.query(query)
-        await Database.close
+        await Database.close()
         return buku
     }
     static async allUserForSuper(){
         await Database.createConnection()
         const query = {
-            text: 'SELECT nisn, nama, username, jurusan, wa, role FROM account WHERE role = $1  or role = $2 order by role asc',
+            text: 'SELECT * WHERE role = $1  or role = $2 order by role asc',
             values: ['siswa', 'admin']
         }
         const user = await Database.query(query)
-        await Database.close
+        await Database.close()
         return user
     }
     static async allUser(){
         await Database.createConnection()
         const query = {
-            text: 'SELECT nisn, nama, username, jurusan, wa, role FROM account WHERE role = $1',
+            text: 'SELECT * FROM account WHERE role = $1',
             values: ['siswa']
         }
         const user = await Database.query(query)
-        await Database.close
+        await Database.close()
         return user
     }
     static async countUser(){
@@ -37,7 +37,7 @@ class dashboardService{
             values: ['siswa']
         }
         const count = await Database.query(query)
-        await Database.close
+        await Database.close()
         return count
     }
     static async countUserSuper(){
@@ -47,7 +47,7 @@ class dashboardService{
             values: ['siswa', 'admin']
         }
         const count = await Database.query(query)
-        await Database.close
+        await Database.close()
         return count
     }
     static async countBook(){
@@ -56,7 +56,7 @@ class dashboardService{
             text: 'SELECT COUNT(*) FROM buku',
         }
         const count = await Database.query(query)
-        await Database.close
+        await Database.close()
         return count
     }
 }
