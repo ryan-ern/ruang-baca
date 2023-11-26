@@ -1,22 +1,20 @@
-import { Card, Col, Row, Container, CardBody } from "react-bootstrap";
+import { Card, Col, Row, Container, CardBody, Alert } from "react-bootstrap";
 import "../../../assets/styles/common.css";
-// import StatusBadge from "../../../components/Statusbadge";
+import StatusBadge from "../../../components/Statusbadge";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { borrow } from "../../../store/borrow/actions";
-import { useTable } from "react-table";
+import { usePagination, useTable } from "react-table";
+import moment from 'moment'
 
 export default function TablePeminjaman() {
     const dispatch = useDispatch()
     const dataPinjam = useSelector((state) => state.borrow)
+    const message = useSelector((state) => state.borrow.add.message)
 
     useEffect(() => {
         dispatch(borrow())
     },[])
-
-    // const statuspinjam = "pending";
-    // const statuspinjam2 = "approved";
-    // const statuspinjam3 = "rejected";
 
     const columns = useMemo(
         () => [
@@ -30,24 +28,19 @@ export default function TablePeminjaman() {
                 Cell: ({value}) => (value)
             },
             {
-                Header: 'Judul Buku',
-                accessor: 'judul',
-                Cell: ({value}) => (value)
-            },
-            {
                 Header: 'Tanggal Pinjam',
-                accessor: 'judul',
-                Cell: ({value}) => (value)
+                accessor: 'created_at',
+                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
                 Header: 'Tenggat Pengembalian',
-                accessor: 'judul',
-                Cell: ({value}) => (value)
+                accessor: 'due_date',
+                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
             },
             {
                 Header: 'Status',
-                accessor: 'judul',
-                Cell: ({value}) => (value)
+                accessor: 'status',
+                Cell: ({value}) => <StatusBadge status={value} />
             }
         ],
         [],
@@ -63,15 +56,14 @@ export default function TablePeminjaman() {
         headerGroups,
         page,
         prepareRow,
-        state,
-        gotoPage,
-        pageCount,
     } = useTable(
         {
             columns,
             data,
         },
+        usePagination,
     )
+    
     
     return (
         <Container>
@@ -81,13 +73,12 @@ export default function TablePeminjaman() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {/* {deleteMessage ? <Alert dismissible variant='danger'>{deleteMessage.message}</Alert> :
-                                        (editMessage || createMessage) ? (
-                                            <Alert dismissible variant={createMessage ? 'success' : 'info'}>
-                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.isbn) || (createMessage && createMessage.data && createMessage.data.isbn))}`}
-                                            </Alert>
-                                        ) : null} */}
+                                    {message ? <Alert dismissible variant='success text-capitalize' className="">{message.message}</Alert> :
+                                        null}
                                 </Col>
+                            </Row>
+                            <Row className="mb-2">
+                              
                             </Row>
                             <Row>
                                 <Col>
@@ -96,12 +87,10 @@ export default function TablePeminjaman() {
                                             <thead className='text-center'>
                                                 {headerGroups.map((headerGroup) => (
                                                     <tr {...headerGroup.getHeaderGroupProps()}>
-                                                        {headerGroup.headers.map((column) => {
-                                                            const sortIcon = column.isSortedDesc ? "🔼": "🔽";
+                                                        {headerGroup.headers.map((column, index) => {
                                                             return (
-                                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{backgroundColor:'#f3f6f9'}}>
+                                                                <th style={{backgroundColor:'#f3f6f9'}} key={index}>
                                                                     {column.render('Header')}
-                                                                    <span>{column.isSorted ? sortIcon : ''}</span>
                                                                 </th>
                                                             );
                                                         })}
@@ -132,39 +121,6 @@ export default function TablePeminjaman() {
                                             )}
                                         </table>
                                     </div>
-                                </Col>
-                            </Row>
-                            <Row className="align-items-md-center mt-3">
-                                <Col>
-                                    <nav aria-label="Page navigation">
-                                        <ul className="pagination pagination-rounded justify-content-end mb-2">
-                                            {/* First */}
-                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" onClick={() => gotoPage(0)} tabIndex="-1">
-                                                    {'<<'}
-                                                </a>
-                                            </li>
-                                            {/* Previus */}
-                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
-                                            </li>
-                                            {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
-                                                <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
-                                                    <a className="page-link" onClick={() => gotoPage(index)}>{index + 1}</a>
-                                                </li>
-                                            ))}
-                                            {/* Next */}
-                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
-                                            </li>
-                                            {/* Last */}
-                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" onClick={() => gotoPage(pageCount - 1)}>
-                                                    {">>"}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
                                 </Col>
                             </Row>
                         </CardBody>

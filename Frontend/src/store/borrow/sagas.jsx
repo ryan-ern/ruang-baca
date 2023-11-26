@@ -24,7 +24,7 @@ export function* getBorrowSaga() {
 }
 export function* postBorrowSaga({payload:{isbn, navigate}}) {
     try {
-        const response = yield call(axios.post, URL_POST_BORROW, isbn)
+        const response = yield call(axios.post, URL_POST_BORROW.replace(':isbn', isbn))
         yield put(postBorrowSuccess(response.data))
         navigate('/panel/peminjaman')
     }
