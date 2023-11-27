@@ -1,4 +1,4 @@
-import { DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_FAILED, GET_ACCOUNT_SUCCESS } from "./actionTypes"
+import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_FAILED, GET_ACCOUNT_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
@@ -59,6 +59,14 @@ const accountReducer = (state = init_state, action) => {
         state = {
             ...state,
             loading:false,
+        }
+        break
+    case CLEAR_ACCOUNT_MESSAGE:
+        state = {
+            ...state,
+            loading: false,
+            edit: { message: null },
+            delete: { message: null },
         }
         break
     default:

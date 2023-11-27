@@ -1,4 +1,4 @@
-import { PUT_PROFILE, PUT_PROFILE_FAILED, PUT_PROFILE_SUCCESS } from "./actionTypes";
+import { CLEAR_EDIT_PROFILE_MESSAGE, PUT_PROFILE, PUT_PROFILE_FAILED, PUT_PROFILE_SUCCESS } from "./actionTypes";
 
 export const putProfil = (body) => ({
     type: PUT_PROFILE,
@@ -12,3 +12,8 @@ export const putProfilFailed = (message) => ({
     type: PUT_PROFILE_FAILED,
     payload: message
 })
+
+export const clearEditProfileMessage = () => ({
+    type: CLEAR_EDIT_PROFILE_MESSAGE,
+    payload: null
+});

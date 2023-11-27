@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { putProfil } from "../../../store/actions";
+import { clearEditProfileMessage, putProfil } from "../../../store/actions";
 
 export default function Profil() {
     const profile = useSelector((state) => state.auth.response.data)
@@ -34,6 +34,10 @@ export default function Profil() {
         setEditMode(false)
         setEditAvatar(false)
     }
+    const handleDismiss = () => {
+        dispatch(clearEditProfileMessage());
+    };
+
     return(
         <>
             <Waveup color="#B6D8CF" />
@@ -49,6 +53,7 @@ export default function Profil() {
                                             variant="success"
                                             className="text-center"
                                             dismissible
+                                            onClose={handleDismiss}
                                         >
                                             {editProfile}
                                         </Alert>

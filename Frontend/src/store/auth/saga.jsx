@@ -14,8 +14,8 @@ export function* loginSaga({ payload: { account, navigate } }) {
         yield put(authInfo())
         navigate('/panel');
     } catch (err) {
-        const response = err.response.data;
-        yield put(loginFailed(response.message))
+        const response = err.response;
+        yield put(loginFailed(response))
     }
 }
 
@@ -25,10 +25,9 @@ export function* registerSaga({ payload: { account, navigate } }) {
         yield put(registerSuccess(response.data));
         navigate('/login');
     } catch (err) {
-        const response = err.response.data;
-        yield put(registerFailed(response.message))
+        const response = err.response;
+        yield put(registerFailed(response))
     }
-
 }
 
 export function* authInfoSaga() {

@@ -6,7 +6,7 @@ import {
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import { account, deleteAccount } from '../../../store/account/actions';
+import { account, clearAccountMessage, deleteAccount } from '../../../store/account/actions';
 import ModalEditAccount from './modal';
 
 export default function Account() {
@@ -121,6 +121,9 @@ export default function Account() {
         dispatch(account())
     }, [])
 
+    const handleDismiss = () => {
+        dispatch(clearAccountMessage());
+    };
 
     return (
         <Container>
@@ -133,7 +136,7 @@ export default function Account() {
                             <Row>
                                 <Col className='text-center'>
                                     {(editMessage || deleteMessage) ?
-                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
                                         :
                                         null
                                     }

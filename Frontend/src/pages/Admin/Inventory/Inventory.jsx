@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
-import { deleteInventory, inventory } from '../../../store/inventory/actions';
+import { clearIventoryMessage, deleteInventory, inventory } from '../../../store/inventory/actions';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
 import ModalInventory from './modal';
@@ -129,6 +129,10 @@ export default function Inventory() {
         setShowModalDetail(false)
     };
 
+    const handleDismiss = () => {
+        dispatch(clearIventoryMessage());
+    };
+
     return (
         <Container>
             <Waveup color="#B6D8CF" />
@@ -139,9 +143,9 @@ export default function Inventory() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {deleteMessage ? <Alert dismissible variant='danger'>{deleteMessage.message}</Alert> :
+                                    {deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='danger'>{deleteMessage.message}</Alert> :
                                         (editMessage || createMessage) ? (
-                                            <Alert dismissible variant={createMessage ? 'success' : 'info'}>
+                                            <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
                                                 {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.isbn) || (createMessage && createMessage.data && createMessage.data.isbn))}`}
                                             </Alert>
                                         ) : null}

@@ -1,4 +1,4 @@
-import { DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_SUCCESS } from "./actionTypes";
+import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_SUCCESS } from "./actionTypes";
 
 export const account = () => ({
     type: GET_ACCOUNT,
@@ -31,4 +31,8 @@ export const editAccountSuccess = (message) => ({
 export const editAccountFailed = (message) => ({
     type: EDIT_ACCOUNT_FAILED,
     payload: message,
+})
+export const clearAccountMessage = () => ({
+    type: CLEAR_ACCOUNT_MESSAGE,
+    payload: null,
 })
