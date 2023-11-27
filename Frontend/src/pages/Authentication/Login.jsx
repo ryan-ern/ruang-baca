@@ -9,6 +9,7 @@ export default function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth)
+    const messageError = useSelector((state)=> state.auth?.message?.data)
 
     const [account, setAccount] = useState({
         username: "",
@@ -40,9 +41,11 @@ export default function Login() {
                                             Silahkan Sign In
                                                 </p>
                                             </div>
-                                            {auth.message ?
-                                                <Alert variant="danger">{auth.message}</Alert>
-                                                : null    
+                                            {messageError?
+                                                <Alert variant="danger">{messageError.message}</Alert>:
+                                                ( auth.message ?
+                                                    <Alert variant="danger">{auth.message}</Alert>
+                                                    : null    )
                                             }
                                             <div>
                                                 <Form action="#" onSubmit={(e) => {

@@ -209,9 +209,10 @@ export default function Profil() {
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 required
-                                                                type="text"
+                                                                type="tel"
                                                                 className="form-control bg-light border-light "
-                                                                placeholder=""
+                                                                pattern="^\08\d{9,15}$"
+                                                                placeholder="08123456789"
                                                                 defaultValue={profile.wa}
                                                                 onChange={(e) => setData({...data, wa: e.target.value})}
                                                                 id="whatsapp"

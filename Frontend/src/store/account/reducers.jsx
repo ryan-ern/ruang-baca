@@ -1,10 +1,11 @@
-import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_FAILED, GET_ACCOUNT_SUCCESS } from "./actionTypes"
+import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_FAILED, GET_ACCOUNT_SUCCESS, POST_ACCOUNT_ADMIN, POST_ACCOUNT_ADMIN_FAILED, POST_ACCOUNT_ADMIN_SUCCESS, POST_ACCOUNT_SUPER, POST_ACCOUNT_SUPER_FAILED, POST_ACCOUNT_SUPER_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
     response: {},
     delete: { message: null },
-    edit: {message:null}
+    edit: { message: null },
+    add : {message:null}
 }
 
 const accountReducer = (state = init_state, action) => {
@@ -32,6 +33,7 @@ const accountReducer = (state = init_state, action) => {
             ...state,
             edit: { message: null },
             delete: { message: null },
+            add : {message:null},
         }
         break
     case DELETE_ACCOUNT_SUCCESS:
@@ -45,6 +47,7 @@ const accountReducer = (state = init_state, action) => {
             ...state,
             edit: { message: null },
             delete: { message: null },
+            add : {message:null},
             loading:true,
         }
         break
@@ -61,12 +64,57 @@ const accountReducer = (state = init_state, action) => {
             loading:false,
         }
         break
+    case POST_ACCOUNT_ADMIN:
+        state = {
+            ...state,
+            edit: { message: null },
+            delete: { message: null },
+            add : {message:null},
+            loading:true,
+        }
+        break
+    case POST_ACCOUNT_ADMIN_SUCCESS:
+        state = {
+            ...state,
+            loading: false,
+            add: {message:action.payload}
+        }
+        break
+    case POST_ACCOUNT_ADMIN_FAILED:
+        state = {
+            ...state,
+            loading:false,
+        }
+        break
+    case POST_ACCOUNT_SUPER:
+        state = {
+            ...state,
+            edit: { message: null },
+            delete: { message: null },
+            add : {message:null},
+            loading:true,
+        }
+        break
+    case POST_ACCOUNT_SUPER_SUCCESS:
+        state = {
+            ...state,
+            loading: false,
+            add: {message:action.payload}
+        }
+        break
+    case POST_ACCOUNT_SUPER_FAILED:
+        state = {
+            ...state,
+            loading:false,
+        }
+        break
     case CLEAR_ACCOUNT_MESSAGE:
         state = {
             ...state,
             loading: false,
             edit: { message: null },
             delete: { message: null },
+            add : {message:null},
         }
         break
     default:
