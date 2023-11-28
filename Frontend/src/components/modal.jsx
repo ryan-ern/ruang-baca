@@ -1,13 +1,24 @@
+<<<<<<< HEAD
 import { Modal, Row, Col, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+=======
+import { Modal, Row, Col, Alert } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+>>>>>>> 432e2b4089cf7a207be1fa701bac0976b6fd448f
 import { useNavigate } from "react-router-dom";
-import { postBorrow } from "../store/borrow/actions";
+import { clearBorrowMessage, postBorrow } from "../store/borrow/actions";
 
 export default function ModalDetailBuku({ show, onHide, data, inv }) {
+    const borrowMessage = useSelector((state) => state.borrow.add.message)
     const dispatch = useDispatch()
     const navigate = useNavigate();
+
+    const handleDismiss = () => {
+        dispatch(clearBorrowMessage());
+    };
     return (
         <>
+<<<<<<< HEAD
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg' className="custom-modal">
                 {/* <Modal.Header closeButton /> */}
                 <Modal.Body className="p-5"  style={{ backgroundColor: '#e0f8f2', borderRadius: '25px'}}>
@@ -20,6 +31,17 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                     objectFit: "cover",
                                     width: "100%",
                                 }}/>
+=======
+            <Modal show={show} onHide={onHide} keyboard={false} centered size='lg'>
+                <Modal.Header closeButton />
+                <Modal.Body>
+                    <Row>
+                        <Col lg="3">
+                            {borrowMessage ?
+                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage.response.data.message}</Alert> : null
+                            }
+                            <img src={data?.cover || data?.file} alt={data?.judul} width="155px" />
+>>>>>>> 432e2b4089cf7a207be1fa701bac0976b6fd448f
                         </Col>
                         <Col lg="9" md>
                             <Row className="g-2 mb-3">

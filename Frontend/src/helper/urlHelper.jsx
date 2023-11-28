@@ -25,9 +25,9 @@ export const URL_GET_BORROW_ADMIN = '/peminjamanAdmin'
 export const URL_GET_BORROW = '/peminjaman'
 export const URL_POST_BORROW = '/addBorrow/:isbn'
 
-// unfinished
 export const URL_POST_ACCEPT_BORROW = '/acceptPeminjaman/:id'
 export const URL_POST_DENIED_BORROW = '/deniedPeminjaman/:id'
+// unfinished
 export const URL_DELETE_BORROW = '/deletePeminjaman/:id'
 
 export const URL_GET_DENDA = "/denda"
