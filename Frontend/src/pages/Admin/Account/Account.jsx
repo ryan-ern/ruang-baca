@@ -6,75 +6,91 @@ import {
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import { account, deleteAccount } from '../../../store/account/actions';
-import ModalEditAccount from './modal';
+import { account, clearAccountMessage, deleteAccount } from '../../../store/account/actions';
+import ModalAccount from './modal';
 
 export default function Account() {
     const dispatch = useDispatch()
     const acc = useSelector((state) => state.account)
     const editMessage = useSelector((state) => state.account.edit.message)
     const deleteMessage = useSelector((state) => state.account.delete.message)
+    const addMessage = useSelector((state) => state.account.add.message)
     const columns = useMemo(
-        () => [
-            {
-                Header: 'No',
-                accessor: (_, index) => index + 1
-            },
-            {
-                Header: 'NISN',
-                accessor: 'nisn',
-                Cell: ({value}) => (value)
-            },
-            {
-                Header: 'Username',
-                accessor: 'username',
-                Cell: ({value}) => (value),
-            },
-            {
-                Header: 'Nama',
-                accessor: 'name',
-                Cell: ({value}) => (value),
-            },
-            {
-                Header: 'Jurusan',
-                accessor: 'jurusan',
-                Cell: ({value}) => (value),
-            },
-            {
+        () => {
+            const baseColumns = [
+                {
+                    Header: 'No',
+                    accessor: (_, index) => index + 1,
+                },
+                {
+                    Header: 'NISN',
+                    accessor: 'nisn',
+                    Cell: ({ value }) => value,
+                },
+                {
+                    Header: 'Username',
+                    accessor: 'username',
+                    Cell: ({ value }) => value,
+                },
+                {
+                    Header: 'Nama',
+                    accessor: 'name',
+                    Cell: ({ value }) => value,
+                },
+                {
+                    Header: 'Jurusan',
+                    accessor: 'jurusan',
+                    Cell: ({ value }) => value,
+                },
+            ];
+
+            if (acc.response.message !== 'Anda Admin') {
+                baseColumns.push({
+                    Header: 'Akses',
+                    accessor: 'role',
+                    Cell: ({ value }) => value,
+                });
+            }
+
+            baseColumns.push({
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({row}) => (
+                Cell: ({ row }) => (
                     <div className='text-center'>
-                        <Button
-                            variant='warning'
-                            onClick={() => {
-                                setSelectedBook(row.original);
-                                setShowModal(true);
-                            }}
-                            className='btn-tbl-edit'
-                        >Edit</Button>
-                        <Button
-                            variant='success'
-                            onClick={() => {
-                                setSelectedBook(row.original);
+                        <div className='text-center'>
+                            <Button
+                                variant='warning'
+                                onClick={() => {
+                                    setSelectedAccount(row.original);
+                                    setShowModal(true);
+                                }}
+                                className='px-2 mx-2 mt-2'
+                            >Edit</Button>
+                            <Button
+                                variant='success'
+                                onClick={() => {
+                                    setSelectedAccount(row.original);
                                 // setShowModal(true);
-                            }}
-                            className='btn-tbl-detail'
-                        >Blokir</Button>
-                        <Button
-                            variant='danger'
-                            onClick={() => {
-                                if (window.confirm("Apakah Anda Yakin Untuk Menghapus Akun :" + row.original.name)) handleclick(row.original.username);
-                            }}
-                            className='btn-tbl-delete'
-                        >Hapus</Button>
+                                }}
+                                className='px-3 mx-2 mt-2'
+                            >Blokir</Button>
+                            <Button
+                                variant='danger'
+                                onClick={() => {
+                                    if (window.confirm("Apakah Anda Yakin Untuk Menghapus Akun :" + row.original.name)) handleclick(row.original.username);
+                                }}
+                                className='px-3 mx-2 mt-2'
+                            >Hapus</Button>
+                        </div>
                     </div>
                 ),
-            },
-        ],
-        [],
-    )
+            });
+
+            return baseColumns;
+        },
+        [acc.response.message]
+    );
     
     const data = useMemo(
         () => (acc.response?.data || []),
@@ -107,7 +123,8 @@ export default function Account() {
     const { globalFilter } = state
 
     const [showModal, setShowModal] = useState(false);
-    const [selectedBook, setSelectedBook] = useState(null);
+    const [selectedAccount, setSelectedAccount] = useState(null);
+    const [addAccount, setAddAccount] = useState(null);
 
     const handleclick = (data) => {
         dispatch(deleteAccount(data))
@@ -115,12 +132,17 @@ export default function Account() {
 
     const handleClose = () => {
         setShowModal(false)
+        setAddAccount(null)
+        setSelectedAccount(null)
     };
 
     useEffect(() => {
         dispatch(account())
     }, [])
 
+    const handleDismiss = () => {
+        dispatch(clearAccountMessage());
+    };
 
     return (
         <Container>
@@ -132,10 +154,11 @@ export default function Account() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {(editMessage || deleteMessage) ?
-                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
-                                        :
-                                        null
+                                    {addMessage ? <Alert dismissible onClose={handleDismiss} variant='success'>{addMessage && addMessage.data.message}</Alert> :
+                                        (editMessage || deleteMessage) ?
+                                            <Alert variant={editMessage? 'info' : 'danger'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                            :
+                                            null
                                     }
                                 </Col>
                             </Row>
@@ -150,6 +173,11 @@ export default function Account() {
                                         </div>
                                     </div>
                                 </Col>
+                                {acc.response.message === 'Anda Admin' ? null :
+                                    <Col className='d-flex justify-content-end'>
+                                        <button onClick={() => { setAddAccount('tambah'); setShowModal(true);}} className='btn btn-success px-3'>Tambah Admin</button>
+                                    </Col>
+                                }
                             </Row>
                             <Row>
                                 <Col>
@@ -233,7 +261,7 @@ export default function Account() {
                     </Card>
                 </Col>
             </Row>
-            <ModalEditAccount show={showModal} onHide={handleClose} editdata={selectedBook} />
+            <ModalAccount show={showModal} onHide={handleClose} editdata={selectedAccount} add={addAccount} />
         </Container>
     )
 }

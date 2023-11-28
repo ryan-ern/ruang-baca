@@ -1,4 +1,4 @@
-import { DELETE_INVENTORY, DELETE_INVENTORY_SUCCESS, EDIT_INVENTORY, EDIT_INVENTORY_FAILED, EDIT_INVENTORY_SUCCESS, GET_INVENTORY, GET_INVENTORY_FAILED, GET_INVENTORY_SUCCESS, POST_INVENTORY, POST_INVENTORY_FAILED, POST_INVENTORY_SUCCESS } from "./actionTypes"
+import { CLEAR_INVENTORY_MESSAGE, DELETE_INVENTORY, DELETE_INVENTORY_SUCCESS, EDIT_INVENTORY, EDIT_INVENTORY_FAILED, EDIT_INVENTORY_SUCCESS, GET_INVENTORY, GET_INVENTORY_FAILED, GET_INVENTORY_SUCCESS, POST_INVENTORY, POST_INVENTORY_FAILED, POST_INVENTORY_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
@@ -99,6 +99,15 @@ const inventoryReducer = (state = init_state, action) =>{
             ...state,
             loading:false,
             delete: {message:action.payload}
+        }
+        break
+    case CLEAR_INVENTORY_MESSAGE:
+        state = {
+            ...state,
+            loading:false,
+            edit: { message: null },
+            delete: {message:null},
+            create: {message:null}
         }
         break
     default:

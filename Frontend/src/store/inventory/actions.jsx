@@ -1,4 +1,4 @@
-import { DELETE_INVENTORY, DELETE_INVENTORY_SUCCESS, EDIT_INVENTORY, EDIT_INVENTORY_FAILED, EDIT_INVENTORY_SUCCESS, GET_INVENTORY, GET_INVENTORY_FAILED, GET_INVENTORY_SUCCESS, POST_INVENTORY, POST_INVENTORY_SUCCESS } from "./actionTypes";
+import { CLEAR_INVENTORY_MESSAGE, DELETE_INVENTORY, DELETE_INVENTORY_SUCCESS, EDIT_INVENTORY, EDIT_INVENTORY_FAILED, EDIT_INVENTORY_SUCCESS, GET_INVENTORY, GET_INVENTORY_FAILED, GET_INVENTORY_SUCCESS, POST_INVENTORY, POST_INVENTORY_SUCCESS } from "./actionTypes";
 
 export const inventory = () => ({
     type: GET_INVENTORY,
@@ -48,4 +48,9 @@ export const deleteInventory = (isbn) => ({
 export const deleteInventorySuccess = (message) => ({
     type: DELETE_INVENTORY_SUCCESS,
     payload: message
+})
+
+export const clearIventoryMessage = () => ({
+    type: CLEAR_INVENTORY_MESSAGE,
+    payload: null
 })

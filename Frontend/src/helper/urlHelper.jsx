@@ -18,10 +18,14 @@ export const URL_GET_ACCOUNT = '/userControl'
 export const URL_DELETE_ACCOUNT = '/user/:username'
 export const URL_EDIT_ACCOUNT = '/user/:username'
 
-// unfinished
+export const URL_POST_ADMIN = '/addAdmin'
+export const URL_POST_SUPERADMIN = '/addSuperAdmin'
+
 export const URL_GET_BORROW_ADMIN = '/peminjamanAdmin'
 export const URL_GET_BORROW = '/peminjaman'
 export const URL_POST_BORROW = '/addBorrow/:isbn'
+
+// unfinished
 export const URL_POST_ACCEPT_BORROW = '/acceptPeminjaman/:id'
 export const URL_POST_DENIED_BORROW = '/deniedPeminjaman/:id'
 export const URL_DELETE_BORROW = '/deletePeminjaman/:id'

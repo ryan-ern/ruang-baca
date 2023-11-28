@@ -1,4 +1,4 @@
-import { PUT_PROFILE, PUT_PROFILE_FAILED, PUT_PROFILE_SUCCESS } from "./actionTypes"
+import { CLEAR_EDIT_PROFILE_MESSAGE, PUT_PROFILE, PUT_PROFILE_FAILED, PUT_PROFILE_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
@@ -27,6 +27,11 @@ const profilReducer = (state = init_state, action) => {
             message: action.payload,
         }
         break
+    case CLEAR_EDIT_PROFILE_MESSAGE:
+        return {
+            ...state,
+            message: null
+        };
     default:
         state = { ...state }
         break

@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "../../helper/apiHelper";
-import { URL_DELETE_ACCOUNT, URL_EDIT_ACCOUNT, URL_GET_ACCOUNT } from "../../helper/urlHelper";
-import { account, accountFailed, accountSuccess, deleteAccountSuccess, editAccountSuccess } from "./actions";
-import { DELETE_ACCOUNT, EDIT_ACCOUNT, GET_ACCOUNT } from "./actionTypes";
+import { URL_DELETE_ACCOUNT, URL_EDIT_ACCOUNT, URL_GET_ACCOUNT, URL_POST_ADMIN, URL_POST_SUPERADMIN } from "../../helper/urlHelper";
+import { account, accountFailed, accountSuccess, deleteAccountSuccess, editAccountSuccess, postAccountAdminSuccess, postAccountSuperSuccess } from "./actions";
+import { DELETE_ACCOUNT, EDIT_ACCOUNT, GET_ACCOUNT, POST_ACCOUNT_ADMIN, POST_ACCOUNT_SUPER } from "./actionTypes";
 
 export function* getAccountSaga() {
     try {
@@ -34,11 +34,35 @@ export function* editAccountSaga({ payload: { username, data, onHide } }) {
         //
     }
 }
+export function* postAdminSaga({ payload: { data, onHide } }) {
+    try {
+        const response = yield call(axios.post, URL_POST_ADMIN, data)
+        yield put(postAccountAdminSuccess(response))
+        yield call(onHide)
+        yield put(account())
+    }
+    catch (err) {
+        //
+    }
+}
+export function* postSuperSaga({ payload: { data, onHide } }) {
+    try {
+        const response = yield call(axios.post, URL_POST_SUPERADMIN, data)
+        yield put(postAccountSuperSuccess(response))
+        yield call(onHide)
+        yield put(account())
+    }
+    catch (err) {
+        //
+    }
+}
 
 export function* accountSaga() {
     yield takeEvery(GET_ACCOUNT, getAccountSaga),
     yield takeEvery(DELETE_ACCOUNT, deleteAccountSaga),
     yield takeEvery(EDIT_ACCOUNT, editAccountSaga)
+    yield takeEvery(POST_ACCOUNT_ADMIN, postAdminSaga),
+    yield takeEvery(POST_ACCOUNT_SUPER, postSuperSaga)
 }
 
 export default accountSaga

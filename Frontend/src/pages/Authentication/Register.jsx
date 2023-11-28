@@ -133,19 +133,15 @@ export default function Register() {
                                                             <Form.Control
                                                                 required
                                                                 type="tel"
-                                                                pattern="^\+62\d{9,15}$"
+                                                                pattern="^\08\d{9,15}$"
                                                                 className="form-control bg-light border-light password-input"
-                                                                placeholder="628123456789"
+                                                                placeholder="08123456789"
                                                                 id="whatsapp"
                                                                 autoComplete="whatsapp"
                                                                 name="whatsapp"
                                                                 value={account.wa || ''}
                                                                 onChange={(e) => {
-                                                                    // Remove non-numeric characters from the input
-                                                                    const sanitizedValue = e.target.value.replace(/\D/g, '');
-                                                                    // Format the phone number as +62xxxxxxxxxxx
-                                                                    const formattedValue = sanitizedValue.length > 2 ? `+62${sanitizedValue.slice(2)}` : sanitizedValue;
-                                                                    setAccount({ ...account, wa: formattedValue });
+                                                                    setAccount({ ...account, wa: e.target.value });
                                                                 }}
                                                             />
                                                         </div>

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { putProfil } from "../../../store/actions";
+import { clearEditProfileMessage, putProfil } from "../../../store/actions";
 
 export default function Profil() {
     const profile = useSelector((state) => state.auth.response.data)
@@ -34,6 +34,10 @@ export default function Profil() {
         setEditMode(false)
         setEditAvatar(false)
     }
+    const handleDismiss = () => {
+        dispatch(clearEditProfileMessage());
+    };
+
     return(
         <>
             <Waveup color="#B6D8CF" />
@@ -49,6 +53,7 @@ export default function Profil() {
                                             variant="success"
                                             className="text-center"
                                             dismissible
+                                            onClose={handleDismiss}
                                         >
                                             {editProfile}
                                         </Alert>
@@ -204,9 +209,10 @@ export default function Profil() {
                                                         <div className="position-relative">
                                                             <Form.Control
                                                                 required
-                                                                type="text"
+                                                                type="tel"
                                                                 className="form-control bg-light border-light "
-                                                                placeholder=""
+                                                                pattern="^\08\d{9,15}$"
+                                                                placeholder="08123456789"
                                                                 defaultValue={profile.wa}
                                                                 onChange={(e) => setData({...data, wa: e.target.value})}
                                                                 id="whatsapp"
