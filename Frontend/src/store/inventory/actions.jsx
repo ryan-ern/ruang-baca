@@ -41,9 +41,9 @@ export const editInventoryFailed = (message) => ({
     payload: message
 })
 
-export const deleteInventory = (isbn) => ({
+export const deleteInventory = (isbn, onHide) => ({
     type: DELETE_INVENTORY,
-    payload: {isbn}
+    payload: {isbn, onHide}
 })
 export const deleteInventorySuccess = (message) => ({
     type: DELETE_INVENTORY_SUCCESS,

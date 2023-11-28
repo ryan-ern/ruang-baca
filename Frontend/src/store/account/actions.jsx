@@ -14,9 +14,9 @@ export const accountFailed = (message) => ({
 })
 
 
-export const deleteAccount = (username) => ({
+export const deleteAccount = (username, onHide) => ({
     type: DELETE_ACCOUNT,
-    payload: username,
+    payload: {username, onHide}
 })
 export const deleteAccountSuccess = (message) => ({
     type: DELETE_ACCOUNT_SUCCESS,

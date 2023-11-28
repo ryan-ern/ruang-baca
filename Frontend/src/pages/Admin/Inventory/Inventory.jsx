@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
-import { clearIventoryMessage, deleteInventory, inventory } from '../../../store/inventory/actions';
+import { clearIventoryMessage, inventory } from '../../../store/inventory/actions';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
 import ModalInventory from './modal';
 import ModalDetailBuku from '../../../components/modal';
 import Top from './top';
 import "../../../assets/styles/common.css";
+import ModalKonfirmasi from '../../../components/modalkonfirmasi';
 
 export default function Inventory() {
     const dispatch = useDispatch()
@@ -79,10 +80,19 @@ export default function Inventory() {
                         <Button
                             variant='danger'
                             onClick={() => {
-                                if(confirm("Yakin Ingin Menhapus Data Buku Dengan ISBN : "+row.original.isbn))dispatch(deleteInventory(row.original.isbn))
+                                setSelectedBook(row.original.isbn);
+                                setShowModalDelete(true);
+                                
                             }}
                             className='btn-tbl-delete'
                         >Delete</Button>
+                        {/* <Button
+                            variant='danger'
+                            onClick={() => {
+                                if(confirm("Yakin Ingin Menghapus Data Buku Dengan ISBN : "+row.original.isbn))dispatch(deleteInventory(row.original.isbn))
+                            }}
+                            className='btn-tbl-delete'
+                        >Delete</Button> */}
                     </div>
                 ),
             },
@@ -122,11 +132,13 @@ export default function Inventory() {
 
     const [showModal, setShowModal] = useState(false);
     const [showModalDetail, setShowModalDetail] = useState(false);
+    const [showModalDelete, setShowModalDelete] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
 
     const handleClose = () => {
         setShowModal(false)
         setShowModalDetail(false)
+        setShowModalDelete(false)
     };
 
     const handleDismiss = () => {
@@ -247,6 +259,7 @@ export default function Inventory() {
             </Row>
             <ModalInventory show={showModal} onHide={handleClose} editdata={selectedBook} />
             <ModalDetailBuku show={showModalDetail} onHide={handleClose} data={selectedBook} inv={true} />
+            <ModalKonfirmasi show={showModalDelete} onHide={handleClose} data={selectedBook} event="inventory" />
         </Container>
     )
 }

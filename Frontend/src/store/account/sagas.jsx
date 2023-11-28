@@ -13,10 +13,11 @@ export function* getAccountSaga() {
         yield put(accountFailed(err))
     }
 }
-export function* deleteAccountSaga(username) {
+export function* deleteAccountSaga({ payload: { username, onHide } }) {
     try {
-        const response = yield call(axios.delete, URL_DELETE_ACCOUNT.replace(':username', username.payload))
+        const response = yield call(axios.delete, URL_DELETE_ACCOUNT.replace(':username', username))
         yield put(deleteAccountSuccess(response.data))
+        yield call(onHide)
         yield put(account())
     }
     catch (err) {

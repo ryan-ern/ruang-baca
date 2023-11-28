@@ -6,8 +6,9 @@ import {
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import { account, clearAccountMessage, deleteAccount } from '../../../store/account/actions';
+import { account, clearAccountMessage } from '../../../store/account/actions';
 import ModalAccount from './modal';
+import ModalKonfirmasi from '../../../components/modalkonfirmasi';
 
 export default function Account() {
     const dispatch = useDispatch()
@@ -65,7 +66,7 @@ export default function Account() {
                                     setSelectedAccount(row.original);
                                     setShowModal(true);
                                 }}
-                                className='px-2 mx-2 mt-2'
+                                className='btn-tbl-edit'
                             >Edit</Button>
                             <Button
                                 variant='success'
@@ -73,15 +74,17 @@ export default function Account() {
                                     setSelectedAccount(row.original);
                                 // setShowModal(true);
                                 }}
-                                className='px-3 mx-2 mt-2'
+                                className='btn-tbl-detail'
                             >Blokir</Button>
                             <Button
                                 variant='danger'
                                 onClick={() => {
-                                    if (window.confirm("Apakah Anda Yakin Untuk Menghapus Akun :" + row.original.name)) handleclick(row.original.username);
+                                    setSelectedAccount(row.original.username);
+                                    setShowModalDelete(true);
+                                
                                 }}
-                                className='px-3 mx-2 mt-2'
-                            >Hapus</Button>
+                                className='btn-tbl-delete'
+                            >Delete</Button>
                         </div>
                     </div>
                 ),
@@ -124,16 +127,18 @@ export default function Account() {
 
     const [showModal, setShowModal] = useState(false);
     const [selectedAccount, setSelectedAccount] = useState(null);
+    const [showModalDelete, setShowModalDelete] = useState(false);
     const [addAccount, setAddAccount] = useState(null);
 
-    const handleclick = (data) => {
-        dispatch(deleteAccount(data))
-    };
+    // const handleclick = (data) => {
+    //     dispatch(deleteAccount(data))
+    // };
 
     const handleClose = () => {
         setShowModal(false)
         setAddAccount(null)
         setSelectedAccount(null)
+        setShowModalDelete(false)
     };
 
     useEffect(() => {
@@ -156,7 +161,7 @@ export default function Account() {
                                 <Col className='text-center'>
                                     {addMessage ? <Alert dismissible onClose={handleDismiss} variant='success'>{addMessage && addMessage.data.message}</Alert> :
                                         (editMessage || deleteMessage) ?
-                                            <Alert variant={editMessage? 'info' : 'danger'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                            <Alert variant={editMessage? 'info' : 'success'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
                                             :
                                             null
                                     }
@@ -262,6 +267,7 @@ export default function Account() {
                 </Col>
             </Row>
             <ModalAccount show={showModal} onHide={handleClose} editdata={selectedAccount} add={addAccount} />
+            <ModalKonfirmasi show={showModalDelete} onHide={handleClose} data={selectedAccount} event="account" />
         </Container>
     )
 }

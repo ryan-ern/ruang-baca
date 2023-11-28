@@ -24,10 +24,11 @@ export function* editInventorySaga({payload: {isbn, data, onHide}}) {
         yield put(editInventoryFailed(err.response.message))
     }
 }
-export function* deleteInventorySaga({payload: {isbn}}) {
+export function* deleteInventorySaga({payload: {isbn, onHide}}) {
     try {
         const response = yield call(axios.delete, URL_DELETE_INVENTORY.replace(':isbn', isbn))
         yield put(deleteInventorySuccess(response.data))
+        yield call(onHide)
         yield put(inventory())
     } catch (err) {
         //
