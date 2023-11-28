@@ -1,0 +1,7 @@
+export const GET_FINED = 'GET_FINED'
+export const GET_FINED_SUCCES = 'GET_FINED_SUCCES'
+export const GET_FINED_FAILED = 'GET_FINED_FAILED'
+
+export const PUT_FINED ='PUT_FINED'
+export const PUT_FINED_SUCCESS ='PUT_FINED_SUCCESS'
+export const PUT_FINED_FAILED ='PUT_FINED_FAILED'

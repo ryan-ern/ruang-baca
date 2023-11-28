@@ -25,10 +25,13 @@ export const URL_GET_BORROW_ADMIN = '/peminjamanAdmin'
 export const URL_GET_BORROW = '/peminjaman'
 export const URL_POST_BORROW = '/addBorrow/:isbn'
 
+export const URL_GET_RETURN= '/pengembalian'
+
 export const URL_POST_ACCEPT_BORROW = '/acceptPeminjaman/:id'
 export const URL_POST_DENIED_BORROW = '/deniedPeminjaman/:id'
+
 // unfinished
 export const URL_DELETE_BORROW = '/deletePeminjaman/:id'
 
-export const URL_GET_DENDA = "/denda"
-export const URL_PUT_DENDA = "/denda"
+export const URL_GET_FINED = "/denda"
+export const URL_PUT_FINED= "/denda"

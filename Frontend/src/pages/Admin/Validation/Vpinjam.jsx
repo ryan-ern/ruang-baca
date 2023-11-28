@@ -151,7 +151,8 @@ export default function ValidationPinjam() {
                                     {deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='danger'>{deleteMessage.message}</Alert> :
                                         (editMessage || createMessage) ? (
                                             <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
-                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.message)} Dengan ISBN : ${((editMessage && editMessage.data && editMessage.data.book_isbn) || (createMessage && createMessage.data && createMessage.data.book_isbn))}`}
+                                                {console.log(editMessage)}
+                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.data.message)} Dengan ISBN : ${((editMessage && editMessage.data.book_isbn) || (createMessage &&  createMessage.data.data.book_isbn))}`}
                                             </Alert>
                                         ) : null}
                                 </Col>

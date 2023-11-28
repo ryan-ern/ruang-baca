@@ -1,6 +1,6 @@
-import {  useMemo, } from 'react'
+import {  useEffect, useMemo, } from 'react'
 import {  Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
@@ -9,10 +9,13 @@ import Wavebot from '../../../components/background/Wavebot';
 // import { account } from '../../../store/account/actions';
 // import ModalEditAccount from '../Account/modal';
 import moment from 'moment';
+import { returnAdmin } from '../../../store/actions';
+import StatusBadge from '../../../components/Statusbadge';
 
 export default function Vpengembalian() {
-    // const dispatch = useDispatch()
-    const acc = useSelector((state) => state.account)
+    const dispatch = useDispatch()
+    const Pengembalian = useSelector((state) => state.return)
+    
     // const editMessage = useSelector((state) => state.account.edit.message)
     // const deleteMessage = useSelector((state) => state.account.delete.message)
     const columns = useMemo(
@@ -22,8 +25,8 @@ export default function Vpengembalian() {
                 accessor: (_, index) => index + 1
             },
             {
-                Header: 'NISN',
-                accessor: 'nisn',
+                Header: 'Nama',
+                accessor: 'name',
                 Cell: ({value}) => (value)
             },
             {
@@ -32,7 +35,7 @@ export default function Vpengembalian() {
                 Cell: ({value}) => (value),
             },
             {
-                Header: 'Tanggal Pinjam',
+                Header: 'Tanggal Peminjaman',
                 accessor: 'created_at',
                 Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
             },
@@ -47,25 +50,48 @@ export default function Vpengembalian() {
                 Cell: ({value}) => (value)
             },
             {
+                Header: 'status',
+                accessor: 'status',
+                Cell: ({value}) => <StatusBadge status={value} />,
+            },
+            {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: () => (
+                Cell: ({row}) => (
                     <div className='text-center'>
-                        <Button
-                            variant='success'
-                            onClick={() => {
-                                
-                            }}
-                            className='btn-tbl-detail'
-                        >Terima</Button>
-                        <Button
-                            variant='danger'
-                            onClick={() => {
-                                
-                            }}
-                            className='btn-tbl-delete'
-                        >Tolak</Button>
+                        {row.original.status !== '-' ? (
+                            <Button
+                                variant='info'
+                                onClick={() => {
+                                    // dispatch(deleteBorrow(row.original.id))
+                                }}
+                                className='px-2'
+                            >
+                                Reset
+                            </Button>
+                        ) : (
+                            <>
+                                <Button
+                                    variant='success'
+                                    onClick={() => {
+                                        // dispatch(postAcceptBorrow(row.original.id))
+                                    }}
+                                    className='btn-tbl-detail'
+                                >
+                                        Terima
+                                </Button>
+                                <Button
+                                    variant='danger'
+                                    onClick={() => {
+                                        // if (confirm("Yakin Ingin Menolak Peminjaman " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postDeniedBorrow(row.original.id))
+                                    }}
+                                    className='btn-tbl-delete'
+                                >
+                                        Tolak
+                                </Button>
+                            </>
+                        )}
                     </div>
                 ),
             },
@@ -74,8 +100,8 @@ export default function Vpengembalian() {
     )
     
     const data = useMemo(
-        () => (acc.response?.data || []),
-        [acc.response.data],
+        () => (Pengembalian?.response?.data?.data || []),
+        [Pengembalian?.response?.data?.data ],
     );
 
     const {
@@ -94,6 +120,7 @@ export default function Vpengembalian() {
             data,
             initialState:{
                 pageSize:10,
+                sortBy: [{ id: 'created_at', desc: true }],
             }
         },
         useGlobalFilter,
@@ -112,9 +139,9 @@ export default function Vpengembalian() {
     //     setShowModal(false)
     // };
 
-    // useEffect(() => {
-    //     dispatch(account())
-    // }, [])
+    useEffect(() => {
+        dispatch(returnAdmin())
+    }, [])
 
 
     return (
@@ -169,7 +196,7 @@ export default function Vpengembalian() {
                                                 <tbody>
                                                     <tr>
                                                         <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(acc.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                            {(Pengembalian.loading) ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
