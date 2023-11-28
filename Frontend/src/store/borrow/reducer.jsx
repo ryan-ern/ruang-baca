@@ -1,4 +1,4 @@
-import { DELETE_BORROW, DELETE_BORROW_SUCCESS, GET_BORROW, GET_BORROW_ADMIN, GET_BORROW_ADMIN_FAILED, GET_BORROW_ADMIN_SUCCESS, GET_BORROW_FAILED, GET_BORROW_SUCCESS, POST_ACCEPT_BORROW, POST_ACCEPT_BORROW_FAILED, POST_ACCEPT_BORROW_SUCCESS, POST_BORROW, POST_BORROW_FAILED, POST_BORROW_SUCCESS, POST_DENIED_BORROW, POST_DENIED_BORROW_FAILED, POST_DENIED_BORROW_SUCCESS } from "./actionTypes"
+import { CLEAR_BORROW_MESSAGE, DELETE_BORROW, DELETE_BORROW_SUCCESS, GET_BORROW, GET_BORROW_ADMIN, GET_BORROW_ADMIN_FAILED, GET_BORROW_ADMIN_SUCCESS, GET_BORROW_FAILED, GET_BORROW_SUCCESS, POST_ACCEPT_BORROW, POST_ACCEPT_BORROW_FAILED, POST_ACCEPT_BORROW_SUCCESS, POST_BORROW, POST_BORROW_FAILED, POST_BORROW_SUCCESS, POST_DENIED_BORROW, POST_DENIED_BORROW_FAILED, POST_DENIED_BORROW_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
@@ -150,6 +150,16 @@ const borrowReducer = (state = init_state, action) => {
             ...state,
             loading: false,
             delete: {message:action.payload}
+        }
+        break
+    case CLEAR_BORROW_MESSAGE:
+        state = {
+            ...state,
+            loading: false,
+            add: {message:null},
+            accept: {message:null},
+            denied: {message:null},
+            delete: {message:null},
         }
         break
     default:

@@ -3,7 +3,7 @@ import "../../../assets/styles/common.css";
 import StatusBadge from "../../../components/Statusbadge";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
-import { borrow } from "../../../store/borrow/actions";
+import { borrow, clearBorrowMessage } from "../../../store/borrow/actions";
 import { usePagination, useTable } from "react-table";
 import moment from 'moment'
 
@@ -64,7 +64,10 @@ export default function TablePeminjaman() {
         usePagination,
     )
     
-    
+    const handleDismiss = () => {
+        dispatch(clearBorrowMessage());
+    };
+
     return (
         <Container>
             <Row>
@@ -73,7 +76,7 @@ export default function TablePeminjaman() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {message ? <Alert dismissible variant='success text-capitalize' className="">{message.message}</Alert> :
+                                    {message ? <Alert dismissible variant='success text-capitalize' onClose={handleDismiss}>{message.message}</Alert> :
                                         null}
                                 </Col>
                             </Row>

@@ -6,17 +6,17 @@ const StatusBadge = ({ status }) => {
     switch (status) {
     case "PROSES":
         badgeColor = "#fbe1a7"; // Warna untuk status pending
-        badgeText = "PROSES";
+        badgeText = status;
         textColor = "#B78820"; // Teks untuk status pending
         break;
     case "SUKSES":
         badgeColor = "#C9F7F5"; // Warna untuk status approved
-        badgeText = "SUKSES";
+        badgeText = status;
         textColor = "#1BC5BD"; // Teks untuk status approved
         break;
     case "DITOLAK":
         badgeColor = "#F09696"; // Warna untuk status rejected
-        badgeText = "DITOLAK";
+        badgeText = status;
         textColor = "#5E3C3C"; // Teks untuk status rejected
         break;
     case "rejected-b":
