@@ -1,19 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Alert, Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useMemo, } from 'react'
+import {  Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import {  useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import { account, deleteAccount } from '../../../store/account/actions';
-import ModalEditAccount from './modal';
+// import { account } from '../../../store/account/actions';
+// import ModalEditAccount from '../Account/modal';
+import moment from 'moment';
 
-export default function Account() {
-    const dispatch = useDispatch()
+export default function Vpengembalian() {
+    // const dispatch = useDispatch()
     const acc = useSelector((state) => state.account)
-    const editMessage = useSelector((state) => state.account.edit.message)
-    const deleteMessage = useSelector((state) => state.account.delete.message)
+    // const editMessage = useSelector((state) => state.account.edit.message)
+    // const deleteMessage = useSelector((state) => state.account.delete.message)
     const columns = useMemo(
         () => [
             {
@@ -26,49 +27,45 @@ export default function Account() {
                 Cell: ({value}) => (value)
             },
             {
-                Header: 'Username',
-                accessor: 'username',
+                Header: 'Judul Buku',
+                accessor: 'judul',
                 Cell: ({value}) => (value),
             },
             {
-                Header: 'Nama',
-                accessor: 'name',
-                Cell: ({value}) => (value),
+                Header: 'Tanggal Pinjam',
+                accessor: 'created_at',
+                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
-                Header: 'Jurusan',
-                accessor: 'jurusan',
-                Cell: ({value}) => (value),
+                Header: 'Tenggat Pengembalian',
+                accessor: 'due_date',
+                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
+            },
+            {
+                Header: 'Denda',
+                accessor: 'denda',
+                Cell: ({value}) => (value)
             },
             {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({row}) => (
+                Cell: () => (
                     <div className='text-center'>
-                        <Button
-                            variant='warning'
-                            onClick={() => {
-                                setSelectedBook(row.original);
-                                setShowModal(true);
-                            }}
-                            className='btn-tbl-edit'
-                        >Edit</Button>
                         <Button
                             variant='success'
                             onClick={() => {
-                                setSelectedBook(row.original);
-                                // setShowModal(true);
+                                
                             }}
                             className='btn-tbl-detail'
-                        >Blokir</Button>
+                        >Terima</Button>
                         <Button
                             variant='danger'
                             onClick={() => {
-                                if (window.confirm("Apakah Anda Yakin Untuk Menghapus Akun :" + row.original.name)) handleclick(row.original.username);
+                                
                             }}
                             className='btn-tbl-delete'
-                        >Hapus</Button>
+                        >Tolak</Button>
                     </div>
                 ),
             },
@@ -106,20 +103,18 @@ export default function Account() {
     
     const { globalFilter } = state
 
-    const [showModal, setShowModal] = useState(false);
-    const [selectedBook, setSelectedBook] = useState(null);
+    // const [showModal, setShowModal] = useState(false);
+    // const [selectedBook, setSelectedBook] = useState(null);
 
-    const handleclick = (data) => {
-        dispatch(deleteAccount(data))
-    };
+    
 
-    const handleClose = () => {
-        setShowModal(false)
-    };
+    // const handleClose = () => {
+    //     setShowModal(false)
+    // };
 
-    useEffect(() => {
-        dispatch(account())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(account())
+    // }, [])
 
 
     return (
@@ -130,7 +125,7 @@ export default function Account() {
                 <Col className='my-5'>
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                         <CardBody>
-                            <Row>
+                            {/* <Row>
                                 <Col className='text-center'>
                                     {(editMessage || deleteMessage) ?
                                         <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
@@ -138,15 +133,15 @@ export default function Account() {
                                         null
                                     }
                                 </Col>
-                            </Row>
+                            </Row> */}
                             <Row className="mb-2">
                                 <Col>
-                                    <div>Kontrol Akun</div>
+                                    <div>Validasi Pengembalian</div>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="mb-2 d-inline-block">
                                         <div className="position-relative">
-                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data pengguna" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari NISN atau Judul" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                         </div>
                                     </div>
                                 </Col>
@@ -155,7 +150,7 @@ export default function Account() {
                                 <Col>
                                     <div className='table-responsive'>
                                         <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader5'>
+                                            <thead className='custom-theader6'>
                                                 {headerGroups.map((headerGroup) => (
                                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                                         {headerGroup.headers.map((column) => {
@@ -179,7 +174,7 @@ export default function Account() {
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-start'>
+                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody4'>
                                                     {page.map((row) => {
                                                         prepareRow(row);
                                                         return (
@@ -233,7 +228,7 @@ export default function Account() {
                     </Card>
                 </Col>
             </Row>
-            <ModalEditAccount show={showModal} onHide={handleClose} editdata={selectedBook} />
+            {/* <ModalEditAccount show={showModal} onHide={handleClose} editdata={selectedBook} /> */}
         </Container>
     )
 }

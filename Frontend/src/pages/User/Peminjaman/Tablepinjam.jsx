@@ -1,4 +1,4 @@
-import { Card, Col, Row, Container, CardBody, Alert } from "react-bootstrap";
+import { Card, Col, Row, Container, CardBody, Alert, Button } from "react-bootstrap";
 import "../../../assets/styles/common.css";
 import StatusBadge from "../../../components/Statusbadge";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +69,7 @@ export default function TablePeminjaman() {
         <Container>
             <Row>
                 <Col className='my-5'>
-                    <Card className="bg-card">
+                    <Card className="overflow-hidden p-4 pt-2 pb-2 border-0 shadow-lg rounded-4">
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
@@ -77,14 +77,21 @@ export default function TablePeminjaman() {
                                         null}
                                 </Col>
                             </Row>
-                            <Row className="mb-2">
-                              
+                            <Row className="mb-3">
+                                <Col>
+                                    <p className=" fw-bold">Peminjaman</p>
+                                </Col>
+                                <Col>
+                                    <div className="d-flex justify-content-end">
+                                        <Button variant="success" className=" btn-table rounded-pill custom-button">Tambah Buku</Button>
+                                    </div>
+                                </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
                                         <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='text-center'>
+                                            <thead className='custom-theader align-middle'>
                                                 {headerGroups.map((headerGroup) => (
                                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                                         {headerGroup.headers.map((column, index) => {
@@ -106,7 +113,7 @@ export default function TablePeminjaman() {
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-start'>
+                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
                                                     {page.map((row) => {
                                                         prepareRow(row);
                                                         return (

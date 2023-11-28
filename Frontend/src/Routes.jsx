@@ -17,6 +17,8 @@ import Inventory from "./pages/Admin/Inventory/Inventory";
 import { useSelector } from "react-redux";
 import DashboardAdmin from "./pages/Admin/Dashboard/Dashboard";
 import Account from "./pages/Admin/Account/Account";
+import Vpinjam from "./pages/Admin/Validasi Peminjaman/vpinjam";
+import Vpengembalian from "./pages/Admin/Validasi Pengembalian/vpengembalian";
 
 /**
  * Admin
@@ -56,10 +58,10 @@ export default function RoutesApp() {
                             <Route index element={<Inventory />}/>    
                         </Route>
                         <Route path="/panel/borrow-validation" element={<UseFeature allow="Validasi Peminjaman" />}>
-                            <Route index element={<Inventory />}/>    
+                            <Route index element={<Vpinjam />}/>    
                         </Route>
                         <Route path="/panel/return-validation" element={<UseFeature allow="Validasi pengembalian" />}>
-                            <Route index element={<Inventory />}/>    
+                            <Route index element={<Vpengembalian />}/>    
                         </Route>
                         <Route path="/panel/account-control" element={<UseFeature allow="Kontrol Akun" />}>
                             <Route index element={<Account />}/>    
