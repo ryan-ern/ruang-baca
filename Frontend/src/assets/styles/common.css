@@ -7,6 +7,33 @@
   height: 120px;
 }
 
+.image-modal {
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+@media (max-width: 991px) {
+  .image-modal {
+    width: 100px;
+    margin-bottom: 20px;
+  }
+}
+
+.btn-pinjam {
+  display: flex;
+  justify-content: end;
+}
+@media (max-width: 768px) {
+  .btn-pinjam {
+    display: flex;
+    justify-content: center;
+  }
+  .judul-buku {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .float-end {
   float: right;
 }
@@ -110,15 +137,20 @@
 }
 
 .responsive-textarea {
-  width: 100%; /* Lebar 100% dari parent element */
-  min-height: 100px; /* Tinggi minimum */
-  max-height: 300px; /* Tinggi maksimum jika diperlukan */
-  resize: vertical; /* Izinkan pengguna untuk merubah tinggi vertikal */
-  /* Atur gaya lainnya sesuai kebutuhan */
+  width: 100%;
+  min-height: 100px;
+  max-height: 300px;
+  resize: vertical;
 }
-/* CSS */
+
 .custom-modal .modal-content {
-  border-radius: 25px; /* Atur border-radius yang diinginkan */
+  border-radius: 25px;
+  padding: 3rem;
+}
+@media (max-width: 467px) {
+  .custom-modal {
+    padding-top: 200px;
+  }
 }
 
 .input-group {
