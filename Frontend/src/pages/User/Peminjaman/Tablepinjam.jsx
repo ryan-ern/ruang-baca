@@ -86,7 +86,7 @@ export default function TablePeminjaman() {
                                 </Col>
                                 <Col>
                                     <div className="d-flex justify-content-end">
-                                        <Button variant="success" className=" btn-table rounded-pill custom-button">Tambah Buku</Button>
+                                        <Button variant="success" className=" btn-table rounded-pill custom-button">Pengembalian</Button>
                                     </div>
                                 </Col>
                             </Row>

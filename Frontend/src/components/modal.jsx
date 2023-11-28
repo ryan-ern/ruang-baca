@@ -15,13 +15,13 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg' className="custom-modal">
                
-                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px'}} className="custom-modal">
+                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px'}} className="custom-modal-body">
                     <Row>
+                        {inv ? null :
+                            borrowMessage ?
+                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage?.response?.data?.message}</Alert> : null
+                        }
                         <Col lg="3" className=" text-center" >
-                            {inv ? null :
-                                borrowMessage ?
-                                    <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage?.response?.data?.message}</Alert> : null
-                            }
                             <img src={data?.cover || data?.file} alt={data?.judul} width="155px" className="image-modal"/>
                         </Col>
                         <Col lg="9" md>

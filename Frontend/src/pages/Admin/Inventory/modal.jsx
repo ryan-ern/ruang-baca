@@ -61,7 +61,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
         <>
             <Modal show={show} onHide={onHide} centered size='lg' className="custom-modal">
                 {/* <Modal.Header closeButton /> */}
-                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px',}} className="p-5">
+                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px',}} className="custom-modal-body pb-5">
                     <Container>
                         <Row>
                             <Col>
@@ -215,8 +215,8 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                     {editdata ? 
                                         !cover ?
                                             <div>
-                                                <img src={data.file} alt={data.judul} width="100px" />
-                                                <button onClick={handleClick} className="btn btn-warning mx-5 px-3">Edit Cover</button>
+                                                <img src={data.file} alt={data.judul} style={{borderRadius:'12px', width:'100px'}} />
+                                                <button onClick={handleClick}  className=" ms-5 rounded-pill ">Edit Cover</button>
                                             </div>
                                             :
                                             <input

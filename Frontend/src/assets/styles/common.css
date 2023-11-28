@@ -145,11 +145,17 @@
 
 .custom-modal .modal-content {
   border-radius: 25px;
+}
+
+.custom-modal-body {
   padding: 3rem;
 }
 @media (max-width: 467px) {
   .custom-modal {
     padding-top: 200px;
+  }
+  .custom-modal-body {
+    padding: 1.5rem;
   }
 }
 
