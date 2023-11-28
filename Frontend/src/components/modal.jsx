@@ -1,11 +1,16 @@
-import { Modal, Row, Col } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { Modal, Row, Col, Alert } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postBorrow } from "../store/borrow/actions";
+import { clearBorrowMessage, postBorrow } from "../store/borrow/actions";
 
 export default function ModalDetailBuku({ show, onHide, data, inv }) {
+    const borrowMessage = useSelector((state) => state.borrow.add.message)
     const dispatch = useDispatch()
     const navigate = useNavigate();
+
+    const handleDismiss = () => {
+        dispatch(clearBorrowMessage());
+    };
     return (
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg'>
@@ -13,6 +18,9 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                 <Modal.Body>
                     <Row>
                         <Col lg="3">
+                            {borrowMessage ?
+                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage.response.data.message}</Alert> : null
+                            }
                             <img src={data?.cover || data?.file} alt={data?.judul} width="155px" />
                         </Col>
                         <Col lg="9">

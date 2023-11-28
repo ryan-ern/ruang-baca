@@ -35,7 +35,7 @@ export default function TablePeminjaman() {
             {
                 Header: 'Tenggat Pengembalian',
                 accessor: 'due_date',
-                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
+                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
                 Header: 'Status',

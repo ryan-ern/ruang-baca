@@ -44,7 +44,7 @@ export const postBorrowFailed = (message) => ({
 
 export const postAcceptBorrow = (id) => ({
     type: POST_ACCEPT_BORROW,
-    payload: id,
+    payload: {id},
 })
 export const postAcceptBorrowSuccess = (respons) => ({
     type: POST_ACCEPT_BORROW_SUCCESS,
@@ -58,7 +58,7 @@ export const postAcceptBorrowFailed = (message) => ({
 
 export const postDeniedBorrow = (id) => ({
     type: POST_DENIED_BORROW,
-    payload: id,
+    payload: {id},
 })
 export const postDeniedBorrowSuccess = (respons) => ({
     type: POST_DENIED_BORROW_SUCCESS,
