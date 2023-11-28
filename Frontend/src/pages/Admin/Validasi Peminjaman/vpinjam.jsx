@@ -1,96 +1,72 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Alert, Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useMemo, } from 'react'
+import {  Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import {  useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import { account, clearAccountMessage, deleteAccount } from '../../../store/account/actions';
-import ModalAccount from './modal';
+// import { account } from '../../../store/account/actions';
+// import ModalEditAccount from '../Account/modal';
+import moment from 'moment';
 
-export default function Account() {
-    const dispatch = useDispatch()
+export default function Vpinjam() {
+    // const dispatch = useDispatch()
     const acc = useSelector((state) => state.account)
-    const editMessage = useSelector((state) => state.account.edit.message)
-    const deleteMessage = useSelector((state) => state.account.delete.message)
-    const addMessage = useSelector((state) => state.account.add.message)
+    // const editMessage = useSelector((state) => state.account.edit.message)
+    // const deleteMessage = useSelector((state) => state.account.delete.message)
     const columns = useMemo(
-        () => {
-            const baseColumns = [
-                {
-                    Header: 'No',
-                    accessor: (_, index) => index + 1,
-                },
-                {
-                    Header: 'NISN',
-                    accessor: 'nisn',
-                    Cell: ({ value }) => value,
-                },
-                {
-                    Header: 'Username',
-                    accessor: 'username',
-                    Cell: ({ value }) => value,
-                },
-                {
-                    Header: 'Nama',
-                    accessor: 'name',
-                    Cell: ({ value }) => value,
-                },
-                {
-                    Header: 'Jurusan',
-                    accessor: 'jurusan',
-                    Cell: ({ value }) => value,
-                },
-            ];
-
-            if (acc.response.message !== 'Anda Admin') {
-                baseColumns.push({
-                    Header: 'Akses',
-                    accessor: 'role',
-                    Cell: ({ value }) => value,
-                });
-            }
-
-            baseColumns.push({
+        () => [
+            {
+                Header: 'No',
+                accessor: (_, index) => index + 1
+            },
+            {
+                Header: 'NISN',
+                accessor: 'nisn',
+                Cell: ({value}) => (value)
+            },
+            {
+                Header: 'Judul Buku',
+                accessor: 'judul',
+                Cell: ({value}) => (value),
+            },
+            {
+                Header: 'Tanggal Pinjam',
+                accessor: 'created_at',
+                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
+            },
+            {
+                Header: 'Tenggat Pengembalian',
+                accessor: 'due_date',
+                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
+            },
+            {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({ row }) => (
+                Cell: () => (
                     <div className='text-center'>
-                        <div className='text-center'>
-                            <Button
-                                variant='warning'
-                                onClick={() => {
-                                    setSelectedAccount(row.original);
-                                    setShowModal(true);
-                                }}
-                                className='px-2 mx-2 mt-2'
-                            >Edit</Button>
-                            <Button
-                                variant='success'
-                                onClick={() => {
-                                    setSelectedAccount(row.original);
-                                // setShowModal(true);
-                                }}
-                                className='px-3 mx-2 mt-2'
-                            >Blokir</Button>
-                            <Button
-                                variant='danger'
-                                onClick={() => {
-                                    if (window.confirm("Apakah Anda Yakin Untuk Menghapus Akun :" + row.original.name)) handleclick(row.original.username);
-                                }}
-                                className='px-3 mx-2 mt-2'
-                            >Hapus</Button>
-                        </div>
+                        <Button
+                            variant='success'
+                            onClick={() => {
+                                
+                            }}
+                            className='btn-tbl-detail'
+                        >Terima</Button>
+                        <Button
+                            variant='danger'
+                            onClick={() => {
+                                
+                            }}
+                            className='btn-tbl-delete'
+                        >Tolak</Button>
                     </div>
                 ),
-            });
-
-            return baseColumns;
-        },
-        [acc.response.message]
-    );
+            },
+        ],
+        [],
+    )
     
     const data = useMemo(
         () => (acc.response?.data || []),
@@ -122,27 +98,19 @@ export default function Account() {
     
     const { globalFilter } = state
 
-    const [showModal, setShowModal] = useState(false);
-    const [selectedAccount, setSelectedAccount] = useState(null);
-    const [addAccount, setAddAccount] = useState(null);
+    // const [showModal, setShowModal] = useState(false);
+    // const [selectedBook, setSelectedBook] = useState(null);
 
-    const handleclick = (data) => {
-        dispatch(deleteAccount(data))
-    };
+    
 
-    const handleClose = () => {
-        setShowModal(false)
-        setAddAccount(null)
-        setSelectedAccount(null)
-    };
+    // const handleClose = () => {
+    //     setShowModal(false)
+    // };
 
-    useEffect(() => {
-        dispatch(account())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(account())
+    // }, [])
 
-    const handleDismiss = () => {
-        dispatch(clearAccountMessage());
-    };
 
     return (
         <Container>
@@ -152,38 +120,32 @@ export default function Account() {
                 <Col className='my-5'>
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                         <CardBody>
-                            <Row>
+                            {/* <Row>
                                 <Col className='text-center'>
-                                    {addMessage ? <Alert dismissible onClose={handleDismiss} variant='success'>{addMessage && addMessage.data.message}</Alert> :
-                                        (editMessage || deleteMessage) ?
-                                            <Alert variant={editMessage? 'info' : 'danger'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
-                                            :
-                                            null
+                                    {(editMessage || deleteMessage) ?
+                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                        :
+                                        null
                                     }
                                 </Col>
-                            </Row>
+                            </Row> */}
                             <Row className="mb-2">
                                 <Col>
-                                    <div>Kontrol Akun</div>
+                                    <div>Validasi Peminjaman</div>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="mb-2 d-inline-block">
                                         <div className="position-relative">
-                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data pengguna" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari NISN atau Judul" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                         </div>
                                     </div>
                                 </Col>
-                                {acc.response.message === 'Anda Admin' ? null :
-                                    <Col className='d-flex justify-content-end'>
-                                        <button onClick={() => { setAddAccount('tambah'); setShowModal(true);}} className='btn btn-success px-3'>Tambah Admin</button>
-                                    </Col>
-                                }
                             </Row>
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
                                         <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader5'>
+                                            <thead className='custom-theader4'>
                                                 {headerGroups.map((headerGroup) => (
                                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                                         {headerGroup.headers.map((column) => {
@@ -207,7 +169,7 @@ export default function Account() {
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-start'>
+                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody4'>
                                                     {page.map((row) => {
                                                         prepareRow(row);
                                                         return (
@@ -261,7 +223,7 @@ export default function Account() {
                     </Card>
                 </Col>
             </Row>
-            <ModalAccount show={showModal} onHide={handleClose} editdata={selectedAccount} add={addAccount} />
+            {/* <ModalEditAccount show={showModal} onHide={handleClose} editdata={selectedBook} /> */}
         </Container>
     )
 }

@@ -4,12 +4,22 @@ import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../../components/background/Wavetop";
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from "../../store/auth/actions";
+import { isEdge } from "react-device-detect";
+
+
 
 export default function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth)
     const messageError = useSelector((state)=> state.auth?.message?.data)
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+    };
+
 
     const [account, setAccount] = useState({
         username: "",
@@ -81,7 +91,8 @@ export default function Login() {
                                                             <Form.Control
                                                                 className="form-control bg-light border-light mb-5 password-input"
                                                                 placeholder="Masukkan password"
-                                                                type="password"
+                                                            
+                                                                type={showPassword ? "text" : "password"}
                                                                 id="password"
                                                                 name="password"
                                                                 autoComplete="current-password"
@@ -90,10 +101,15 @@ export default function Login() {
                                                                 onChange={(e) => {
                                                                     setAccount({ ...account, password: e.target.value });
                                                                 }}
+                                                                
                                                             />
+                                                            {!isEdge && (
+                                                                <div className="password-toggle-icon" onClick={handleTogglePassword}>
+                                                                    {showPassword ? '🙈' : '👀'}
+                                                                </div>
+                                                            )}                                                           
                                                         </div>
                                                     </Form.Group>
-
                                                     <div className="pb-4">
                                                         <Button
                                                             className="btn custom-button w-100 rounded-pill py-2"
