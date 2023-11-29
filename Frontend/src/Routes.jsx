@@ -19,6 +19,7 @@ import DashboardAdmin from "./pages/Admin/Dashboard/Dashboard";
 import Account from "./pages/Admin/Account/Account";
 import ValidationPinjam from "./pages/Admin/Validation/Vpinjam";
 import Vpengembalian from "./pages/Admin/Validation/vpengembalian";
+import Fined from "./pages/Admin/Denda/denda";
 
 /**
  * Admin
@@ -66,8 +67,8 @@ export default function RoutesApp() {
                         <Route path="/panel/account-control" element={<UseFeature allow="Kontrol Akun" />}>
                             <Route index element={<Account />}/>    
                         </Route>
-                        <Route path="/panel/penalty-settings" element={<UseFeature allow="Denda" />}>
-                            <Route index element={<Inventory />}/>    
+                        <Route path="/panel/fined-settings" element={<UseFeature allow="Denda" />}>
+                            <Route index element={<Fined />}/>    
                         </Route>
                         <Route path="/panel/profil" element={<Profil/>}/>                       
                     </Route>

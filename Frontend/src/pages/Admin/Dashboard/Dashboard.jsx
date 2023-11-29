@@ -3,8 +3,16 @@ import Waveup from "../../../components/background/Wavetop";
 import "../../../assets/styles/common.css";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import IMAGES from "../../../assets/images";
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from "react";
+import { dashboard } from "../../../store/actions";
 
 export default function DashboardAdmin() {
+    const dispatch = useDispatch()
+    const dashboardState = useSelector((state) => state.book.response.count)
+    useEffect(() => {
+        dispatch(dashboard())  
+    },[])
     return(
         <>
             <Waveup color="#B6D8CF"/>
@@ -82,7 +90,7 @@ export default function DashboardAdmin() {
                                     <tbody>
 
                                         <tr>
-                                            <th className="fs-1">401</th>
+                                            <th className="fs-1">{dashboardState ? dashboardState.countBook : '0'}</th>
                                             <td rowSpan="2"><img style={{height:'70px',  background: 'transparent', padding:'0px', marginLeft:'20px', marginTop:'20px'}} src={IMAGES.databuku1}></img></td>
                                         </tr>
                                         <tr>
@@ -102,7 +110,7 @@ export default function DashboardAdmin() {
                                     <tbody>
 
                                         <tr>
-                                            <th className="fs-1">4002</th>
+                                            <th className="fs-1">{dashboardState ? dashboardState.countUser : '0'}</th>
                                             <td rowSpan="2" ><img style={{height:'70px',  background: 'transparent', padding:'0px', marginTop:'20px'}} src={IMAGES.pengguna1}></img></td>
                                         </tr>
                                         <tr>

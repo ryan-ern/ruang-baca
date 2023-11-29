@@ -1,4 +1,4 @@
-import { GET_FINED, GET_FINED_FAILED, GET_FINED_SUCCES } from "./actionTypes"
+import { GET_FINED, GET_FINED_FAILED, GET_FINED_SUCCES, PUT_FINED, PUT_FINED_FAILED, PUT_FINED_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
@@ -22,6 +22,27 @@ const finedReducer = (state = init_state, action) => {
         }
         break
     case GET_FINED_FAILED:
+        state={
+            ...state,
+            loading: false,
+            message : action.payload
+        }
+        break
+    case PUT_FINED:
+        state={
+            ...state,
+            loading: true,
+            message: null
+        }
+        break
+    case PUT_FINED_SUCCESS:
+        state={
+            ...state,
+            loading: false,
+            message: action.payload
+        }
+        break
+    case PUT_FINED_FAILED:
         state={
             ...state,
             loading: false,

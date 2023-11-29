@@ -58,7 +58,7 @@ export default function Navigation() {
                                 <ul className="navbar-nav">
                                     {features.includes('Dashboard Siswa')|| features.includes('Dashboard Admin')?(
                                         <li className="nav-item">
-                                            <Link to="/panel" className="nav-link">
+                                            <Link to="/panel" className="nav-link active">
                                             Beranda
                                             </Link>
                                         </li>
@@ -111,7 +111,7 @@ export default function Navigation() {
                                     ) : null}
                                     {features.includes('Denda') ? (
                                         <li className="nav-item">
-                                            <Link to="/panel/penalty-settings" className="nav-link">
+                                            <Link to="/panel/fined-settings" className="nav-link">
                                             Pengaturan Denda
                                             </Link>
                                         </li>
