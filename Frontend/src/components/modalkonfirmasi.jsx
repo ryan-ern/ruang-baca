@@ -10,9 +10,9 @@ export default function ModalKonfirmasi({ show, onHide, data, event }) {
     // const navigate = useNavigate();
     return (
         <>
-            <Modal show={show} onHide={onHide} keyboard={false} centered size='md'>
-                <Modal.Header closeButton />
-                <Modal.Body>
+            <Modal show={show} onHide={onHide} keyboard={false} centered size='md' className="custom-modal">
+                {/* <Modal.Header closeButton /> */}
+                <Modal.Body className="mb-3">
                     <Row className="ps-4">
                         <h3>Catatan</h3>
                     </Row>
@@ -21,8 +21,7 @@ export default function ModalKonfirmasi({ show, onHide, data, event }) {
                         {/* {console.log(data)} */}
                     </Row>
                     <Row className="mt-4">
-                        <Col className="ps-5">
-                                                         
+                        <Col className="ps-5">                                                    
                             <Button onClick={onHide} type="button" className="btn-table rounded-pill" variant="danger">Batal</Button> 
                             
                             

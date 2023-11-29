@@ -13,23 +13,24 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
     };
     return (
         <>
-            <Modal show={show} onHide={onHide} keyboard={false} centered size='lg'>
-                <Modal.Header closeButton />
-                <Modal.Body>
+            <Modal show={show} onHide={onHide} keyboard={false} centered size='lg' className="custom-modal">
+               
+                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px'}} className="custom-modal-body">
                     <Row>
-                        <Col lg="3">
-                            {borrowMessage ?
-                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage.response.data.message}</Alert> : null
-                            }
-                            <img src={data?.cover || data?.file} alt={data?.judul} width="155px" />
+                        {inv ? null :
+                            borrowMessage ?
+                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage?.response?.data?.message}</Alert> : null
+                        }
+                        <Col lg="3" className=" text-center" >
+                            <img src={data?.cover || data?.file} alt={data?.judul} width="155px" className="image-modal"/>
                         </Col>
                         <Col lg="9" md>
                             <Row className="g-2 mb-3">
-                                <Col md >
+                                <Col md className="judul-buku">
                                     <h4>{data?.judul}</h4>
                                 </Col>
                                 {inv ? null :
-                                    <Col lg="4" md className=" d-flex justify-content-end">
+                                    <Col lg="4" md className=" btn-pinjam">
                                         <form action="#" onSubmit={(e) => {
                                             e.preventDefault();
                                             dispatch(postBorrow(data.isbn, navigate))
@@ -39,25 +40,26 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                     </Col>
                                 }
                             </Row>
-                            <Row className="g-2">
-                                <Row>
-                                    <Col lg="4" className="ps-1">ISBN</Col>
+                            <Row className="g-2 mb-4">
+                                <Row >
+                                    <Col className="ps-1">ISBN</Col>
                                     <Col >: {data?.isbn}</Col>
+                                    
                                 </Row>
                                 <Row>
-                                    <Col lg="4" className="ps-1">Penulis</Col>
+                                    <Col className="ps-1">Penulis</Col>
                                     <Col>: {data?.penulis || "-"}</Col>
                                 </Row>
                                 <Row>
-                                    <Col lg="4" className="ps-1">Tahun Terbit</Col>
+                                    <Col  className="ps-1">Tahun Terbit</Col>
                                     <Col>: {data?.tahun_terbit}</Col>
                                 </Row>
                                 <Row>
-                                    <Col lg="4" className="ps-1">Penerbit</Col>
+                                    <Col  className="ps-1">Penerbit</Col>
                                     <Col>: {data?.penerbit}</Col>
                                 </Row>
                                 <Row>
-                                    <Col lg="4" className="ps-1">Jumlah Halaman</Col>
+                                    <Col  className="ps-1">Jumlah Halaman</Col>
                                     <Col>: {data?.jumlah_halaman}</Col>
                                 </Row>
                             </Row>

@@ -7,6 +7,33 @@
   height: 120px;
 }
 
+.image-modal {
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+@media (max-width: 991px) {
+  .image-modal {
+    width: 100px;
+    margin-bottom: 20px;
+  }
+}
+
+.btn-pinjam {
+  display: flex;
+  justify-content: end;
+}
+@media (max-width: 768px) {
+  .btn-pinjam {
+    display: flex;
+    justify-content: center;
+  }
+  .judul-buku {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .float-end {
   float: right;
 }
@@ -110,15 +137,26 @@
 }
 
 .responsive-textarea {
-  width: 100%; /* Lebar 100% dari parent element */
-  min-height: 100px; /* Tinggi minimum */
-  max-height: 300px; /* Tinggi maksimum jika diperlukan */
-  resize: vertical; /* Izinkan pengguna untuk merubah tinggi vertikal */
-  /* Atur gaya lainnya sesuai kebutuhan */
+  width: 100%;
+  min-height: 100px;
+  max-height: 300px;
+  resize: vertical;
 }
-/* CSS */
+
 .custom-modal .modal-content {
-  border-radius: 25px; /* Atur border-radius yang diinginkan */
+  border-radius: 25px;
+}
+
+.custom-modal-body {
+  padding: 3rem;
+}
+@media (max-width: 467px) {
+  .custom-modal {
+    padding-top: 200px;
+  }
+  .custom-modal-body {
+    padding: 1.5rem;
+  }
 }
 
 .input-group {
@@ -206,13 +244,9 @@
     width: 300px;
   }
 
-  .form-control {
+  /* .btn {
     height: 30px;
-  }
-
-  .btn {
-    height: 30px;
-  }
+  } */
 
   .custom-card {
     padding: 10px;
@@ -305,15 +339,15 @@
 .custom-theader3 th:nth-child(1) {
   border-bottom-left-radius: 12px;
   border-top-left-radius: 12px;
-  width: 5%;
 }
 
 .custom-theader3 th:nth-child(2) {
-  width: 25%;
+  width: 20%;
 }
 
 .custom-theader3 th:nth-child(3),
-.custom-theader3 th:nth-child(4) {
+.custom-theader3 th:nth-child(4),
+.custom-theader3 th:nth-child(5) {
   width: 15%;
 }
 
@@ -322,6 +356,7 @@
   border-top-right-radius: 12px;
 }
 
+.custom-tbody3 td:nth-child(1),
 .custom-tbody3 td:nth-child(2) {
   text-align: left;
 }
@@ -355,7 +390,7 @@
   width: 15%;
 }
 
-.custom-theader5 th:nth-child(6) {
+.custom-theader5 th:last-child {
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
   width: 20%;
@@ -431,18 +466,15 @@
   align-items: center;
   border-bottom-left-radius: 12px;
   border-top-left-radius: 12px;
-  width: 5%;
+  /* width: 15%; */
 }
 
 .custom-theader6 th:nth-child(2) {
-  width: 15%;
-}
-.custom-theader6 th:nth-child(3) {
   width: 25%;
 }
 
-.custom-theader6 th:nth-child(4),
-.custom-theader6 th:nth-child(5) {
+.custom-theader6 th:nth-child(3),
+.custom-theader6 th:nth-child(4) {
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -456,7 +488,7 @@
   align-items: center;
 }
 
-.custom-theader6 th:nth-child(7) {
+.custom-theader6 th:last-child {
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
   width: 15%;
@@ -465,8 +497,8 @@
   align-items: center;
 }
 
-.custom-tbody4 td:nth-child(2),
-.custom-tbody4 td:nth-child(3) {
+.custom-tbody4 td:nth-child(1),
+.custom-tbody4 td:nth-child(2) {
   text-align: left;
 }
 .custom-tbody td {
@@ -509,6 +541,16 @@
   font-weight: 500;
   font-size: smaller;
   color: #5e3c3c;
+  width: 50px;
+  height: 30px;
+  border-radius: 4px;
+  margin: 5px;
+}
+.btn-tbl-info {
+  background: #d4d4d4;
+  font-weight: 500;
+  font-size: smaller;
+  color: rgb(35, 37, 51);
   width: 50px;
   height: 30px;
   border-radius: 4px;

@@ -87,7 +87,7 @@ export default function Register() {
                                                             >
                                                                 <option value={""}>Pilih Jurusan</option>
                                                                 <option value={account.jurusan = "TKJ"}>
-                                  Teknik Komputer & Jaringan
+                                                                Teknik Komputer & Jaringan
                                                                 </option>
                                                                 <option value={account.jurusan = "PM"}>Pemasaran</option>
                                                                 <option value={account.jurusan = "AK"}>Akuntansi</option>

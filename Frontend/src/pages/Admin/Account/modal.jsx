@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { editAccount, postAccountAdmin, postAccountSuper } from "../../../store/account/actions";
 
@@ -52,16 +52,16 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
     }, [show])
     return (
         <>
-            <Modal show={show} onHide={onHide} centered>
+            <Modal show={show} onHide={onHide} centered className="custom-modal">
                 {/* <Modal.Header closeButton /> */}
-                <Modal.Body style={{backgroundColor: '#e0f8f2', borderRadius: '10px'}}>
+                <Modal.Body style={{backgroundColor: '#e0f8f2', borderRadius: '25px'}} className="custom-modal-body pb-5">
                     <Container>
                         <Row>
                             <Col>
                                 <h4>{add? "Tambah Data Super / Admin" : "Edit Data Akun" }</h4>
                             </Col>
                         </Row>
-                        <form onSubmit={(e) => {
+                        <Form onSubmit={(e) => {
                             e.preventDefault();
                             if (add === 'tambah') {
                                 console.log(role)
@@ -88,8 +88,8 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>NISN</label>
-                                    <input
+                                    <Form.Label>NISN</Form.Label>
+                                    <Form.Control
                                         type="text"
                                         name="nisn"
                                         placeholder="Masukkan NISN"
@@ -102,8 +102,8 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>Username</label>
-                                    { add ? <input
+                                    <Form.Label>Username</Form.Label>
+                                    { add ? <Form.Control
                                         type="text"
                                         name="username"
                                         placeholder="Masukkan Username"
@@ -121,8 +121,8 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>Nama</label>
-                                    <input
+                                    <Form.Label>Nama</Form.Label>
+                                    <Form.Control
                                         type="text"
                                         name="nama"
                                         placeholder="Masukkan Nama"
@@ -135,12 +135,12 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>Jurusan</label>
+                                    <Form.Label>Jurusan</Form.Label>
                                     {add ? <span className="form-control bg-light mb-4">
                                         {data.jurusan}
                                     </span>
                                         :
-                                        <input
+                                        <Form.Select
                                             type="text"
                                             name="jurusan"
                                             placeholder="Masukkan Jurusan"
@@ -154,8 +154,8 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>Whatsapp</label>
-                                    <input
+                                    <Form.Label>Whatsapp</Form.Label>
+                                    <Form.Control
                                         required
                                         type="tel"
                                         pattern="^08\d{9,15}$"
@@ -174,19 +174,19 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>Role</label>
-                                    <select name="role" onChange={(e) => {
+                                    <Form.Label>Role</Form.Label>
+                                    <Form.Select name="role" onChange={(e) => {
                                         setRole({ ...role, role: e.target.value });
-                                    }} className="form-select bg-light border-light mb-4">
+                                    }} className="form-control bg-light border-light mb-4">
                                         <option value="admin">Admin</option>
                                         <option value="superadmin">Superadmin</option>
-                                    </select>
+                                    </Form.Select>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
-                                    <label>Password</label>
-                                    <input
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
                                         type="password"
                                         name="password"
                                         placeholder="Masukkan Password"
@@ -202,15 +202,15 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                 <Col>
                                     <div className="float-end mt-2">
                                         <div className="d-flex flex-wrap gap-2">
-                                            <button onClick={onHide} type="button" className="btn btn-danger px-3">Batal</button>
-                                            <button type="submit" className="btn btn-success px-3">
+                                            <Button onClick={onHide} variant="danger" className="btn-table rounded-pill">Batal</Button>
+                                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="success">
                                                 {add? 'Tambah data':  "Edit Data"}
-                                            </button>
+                                            </Button>
                                         </div>
                                     </div>
                                 </Col>
                             </Row>
-                        </form>
+                        </Form>
                     </Container>
                 </Modal.Body>
             </Modal>
