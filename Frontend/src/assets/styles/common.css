@@ -488,7 +488,7 @@
   align-items: center;
 }
 
-.custom-theader6 th:nth-child(8) {
+.custom-theader6 th:last-child {
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
   width: 15%;
