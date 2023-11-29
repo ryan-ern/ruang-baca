@@ -42,9 +42,9 @@ export default function Dashboard() {
                                     alignItems: "center",
                                 }}
                             >
-                                <h5 className="text-center">
+                                <h3 className="text-center">
                   RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
-                                </h5>
+                                </h3>
                             </div>
                         </Col>
                     </Row>
