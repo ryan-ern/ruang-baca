@@ -180,7 +180,7 @@ export default function Account() {
                                 </Col>
                                 {acc.response.message === 'Anda Admin' ? null :
                                     <Col className='d-flex justify-content-end'>
-                                        <button onClick={() => { setAddAccount('tambah'); setShowModal(true);}} className='btn btn-success px-3'>Tambah Admin</button>
+                                        <Button onClick={() => { setAddAccount('tambah'); setShowModal(true);}} className="btn-table rounded-pill custom-button" variant="sucess">Tambah Admin</Button>
                                     </Col>
                                 }
                             </Row>
@@ -232,7 +232,7 @@ export default function Account() {
                             <Row className="align-items-md-center mt-3">
                                 <Col>
                                     <nav aria-label="Page navigation">
-                                        <ul className="pagination pagination-rounded justify-content-end mb-2">
+                                        <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
                                                 <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">

@@ -112,7 +112,7 @@ export default function Login() {
                                                     </Form.Group>
                                                     <div className="pb-4">
                                                         <Button
-                                                            className="btn custom-button w-100 rounded-pill py-2"
+                                                            className="btn custom-button w-100 rounded-pill"
                                                             type="submit"
                                                             variant="success"
                                                         >

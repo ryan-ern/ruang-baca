@@ -6,6 +6,7 @@ import { useEffect, useMemo } from "react";
 import { borrow, clearBorrowMessage } from "../../../store/borrow/actions";
 import { usePagination, useTable } from "react-table";
 import moment from 'moment'
+import { Link } from "react-router-dom";
 
 export default function TablePeminjaman() {
     const dispatch = useDispatch()
@@ -86,7 +87,9 @@ export default function TablePeminjaman() {
                                 </Col>
                                 <Col>
                                     <div className="d-flex justify-content-end">
-                                        <Button variant="success" className=" btn-table rounded-pill custom-button">Pengembalian</Button>
+                                        <Link to="/panel/pengembalian">
+                                            <Button variant="success" className=" btn-table rounded-pill custom-button">Pengembalian</Button>
+                                        </Link>
                                     </div>
                                 </Col>
                             </Row>

@@ -244,13 +244,9 @@
     width: 300px;
   }
 
-  .form-control {
+  /* .btn {
     height: 30px;
-  }
-
-  .btn {
-    height: 30px;
-  }
+  } */
 
   .custom-card {
     padding: 10px;
@@ -343,15 +339,15 @@
 .custom-theader3 th:nth-child(1) {
   border-bottom-left-radius: 12px;
   border-top-left-radius: 12px;
-  width: 5%;
 }
 
 .custom-theader3 th:nth-child(2) {
-  width: 25%;
+  width: 20%;
 }
 
 .custom-theader3 th:nth-child(3),
-.custom-theader3 th:nth-child(4) {
+.custom-theader3 th:nth-child(4),
+.custom-theader3 th:nth-child(5) {
   width: 15%;
 }
 
@@ -360,6 +356,7 @@
   border-top-right-radius: 12px;
 }
 
+.custom-tbody3 td:nth-child(1),
 .custom-tbody3 td:nth-child(2) {
   text-align: left;
 }
@@ -393,7 +390,7 @@
   width: 15%;
 }
 
-.custom-theader5 th:nth-child(6) {
+.custom-theader5 th:last-child {
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
   width: 20%;
@@ -469,18 +466,15 @@
   align-items: center;
   border-bottom-left-radius: 12px;
   border-top-left-radius: 12px;
-  width: 5%;
+  /* width: 15%; */
 }
 
 .custom-theader6 th:nth-child(2) {
-  width: 15%;
-}
-.custom-theader6 th:nth-child(3) {
   width: 25%;
 }
 
-.custom-theader6 th:nth-child(4),
-.custom-theader6 th:nth-child(5) {
+.custom-theader6 th:nth-child(3),
+.custom-theader6 th:nth-child(4) {
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -494,7 +488,7 @@
   align-items: center;
 }
 
-.custom-theader6 th:nth-child(7) {
+.custom-theader6 th:nth-child(8) {
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
   width: 15%;
@@ -503,8 +497,8 @@
   align-items: center;
 }
 
-.custom-tbody4 td:nth-child(2),
-.custom-tbody4 td:nth-child(3) {
+.custom-tbody4 td:nth-child(1),
+.custom-tbody4 td:nth-child(2) {
   text-align: left;
 }
 .custom-tbody td {
@@ -547,6 +541,16 @@
   font-weight: 500;
   font-size: smaller;
   color: #5e3c3c;
+  width: 50px;
+  height: 30px;
+  border-radius: 4px;
+  margin: 5px;
+}
+.btn-tbl-info {
+  background: #d4d4d4;
+  font-weight: 500;
+  font-size: smaller;
+  color: rgb(35, 37, 51);
   width: 50px;
   height: 30px;
   border-radius: 4px;

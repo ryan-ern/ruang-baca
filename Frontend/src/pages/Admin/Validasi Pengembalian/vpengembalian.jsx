@@ -1,100 +1,71 @@
-import { useEffect, useMemo } from 'react'
-import { Alert, Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useMemo, } from 'react'
+import {  Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import {  useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-// import ModalInventory from './modal';
-// import Top from './top';
-import "../../../assets/styles/common.css";
-import { borrowAdmin, clearBorrowMessage, postAcceptBorrow, postDeniedBorrow } from '../../../store/actions';
+// import { account } from '../../../store/account/actions';
+// import ModalEditAccount from '../Account/modal';
 import moment from 'moment';
-import StatusBadge from '../../../components/Statusbadge';
 
-export default function ValidationPinjam() {
-    const dispatch = useDispatch()
-    const pinjam = useSelector((state) => state.borrow)
-    const editMessage = useSelector((state) => state.borrow.accept.message)
-    const createMessage = useSelector((state) => state.borrow.denied.message)
-    const deleteMessage = useSelector((state) => state.borrow.delete.message)
-
-    useEffect(() => {
-        dispatch(borrowAdmin())
-    }, [])
-
+export default function Vpengembalian() {
+    // const dispatch = useDispatch()
+    const acc = useSelector((state) => state.account)
+    // const editMessage = useSelector((state) => state.account.edit.message)
+    // const deleteMessage = useSelector((state) => state.account.delete.message)
     const columns = useMemo(
         () => [
             {
-                Header: 'Nama',
-                accessor: 'name',
+                Header: 'No',
+                accessor: (_, index) => index + 1
+            },
+            {
+                Header: 'NISN',
+                accessor: 'nisn',
                 Cell: ({value}) => (value)
             },
             {
                 Header: 'Judul Buku',
                 accessor: 'judul',
-                Cell: ({value}) => (value)
-            },
-            {
-                Header: 'ISBN',
-                accessor: 'book_isbn',
                 Cell: ({value}) => (value),
             },
             {
-                Header: 'Tanggal Peminjaman',
+                Header: 'Tanggal Pinjam',
                 accessor: 'created_at',
-                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm'),
+                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
-                Header: 'Tanggal Pengembalian',
+                Header: 'Tenggat Pengembalian',
                 accessor: 'due_date',
-                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm'),
+                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
             },
             {
-                Header: 'status',
-                accessor: 'status',
-                Cell: ({value}) => <StatusBadge status={value} />,
+                Header: 'Denda',
+                accessor: 'denda',
+                Cell: ({value}) => (value)
             },
             {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({row}) => (
+                Cell: () => (
                     <div className='text-center'>
-                        {row.original.status === 'SUKSES' || row.original.status === 'DITOLAK' ? (
-                            <Button
-                                variant='dark'
-                                onClick={() => {
-                                    // dispatch(deleteBorrow(row.original.id))
-                                    console.log(row.original)
-                                }}
-                                className='btn-tbl-info'
-                            >
-                                Reset
-                            </Button>
-                        ) : (
-                            <>
-                                <Button
-                                    variant='success'
-                                    onClick={() => {
-                                        dispatch(postAcceptBorrow(row.original.id))
-                                    }}
-                                    className='btn-tbl-detail'
-                                >
-                                        Terima
-                                </Button>
-                                <Button
-                                    variant='danger'
-                                    onClick={() => {
-                                        if (confirm("Yakin Ingin Menolak Peminjaman " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postDeniedBorrow(row.original.id))
-                                    }}
-                                    className='btn-tbl-delete'
-                                >
-                                        Tolak
-                                </Button>
-                            </>
-                        )}
+                        <Button
+                            variant='success'
+                            onClick={() => {
+                                
+                            }}
+                            className='btn-tbl-detail'
+                        >Terima</Button>
+                        <Button
+                            variant='danger'
+                            onClick={() => {
+                                
+                            }}
+                            className='btn-tbl-delete'
+                        >Tolak</Button>
                     </div>
                 ),
             },
@@ -103,8 +74,8 @@ export default function ValidationPinjam() {
     )
     
     const data = useMemo(
-        () => (pinjam.response?.data || []),
-        [pinjam.response.data],
+        () => (acc.response?.data || []),
+        [acc.response.data],
     );
 
     const {
@@ -122,10 +93,8 @@ export default function ValidationPinjam() {
             columns,
             data,
             initialState:{
-                pageSize: 10,
-                sortBy: [{ id: 'created_at', desc: true }],
-            },
-            
+                pageSize:10,
+            }
         },
         useGlobalFilter,
         useSortBy,
@@ -134,9 +103,19 @@ export default function ValidationPinjam() {
     
     const { globalFilter } = state
 
-    const handleDismiss = () => {
-        dispatch(clearBorrowMessage());
-    };
+    // const [showModal, setShowModal] = useState(false);
+    // const [selectedBook, setSelectedBook] = useState(null);
+
+    
+
+    // const handleClose = () => {
+    //     setShowModal(false)
+    // };
+
+    // useEffect(() => {
+    //     dispatch(account())
+    // }, [])
+
 
     return (
         <Container>
@@ -146,29 +125,24 @@ export default function ValidationPinjam() {
                 <Col className='my-5'>
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                         <CardBody>
-                            <Row>
+                            {/* <Row>
                                 <Col className='text-center'>
-                                    {deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='danger'>{deleteMessage.message}</Alert> :
-                                        (editMessage || createMessage) ? (
-                                            <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
-                                                {console.log(editMessage)}
-                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.data.message)} Dengan ISBN : ${((editMessage && editMessage.data.book_isbn) || (createMessage &&  createMessage.data.data.book_isbn))}`}
-                                            </Alert>
-                                        ) : null}
+                                    {(editMessage || deleteMessage) ?
+                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                        :
+                                        null
+                                    }
                                 </Col>
-                            </Row>
+                            </Row> */}
                             <Row className="mb-2">
                                 <Col>
-                                    <div className="mb-2 d-inline-block">
-                                        <b>Validasi Peminjaman Buku</b>
-                                    </div>
+                                    <div>Validasi Pengembalian</div>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
-                                    <div className="position-relative mx-3">
-                                        <input type="date" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
-                                    </div>
-                                    <div className="position-relative">
-                                        <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data peminjaman" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                    <div className="mb-2 d-inline-block">
+                                        <div className="position-relative">
+                                            <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari NISN atau Judul" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                        </div>
                                     </div>
                                 </Col>
                             </Row>
@@ -176,7 +150,7 @@ export default function ValidationPinjam() {
                                 <Col>
                                     <div className='table-responsive'>
                                         <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader3'>
+                                            <thead className='custom-theader6'>
                                                 {headerGroups.map((headerGroup) => (
                                                     <tr {...headerGroup.getHeaderGroupProps()}>
                                                         {headerGroup.headers.map((column) => {
@@ -192,15 +166,15 @@ export default function ValidationPinjam() {
                                                 ))}
                                             </thead>
                                             {page.length === 0 ? (
-                                                <tbody >
+                                                <tbody>
                                                     <tr>
                                                         <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(pinjam.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                            {(acc.loading) ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
+                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody4'>
                                                     {page.map((row) => {
                                                         prepareRow(row);
                                                         return (
@@ -254,6 +228,7 @@ export default function ValidationPinjam() {
                     </Card>
                 </Col>
             </Row>
+            {/* <ModalEditAccount show={showModal} onHide={handleClose} editdata={selectedBook} /> */}
         </Container>
     )
 }

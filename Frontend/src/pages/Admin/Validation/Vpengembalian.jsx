@@ -20,10 +20,7 @@ export default function Vpengembalian() {
     // const deleteMessage = useSelector((state) => state.account.delete.message)
     const columns = useMemo(
         () => [
-            {
-                Header: 'No',
-                accessor: (_, index) => index + 1
-            },
+           
             {
                 Header: 'Nama',
                 accessor: 'name',
@@ -62,11 +59,11 @@ export default function Vpengembalian() {
                     <div className='text-center'>
                         {row.original.status !== '-' ? (
                             <Button
-                                variant='info'
+                                variant='dark'
                                 onClick={() => {
                                     // dispatch(deleteBorrow(row.original.id))
                                 }}
-                                className='px-2'
+                                className='btn-tbl-info'
                             >
                                 Reset
                             </Button>
@@ -221,7 +218,7 @@ export default function Vpengembalian() {
                             <Row className="align-items-md-center mt-3">
                                 <Col>
                                     <nav aria-label="Page navigation">
-                                        <ul className="pagination pagination-rounded justify-content-end mb-2">
+                                        <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
                                                 <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">

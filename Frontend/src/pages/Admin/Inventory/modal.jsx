@@ -254,7 +254,7 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                     <div className="float-end mt-2">
                                         <div className="d-flex flex-wrap gap-2">
                                             <Button onClick={onHide} type="button" className="btn-table rounded-pill" variant="danger">Batal</Button>
-                                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="sucess">
+                                            <Button type="submit" variant="sucess" className="btn-table rounded-pill custom-button" >
                                                 {editdata ? <span>Edit Data</span> : <span>Tambahkan</span>}
                                             </Button>
                                         </div>
