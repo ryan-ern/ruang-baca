@@ -1,4 +1,4 @@
-import { Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import "../../../assets/styles/common.css";
 import Waveup from "../../../components/background/Wavetop";
 import Wavebot from "../../../components/background/Wavebot";
@@ -38,45 +38,59 @@ export default function Fined() {
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4 mt-2">
                         <Card.Body className="p-sm-3">
                             <h5>Pengaturan Denda</h5>
-                            <form onSubmit={(e) => {
+                            <Form onSubmit={(e) => {
                                 e.preventDefault();
                             }}>
-                                <label className="mt-3">Denda Harian (Rp.)</label>
-                                <input
-                                    type="text"
-                                    className="form-control mb-3" placeholder="1000"
-                                    defaultValue={finedData?.denda?.nominal}
-                                    disabled={editData}
-                                    onChange={(e) => setData({...data, nominal: e.target.value})}>
-                                </input>
-                                <label>Ketentuan</label>
-                                <textarea
-                                    rows="5"
-                                    className="bg-light responsive-textarea"
-                                    placeholder="Masukkan Ketentuan Denda"
-                                    name='ketentuan'
-                                    defaultValue={finedData?.denda?.text}
-                                    required
-                                    disabled={editData}
-                                    onChange={(e) => setData({...data, text: e.target.value})}
-                                ></textarea>
-                                {editData ?
-                                    <button
-                                        className={`btn px-3 btn-info`}
-                                        onClick={handleEditClick}
-                                    >
+                                <Row>
+                                    <Col>
+                                        <Form.Label className="mt-3">Denda Harian (Rp.)</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            className="form-control mb-3" placeholder="1000"
+                                            defaultValue={finedData?.denda?.nominal}
+                                            disabled={editData}
+                                            onChange={(e) => setData({...data, nominal: e.target.value})}>
+                                        </Form.Control>
+                                    </Col>
+                                    <Col></Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Ketentuan</Form.Label>
+                                        <textarea
+                                            className="bg-light responsive-textarea"
+                                            placeholder="Masukkan Ketentuan Denda"
+                                            name='ketentuan'
+                                            defaultValue={finedData?.denda?.text}
+                                            required
+                                            disabled={editData}
+                                            onChange={(e) => setData({...data, text: e.target.value})}
+                                        ></textarea>
+                                        
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col  className="mt-4 d-flex justify-content-end">
+                                        {editData ?
+                                            <Button
+                                                className={`btn-table rounded-pill`}
+                                                variant={`danger`}
+                                                onClick={handleEditClick}
+                                            >
                                         Edit
-                                    </button>
-                                    :
-                                    <button
-                                        className={`btn px-3 btn-success`}
-                                        type="submit"
-                                        onClick={handleSubmit}
-                                    >
+                                            </Button>
+                                            :
+                                            <Button
+                                                className={`btn-table rounded-pill custom-button`}
+                                                variant={`sucess`}
+                                                type="submit"
+                                                onClick={handleSubmit}
+                                            >
                                         Simpan
-                                    </button>
-                                }
-                            </form>
+                                            </Button>
+                                        }</Col>
+                                </Row>
+                            </Form>
                         </Card.Body>
                     </Card>
                 </Col>
