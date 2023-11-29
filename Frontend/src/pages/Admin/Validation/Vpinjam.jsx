@@ -104,7 +104,7 @@ export default function ValidationPinjam() {
     
     const data = useMemo(
         () => (pinjam.response?.data || []),
-        [pinjam.response.data],
+        [pinjam.response?.data],
     );
 
     const {
@@ -165,7 +165,7 @@ export default function ValidationPinjam() {
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="position-relative mx-3">
-                                        <input type="date" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                        <input type="date" className="form-control" onChange={(e) => console.log(e.target.value)} style={{ backgroundColor: '#f3f6f9' }} />
                                     </div>
                                     <div className="position-relative">
                                         <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data peminjaman" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />

@@ -48,7 +48,7 @@ export default function TablePeminjaman() {
     )
     const data = useMemo(
         () => (dataPinjam.response?.data || []),
-        [dataPinjam.response.data]
+        [dataPinjam.response?.data]
     );
 
     const {
