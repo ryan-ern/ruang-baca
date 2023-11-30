@@ -37,6 +37,7 @@ export default function Profil() {
     const handleDismiss = () => {
         dispatch(clearEditProfileMessage());
     };
+  
 
     return(
         <>

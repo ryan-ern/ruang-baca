@@ -12,6 +12,7 @@ import ModalDetailBuku from '../../../components/modal';
 import Top from './top';
 import "../../../assets/styles/common.css";
 import ModalKonfirmasi from '../../../components/modalkonfirmasi';
+import { jurusan } from '../../../store/actions';
 
 export default function Inventory() {
     const dispatch = useDispatch()
@@ -22,6 +23,7 @@ export default function Inventory() {
 
     useEffect(() => {
         dispatch(inventory())
+        dispatch(jurusan())
     }, [])
 
     const columns = useMemo(

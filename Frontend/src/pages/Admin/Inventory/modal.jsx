@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editInventory, postInventory } from "../../../store/inventory/actions";
 import "../../../assets/styles/common.css";
 
 export default function ModalInventory({ show, onHide, editdata }) {
     const dispatch = useDispatch()
     const [cover, setCover] = useState(false)
+    const dataJurusan = useSelector((state) => state.major.response)
     const [data, setData] = useState({
         judul: '',
         file: '',
@@ -18,7 +19,6 @@ export default function ModalInventory({ show, onHide, editdata }) {
         stok: '',
         sinopsis: '',
         jurusan: '',
-        
     })
 
     const handleClick = () => {
@@ -55,7 +55,6 @@ export default function ModalInventory({ show, onHide, editdata }) {
             });
             setCover(false)
         }
-        // dispatch(inventory())
     }, [show])
     return (
         <>
@@ -185,15 +184,21 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                 </Col>
                                 <Col md>
                                     <label>Jurusan</label>
-                                    <input
-                                        type="text"
+                                    <select
                                         className="form-control bg-light"
-                                        placeholder="Masukkan Jurusan Buku"
                                         name="jurusan"
-                                        defaultValue={data.jurusan}
+                                        value={data.jurusan}
+                                        onChange={(e) => setData({ ...data, jurusan: e.target.value })}
                                         required
-                                        onChange={(e) => setData({...data, jurusan: e.target.value})}
-                                    />
+                                    >
+                                        <option value="-">-</option>
+                                        {Array.isArray(dataJurusan?.data?.jurusan) &&
+                                            dataJurusan?.data?.jurusan.map((item) => (
+                                                <option key={item.id} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                    </select>
                                 </Col>
                             </Row>
                             <Row className="g-2 mt-3">
