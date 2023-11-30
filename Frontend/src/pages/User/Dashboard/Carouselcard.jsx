@@ -2,13 +2,21 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../../../assets/styles/common.css";
 import { Card, } from "react-bootstrap";
-import IMAGES from "../../../assets/images";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { jurusan } from "../../../store/actions";
 
 export default function Carouselcard() {
     const handleClick = (index) => {
     // Fungsi yang akan dijalankan saat card diklik
         console.log(`Card dengan index ${index} diklik!`);
     };
+
+    const dispatch = useDispatch()
+    const dataJurusan = useSelector((state) => state.major.response)
+    useEffect(() => {
+        dispatch(jurusan()) 
+    },[])
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -28,64 +36,25 @@ export default function Carouselcard() {
             items: 3,
         },
     };
-    const cardsData = [
-        {
-            description: "Akuntansi dan Keuangan Lembaga",
-            imageSrc: IMAGES.akuntan,
-        },
-        {
-            description: "Multimedia",
-            imageSrc: IMAGES.multimedia,
-        },
-        {
-            description: "Teknik Komputer & Jaringan",
-            imageSrc: IMAGES.jarkom,
-        },
-        {
-            description: "Rekayasa Perangkat Lunak",
-            imageSrc: IMAGES.rpl,
-        },
-        {
-            description: "Teknik Kendaraan Ringan",
-            imageSrc: IMAGES.tkr,
-        },
-        {
-            description: "Keperawatan",
-            imageSrc: IMAGES.keperawatan,
-        },
-        {
-            description: "Farmasi Klinis dan Komunitas",
-            imageSrc: IMAGES.farmasi,
-        },
-        {
-            description: "Pemasaran",
-            imageSrc: IMAGES.pemasaran,
-        },
-        {
-            description: "Teknik Sepeda Motor",
-            imageSrc: IMAGES.tsm,
-        },
-
-    // Tambahkan kartu lain sesuai kebutuhan
-    ];
-
+    
     return (
         <Carousel responsive={responsive}>
-            {cardsData.map((card, index) => (
-                <Card
-                    key={index}
-                    text="black"
-                    className="text-center cardjurusan p-0 m-2 me-3"
-                    onClick={() => handleClick(index)}
-                >
-                    <Card.Body className="cardjurusan-body">
-                        <Card.Text className="cardjurusan-text">
-                            {card.description}
-                        </Card.Text>
-                        <Card.Img className="cardjurusan-img" src={card.imageSrc} />
-                    </Card.Body>
-                </Card>
-            ))}
+            {Array.isArray(dataJurusan?.data?.jurusan) &&
+                dataJurusan.data.jurusan.map((card, index) => (
+                    <Card
+                        key={index}
+                        text="black"
+                        className="text-center cardjurusan p-0 m-2 me-3"
+                        onClick={() => handleClick(index)}
+                    >
+                        <Card.Body className="cardjurusan-body">
+                            <Card.Text className="cardjurusan-text">
+                                {card?.name}
+                            </Card.Text>
+                            <Card.Img className="cardjurusan-img" src={card?.photo} />
+                        </Card.Body>
+                    </Card>
+                ))}
         </Carousel>
     );
 }

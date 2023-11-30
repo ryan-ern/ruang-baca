@@ -189,9 +189,10 @@ export default function ModalInventory({ show, onHide, editdata }) {
                                         name="jurusan"
                                         value={data.jurusan}
                                         onChange={(e) => setData({ ...data, jurusan: e.target.value })}
-                                        required
+                                        required={data.jurusan === ""}
                                     >
-                                        <option value="-">-</option>
+                                        <option value="">--Pilih Jurusan--</option>
+                                        <option value="lainnya">lainnya</option>
                                         {Array.isArray(dataJurusan?.data?.jurusan) &&
                                             dataJurusan?.data?.jurusan.map((item) => (
                                                 <option key={item.id} value={item.name}>

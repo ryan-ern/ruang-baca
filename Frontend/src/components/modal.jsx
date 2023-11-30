@@ -31,7 +31,7 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                     <Row>
                         {inv ? null :
                             borrowMessage ?
-                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage?.response?.data?.message}</Alert> : null
+                                <Alert className="text-center" dismissible onClose={handleDismiss} variant="info">{borrowMessage && borrowMessage?.response?.data?.message || borrowMessage.message}</Alert> : null
                         }
                         <Col lg="3" className=" text-center" >
                             <img src={data?.cover || data?.file} alt={data?.judul} width="155px" className="image-modal"/>
@@ -47,7 +47,7 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                             e.preventDefault();
                                             // dispatch(postBorrow(data.isbn, navigate))
                                         }}>
-                                            <Button variant="success" onClick={handleClick} className="btn-table rounded-pill custom-button" disabled={borrowMessage} >Pinjam</Button>
+                                            <Button variant="success" onClick={handleClick} className="btn-table rounded-pill custom-button">Pinjam</Button>
                                         </form>
                                     </Col>
                                 }

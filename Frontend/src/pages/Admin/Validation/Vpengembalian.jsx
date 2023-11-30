@@ -9,7 +9,7 @@ import Wavebot from '../../../components/background/Wavebot';
 // import { account } from '../../../store/account/actions';
 // import ModalEditAccount from '../Account/modal';
 import moment from 'moment';
-import { returnAdmin } from '../../../store/actions';
+import { postReturn, returnAdmin } from '../../../store/actions';
 import StatusBadge from '../../../components/Statusbadge';
 
 export default function Vpengembalian() {
@@ -72,20 +72,11 @@ export default function Vpengembalian() {
                                 <Button
                                     variant='success'
                                     onClick={() => {
-                                        // dispatch(postAcceptBorrow(row.original.id))
+                                        dispatch(postReturn(row.original.id))
                                     }}
                                     className='btn-tbl-detail'
                                 >
                                         Terima
-                                </Button>
-                                <Button
-                                    variant='danger'
-                                    onClick={() => {
-                                        // if (confirm("Yakin Ingin Menolak Peminjaman " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postDeniedBorrow(row.original.id))
-                                    }}
-                                    className='btn-tbl-delete'
-                                >
-                                        Tolak
                                 </Button>
                             </>
                         )}

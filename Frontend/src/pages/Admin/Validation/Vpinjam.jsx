@@ -9,7 +9,7 @@ import Wavebot from '../../../components/background/Wavebot';
 // import ModalInventory from './modal';
 // import Top from './top';
 import "../../../assets/styles/common.css";
-import { borrowAdmin, clearBorrowMessage, postAcceptBorrow, postDeniedBorrow } from '../../../store/actions';
+import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow } from '../../../store/actions';
 import moment from 'moment';
 import StatusBadge from '../../../components/Statusbadge';
 
@@ -66,8 +66,8 @@ export default function ValidationPinjam() {
                             <Button
                                 variant='dark'
                                 onClick={() => {
-                                    // dispatch(deleteBorrow(row.original.id))
-                                    console.log(row.original)
+                                    if(confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(deleteBorrow(row.original.id))
+                                    // console.log(row.original)
                                 }}
                                 className='btn-tbl-info'
                             >
@@ -148,7 +148,7 @@ export default function ValidationPinjam() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='danger'>{deleteMessage.message}</Alert> :
+                                    {deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='info'>{deleteMessage.data.message}</Alert> :
                                         (editMessage || createMessage) ? (
                                             <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
                                                 {console.log(editMessage)}
