@@ -20,6 +20,7 @@ import Account from "./pages/Admin/Account/Account";
 import ValidationPinjam from "./pages/Admin/Validation/Vpinjam";
 import Vpengembalian from "./pages/Admin/Validation/vpengembalian";
 import Fined from "./pages/Admin/Denda/denda";
+import Jurusan from "./pages/Admin/Jurusan";
 
 /**
  * Admin
@@ -69,6 +70,9 @@ export default function RoutesApp() {
                         </Route>
                         <Route path="/panel/fined-settings" element={<UseFeature allow="Denda" />}>
                             <Route index element={<Fined />}/>    
+                        </Route>
+                        <Route path="/panel/major-settings" element={<UseFeature allow="jurusan" />}>
+                            <Route index element={<Jurusan />}/>    
                         </Route>
                         <Route path="/panel/profil" element={<Profil/>}/>                       
                     </Route>

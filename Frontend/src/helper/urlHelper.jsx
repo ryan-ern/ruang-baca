@@ -34,4 +34,9 @@ export const URL_GET_FINED = "/denda"
 export const URL_PUT_FINED= "/denda"
 
 // unfinished
+export const URL_GET_JURUSAN = '/jurusan'
+export const URL_POST_JURUSAN = '/createJurusan'
+export const URL_PATCH_JURUSAN = '/updateJurusan/:id'
+export const URL_DELETE_JURUSAN = '/deleteJurusan/:id'
+
 export const URL_DELETE_BORROW = '/deletePeminjaman/:id'

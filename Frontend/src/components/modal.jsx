@@ -1,14 +1,12 @@
 import { Modal, Row, Col, Alert, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearBorrowMessage, postBorrow } from "../store/borrow/actions";
+import { clearBorrowMessage } from "../store/borrow/actions";
 import { useState } from "react";
 import ModalKetentuan from "../pages/User/Dashboard/modalketentuan";
 
 export default function ModalDetailBuku({ show, onHide, data, inv }) {
     const borrowMessage = useSelector((state) => state.borrow.add.message)
     const dispatch = useDispatch()
-    const navigate = useNavigate();
 
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());

@@ -116,6 +116,13 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
+                                    {features.includes('jurusan') ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/major-settings" className="nav-link">
+                                            Jurusan
+                                            </Link>
+                                        </li>
+                                    ) : null}
                                 </ul>
                             </Nav>
                             <Navbar.Text className="d-flex">

@@ -7,6 +7,7 @@ import accountSaga from './account/sagas';
 import { borrowSaga } from './borrow/sagas';
 import { returnSaga } from './return/sagas';
 import { finedSaga } from './fined/saga';
+import { majorSaga } from './major/sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -17,6 +18,7 @@ export default function* rootSaga() {
         fork(accountSaga),
         fork(borrowSaga),
         fork(returnSaga),
-        fork(finedSaga)
+        fork(finedSaga),
+        fork(majorSaga)
     ]);
 }

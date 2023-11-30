@@ -1,29 +1,30 @@
 import { useEffect } from "react";
-import { Modal, Row, Col, Button } from "react-bootstrap";
-// import { deleteAccount, deleteInventory } from "../../../store/actions";
+import { Modal, Row, Col, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getFined, postBorrow } from "../../../store/actions";
-// import { useDispatch } from "react-redux";
+import { clearBorrowMessage, getFined, postBorrow } from "../../../store/actions";
 import { useNavigate } from "react-router-dom";
-// import { postBorrow } from "../store/borrow/actions";
 
 export default function ModalKetentuan({ show, onHide, data}) {
     const dispatch = useDispatch()
-    const ketentuan = useSelector((state)=>state.fined.response.denda)
+    const ketentuan = useSelector((state) => state.fined.response.denda)
+    const borrowMessage = useSelector((state) => state.borrow.add.message)
     useEffect(()=>{
         dispatch(getFined())
     },[])
     const navigate = useNavigate();
-    console.log(ketentuan)
+    const handleDismiss = () => {
+        dispatch(clearBorrowMessage());
+    };
     return (
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='md' className="custom-modal">
-                {/* <Modal.Header closeButton /> */}
                 <Modal.Body className="mb-3">
                     <Row className="ps-4">
                         <h3>Catatan</h3>
                     </Row>
                     <Row className="ps-4">
+                        {borrowMessage ?
+                            <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage?.response?.data?.message}</Alert> : null}
                         <p> {ketentuan?.text} </p>
                         {/* {console.log(data)} */}
                     </Row>
@@ -42,7 +43,7 @@ export default function ModalKetentuan({ show, onHide, data}) {
                             
                         </Col>
                         <Col className=" d-flex justify-content-center"> 
-                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="sucess" 
+                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="sucess" disabled={borrowMessage}
                                 onClick={()=>{
                                     dispatch(postBorrow(data, navigate))
                                 }} >

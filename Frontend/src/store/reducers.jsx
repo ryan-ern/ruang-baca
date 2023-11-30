@@ -7,6 +7,7 @@ import accountReducer from "./account/reducers";
 import borrowReducer from "./borrow/reducer";
 import returnReducer from "./return/reducers";
 import finedReducer from "./fined/reducers";
+import majorReducer from "./major/reducers";
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     borrow: borrowReducer,
     return: returnReducer,
     fined: finedReducer,
+    major: majorReducer,
 })
 
 export default rootReducer;
