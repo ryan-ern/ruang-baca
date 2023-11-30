@@ -2,6 +2,8 @@ import { Modal, Row, Col, Alert, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearBorrowMessage, postBorrow } from "../store/borrow/actions";
+import { useState } from "react";
+import ModalKetentuan from "../pages/User/Dashboard/modalketentuan";
 
 export default function ModalDetailBuku({ show, onHide, data, inv }) {
     const borrowMessage = useSelector((state) => state.borrow.add.message)
@@ -11,6 +13,18 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());
     };
+    const [onShow, setonShow] = useState(false)
+    
+    const handleClick = ()=> {
+        setonShow(true)
+        onHide()
+        
+    }
+    const handleClose = () => {
+        setonShow(false)
+    }
+
+
     return (
         <>
             <Modal show={show} onHide={onHide} keyboard={false} centered size='lg' className="custom-modal">
@@ -33,9 +47,9 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                     <Col lg="4" md className=" btn-pinjam">
                                         <form action="#" onSubmit={(e) => {
                                             e.preventDefault();
-                                            dispatch(postBorrow(data.isbn, navigate))
+                                            // dispatch(postBorrow(data.isbn, navigate))
                                         }}>
-                                            <Button variant="success" type="submit" className="btn-table rounded-pill custom-button">Pinjam</Button>
+                                            <Button variant="success" onClick={handleClick} className="btn-table rounded-pill custom-button" disabled={borrowMessage} >Pinjam</Button>
                                         </form>
                                     </Col>
                                 }
@@ -79,6 +93,7 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                     </Row>
                 </Modal.Body>
             </Modal>
+            <ModalKetentuan show={onShow} onHide={handleClose} data={data?.isbn} />
         </>
     );
 }

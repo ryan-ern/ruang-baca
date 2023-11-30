@@ -37,7 +37,7 @@ export default function Fined() {
                 <Col md={10} lg={10} xl={8}>
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4 mt-2">
                         <Card.Body className="p-sm-3">
-                            <h5>Pengaturan Denda</h5>
+                            <b>Pengaturan Denda</b>
                             <Form onSubmit={(e) => {
                                 e.preventDefault();
                             }}>

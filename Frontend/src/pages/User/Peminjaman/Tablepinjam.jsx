@@ -61,6 +61,10 @@ export default function TablePeminjaman() {
         {
             columns,
             data,
+            initialState:{
+                
+                sortBy: [{ id: 'created_at', desc: true }],
+            },
         },
         usePagination,
     )

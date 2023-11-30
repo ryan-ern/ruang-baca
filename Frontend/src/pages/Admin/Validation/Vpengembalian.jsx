@@ -160,7 +160,7 @@ export default function Vpengembalian() {
                             </Row> */}
                             <Row className="mb-2">
                                 <Col>
-                                    <div>Validasi Pengembalian</div>
+                                    <b>Validasi Pengembalian</b>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="mb-2 d-inline-block">

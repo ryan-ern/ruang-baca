@@ -169,7 +169,7 @@ export default function Account() {
                             </Row>
                             <Row className="mb-2">
                                 <Col>
-                                    <div>Kontrol Akun</div>
+                                    <b>Kontrol Akun</b>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="mb-2 d-inline-block">
