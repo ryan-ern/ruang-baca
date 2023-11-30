@@ -49,6 +49,7 @@ export default function Fined() {
                                             className="form-control mb-3" placeholder="1000"
                                             defaultValue={finedData?.denda?.nominal}
                                             disabled={editData}
+                                            required
                                             onChange={(e) => setData({...data, nominal: e.target.value})}>
                                         </Form.Control>
                                     </Col>
