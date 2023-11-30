@@ -31,7 +31,7 @@ export function* deleteJurusanSaga({ payload: { id, onHide } }) {
         yield put(jurusan())
         yield call(onHide)
     } catch (err) {
-        //
+        // yield put(deleteJurusanFailed(err.response.data))
     }
 }
 export function* getJurusanSaga() {

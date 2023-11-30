@@ -1,4 +1,4 @@
-import { DELETE_JURUSAN, DELETE_JURUSAN_SUCCESS, GET_JURUSAN, GET_JURUSAN_FAILED, GET_JURUSAN_SUCCESS, PATCH_JURUSAN, PATCH_JURUSAN_FAILED, PATCH_JURUSAN_SUCCESS, POST_JURUSAN, POST_JURUSAN_FAILED, POST_JURUSAN_SUCCESS } from "./actionTypes";
+import { CLEAR_JURUSAN_MESSAGES, DELETE_JURUSAN, DELETE_JURUSAN_SUCCESS, GET_JURUSAN, GET_JURUSAN_FAILED, GET_JURUSAN_SUCCESS, PATCH_JURUSAN, PATCH_JURUSAN_FAILED, PATCH_JURUSAN_SUCCESS, POST_JURUSAN, POST_JURUSAN_FAILED, POST_JURUSAN_SUCCESS } from "./actionTypes";
 
 export const jurusan = () => ({
     type: GET_JURUSAN,
@@ -49,4 +49,14 @@ export const deleteJurusan = (id, onHide) => ({
 export const deleteJurusanSuccess = (message) => ({
     type: DELETE_JURUSAN_SUCCESS,
     payload: message
+})
+// export const deleteJurusanFailed = (message) => ({
+//     type: DELETE_JURUSAN_FAILED,
+//     payload: message
+// })
+
+
+export const clearJurusanMessage = () => ({
+    type: CLEAR_JURUSAN_MESSAGES,
+    payload: null
 })

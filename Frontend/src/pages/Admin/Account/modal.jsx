@@ -64,7 +64,6 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                         <Form onSubmit={(e) => {
                             e.preventDefault();
                             if (add === 'tambah') {
-                                console.log(role)
                                 if (role) {
                                     dispatch(postAccountAdmin(data, onHide))
                                 } else {
@@ -140,7 +139,7 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                         {data.jurusan}
                                     </span>
                                         :
-                                        <Form.Select
+                                        <Form.Control
                                             type="text"
                                             name="jurusan"
                                             placeholder="Masukkan Jurusan"
@@ -172,17 +171,19 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                     />
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col>
-                                    <Form.Label>Role</Form.Label>
-                                    <Form.Select name="role" onChange={(e) => {
-                                        setRole({ ...role, role: e.target.value });
-                                    }} className="form-control bg-light border-light mb-4">
-                                        <option value="admin">Admin</option>
-                                        <option value="superadmin">Superadmin</option>
-                                    </Form.Select>
-                                </Col>
-                            </Row>
+                            {editdata? null :
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Role</Form.Label>
+                                        <Form.Select name="role" onChange={(e) => {
+                                            setRole({ ...role, role: e.target.value });
+                                        }} className="form-control bg-light border-light mb-4">
+                                            <option value="admin">Admin</option>
+                                            <option value="superadmin">Superadmin</option>
+                                        </Form.Select>
+                                    </Col>
+                                </Row>
+                            }
                             <Row>
                                 <Col>
                                     <Form.Label>Password</Form.Label>

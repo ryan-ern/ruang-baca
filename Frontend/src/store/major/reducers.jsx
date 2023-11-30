@@ -1,4 +1,4 @@
-import { DELETE_JURUSAN, DELETE_JURUSAN_SUCCESS, GET_JURUSAN, GET_JURUSAN_FAILED, GET_JURUSAN_SUCCESS, PATCH_JURUSAN, PATCH_JURUSAN_FAILED, PATCH_JURUSAN_SUCCESS, POST_JURUSAN, POST_JURUSAN_FAILED, POST_JURUSAN_SUCCESS } from "./actionTypes"
+import { CLEAR_JURUSAN_MESSAGES, DELETE_JURUSAN, DELETE_JURUSAN_SUCCESS, GET_JURUSAN, GET_JURUSAN_FAILED, GET_JURUSAN_SUCCESS, PATCH_JURUSAN, PATCH_JURUSAN_FAILED, PATCH_JURUSAN_SUCCESS, POST_JURUSAN, POST_JURUSAN_FAILED, POST_JURUSAN_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
@@ -97,6 +97,21 @@ const majorReducer = (state = init_state, action) => {
             ...state,
             loading: false,
             delete: {message:action.payload}
+        }
+        break
+    // case DELETE_JURUSAN_FAILED:
+    //     state = {
+    //         ...state,
+    //         loading: false,
+    //         delete: {message:action.payload}
+    //     }
+    //     break
+    case CLEAR_JURUSAN_MESSAGES:
+        state = {
+            ...state,
+            post: {message:null},
+            patch: {message:null},
+            delete: {message:null},
         }
         break
     default:

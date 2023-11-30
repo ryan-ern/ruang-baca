@@ -1,19 +1,18 @@
 import { Card, Col, Row, Container, CardBody, Alert, Button } from "react-bootstrap";
 import "../../../assets/styles/common.css";
-import StatusBadge from "../../../components/Statusbadge";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo } from "react";
-import { clearBorrowMessage } from "../../../store/borrow/actions";
-import { usePagination, useTable } from "react-table";
-import moment from 'moment'
-import { Link } from "react-router-dom";
-import { jurusan } from "../../../store/actions";
+import { useEffect, useMemo, useState } from "react";
+import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
+import { clearJurusanMessage, deleteJurusan, jurusan } from "../../../store/actions";
+import ModalJurusan from "./modalJurusan";
 
 export default function Jurusan() {
     const dispatch = useDispatch()
     const dataPinjam = useSelector((state) => state.borrow)
-    const message = useSelector((state) => state.borrow.add.message)
-
+    const dataJurusan = useSelector((state) => state.major.response)
+    const messageDelete = useSelector((state) => state.major.delete)
+    const messagePost = useSelector((state) => state.major.post)
+    const messagePatch = useSelector((state) => state.major.patch)
     useEffect(() => {
         dispatch(jurusan())
     },[])
@@ -25,31 +24,51 @@ export default function Jurusan() {
                 accessor: (_,index) => index+1
             },
             {
-                Header: 'Judul Buku',
-                accessor: 'judul',
+                Header: 'Nama Jurusan',
+                accessor: 'name',
                 Cell: ({value}) => (value)
             },
             {
-                Header: 'Tanggal Pinjam',
-                accessor: 'created_at',
-                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
+                Header: 'Icon Jurusan',
+                accessor: 'photo',
+                Cell: ({value}) => <img src={value} alt='icon' width="50px"/>
             },
             {
-                Header: 'Tenggat Pengembalian',
-                accessor: 'due_date',
-                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm')
+                Header: 'Aksi',
+                id: 'actions',
+                disableSortBy: true,
+                Cell: ({row}) => (
+                    <div className='text-center'>
+                        <>
+                            <Button
+                                variant='success'
+                                onClick={() => {
+                                    setSelectedBook(row.original)
+                                    setShowModal(true);
+                                }}
+                                className='btn-tbl-detail'
+                            >
+                                        Edit
+                            </Button>
+                            <Button
+                                variant='danger'
+                                onClick={() => {
+                                    if (confirm("Yakin Ingin Menghapus Jurusan " + row.original.name)) dispatch(deleteJurusan(row.original.id))
+                                }}
+                                className='btn-tbl-delete'
+                            >
+                                        Hapus
+                            </Button>
+                        </>
+                    </div>
+                ),
             },
-            {
-                Header: 'Status',
-                accessor: 'status',
-                Cell: ({value}) => <StatusBadge status={value} />
-            }
         ],
         [],
     )
     const data = useMemo(
-        () => (dataPinjam.response?.data || []),
-        [dataPinjam.response?.data]
+        () => (dataJurusan?.data?.jurusan|| []),
+        [dataJurusan?.data?.jurusan]
     );
 
     const {
@@ -58,20 +77,32 @@ export default function Jurusan() {
         headerGroups,
         page,
         prepareRow,
+        state,
+        setGlobalFilter,
+        gotoPage,
+        pageCount,
     } = useTable(
         {
             columns,
             data,
             initialState:{
-                
-                sortBy: [{ id: 'created_at', desc: true }],
-            },
+                pageSize:10,
+            }
         },
+        useGlobalFilter,
+        useSortBy,
         usePagination,
     )
-    
+    const { globalFilter } = state
     const handleDismiss = () => {
-        dispatch(clearBorrowMessage());
+        dispatch(clearJurusanMessage());
+    };
+
+    const [showModal, setShowModal] = useState(false)
+    const [selectedBook, setSelectedBook] = useState(null);
+
+    const handleClose = () => {
+        setShowModal(false)
     };
 
     return (
@@ -82,19 +113,28 @@ export default function Jurusan() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {message ? <Alert dismissible variant='success text-capitalize' onClose={handleDismiss}>{message.message}</Alert> :
-                                        null}
+                                    {messageDelete.message ?
+                                        <Alert dismissible variant='danger text-capitalize' onClose={handleDismiss}>{messageDelete.message.data.message}</Alert>
+                                        :
+                                        (messagePost.message || messagePatch.message) ? (
+                                            <Alert dismissible variant={messagePost.message ? 'success' : 'info'} onClose={handleDismiss}>
+                                                {(messagePost && messagePost?.message?.data?.message) || (messagePatch && messagePatch?.message?.data?.message)}
+                                            </Alert>
+                                        ) :
+                                            null
+                                    }
                                 </Col>
                             </Row>
                             <Row className="mb-3">
                                 <Col>
-                                    <p className=" fw-bold">Peminjaman</p>
+                                    <p className=" fw-bold">Data Jurusan</p>
                                 </Col>
-                                <Col>
-                                    <div className="d-flex justify-content-end">
-                                        <Link to="/panel/pengembalian">
-                                            <Button variant="success" className=" btn-table rounded-pill custom-button">Pengembalian</Button>
-                                        </Link>
+                                <Col className='d-flex justify-content-end'>
+                                    <div className="position-relative px-3">
+                                        <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data jurusan" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                    </div>
+                                    <div className="position-relative">
+                                        <Button className="px-3" variant="success" onClick={() =>{setShowModal(true);setSelectedBook(null)}}>Tambah Jurusan</Button>
                                     </div>
                                 </Col>
                             </Row>
@@ -141,10 +181,44 @@ export default function Jurusan() {
                                     </div>
                                 </Col>
                             </Row>
+                            <Row className="align-items-md-center mt-3">
+                                <Col>
+                                    <nav aria-label="Page navigation">
+                                        <ul className="pagination pagination-sm justify-content-end mb-2">
+                                            {/* First */}
+                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                    {'<<'}
+                                                </a>
+                                            </li>
+                                            {/* Previus */}
+                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                            </li>
+                                            {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
+                                                <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
+                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                </li>
+                                            ))}
+                                            {/* Next */}
+                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                            </li>
+                                            {/* Last */}
+                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                    {">>"}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </Col>
+                            </Row>
                         </CardBody>
                     </Card>
                 </Col>
             </Row>
+            <ModalJurusan show={showModal} onHide={handleClose} editdata={selectedBook} />
         </Container>
     );
 }
