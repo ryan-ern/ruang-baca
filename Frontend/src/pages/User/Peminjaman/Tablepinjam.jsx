@@ -4,7 +4,7 @@ import StatusBadge from "../../../components/Statusbadge";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { borrow, clearBorrowMessage } from "../../../store/borrow/actions";
-import { usePagination, useTable } from "react-table";
+import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 import moment from 'moment'
 import { Link } from "react-router-dom";
 
@@ -19,10 +19,6 @@ export default function TablePeminjaman() {
 
     const columns = useMemo(
         () => [
-            {
-                Header: 'No',
-                accessor: (_,index) => index+1
-            },
             {
                 Header: 'Judul Buku',
                 accessor: 'judul',
@@ -57,18 +53,26 @@ export default function TablePeminjaman() {
         headerGroups,
         page,
         prepareRow,
+        state,
+        setGlobalFilter,
+        gotoPage,
+        pageCount,
     } = useTable(
         {
             columns,
             data,
             initialState:{
-                
+                pageSize:3,
                 sortBy: [{ id: 'created_at', desc: true }],
             },
         },
+        useGlobalFilter,
+        useSortBy,
         usePagination,
     )
     
+    const { globalFilter } = state
+
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());
     };
@@ -81,7 +85,7 @@ export default function TablePeminjaman() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {message ? <Alert dismissible variant='success text-capitalize' onClose={handleDismiss}>{message.message}</Alert> :
+                                    {message ? <Alert dismissible variant='success text-capitalize' onClose={handleDismiss}>{message?.response?.data?.message || 'Pengajuan Peminjaman Sukses'}</Alert> :
                                         null}
                                 </Col>
                             </Row>
@@ -91,9 +95,20 @@ export default function TablePeminjaman() {
                                 </Col>
                                 <Col>
                                     <div className="d-flex justify-content-end">
-                                        <Link to="/panel/pengembalian">
-                                            <Button variant="success" className=" btn-table rounded-pill custom-button">Pengembalian</Button>
-                                        </Link>
+                                        <Row>
+                                            <Col>
+                                                <Link to="/panel/pengembalian">
+                                                    <Button variant="success" className="btn-table rounded-pill custom-button">Pengembalian</Button>
+                                                </Link>
+                                            </Col>
+                                            <Col>
+                                                <div className="d-inline-block">
+                                                    <div className="position-relative">
+                                                        <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data buku" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     </div>
                                 </Col>
                             </Row>
@@ -138,6 +153,39 @@ export default function TablePeminjaman() {
                                             )}
                                         </table>
                                     </div>
+                                </Col>
+                            </Row>
+                            <Row className="align-items-md-center mt-3">
+                                <Col>
+                                    <nav aria-label="Page navigation">
+                                        <ul className="pagination pagination-sm justify-content-end mb-2">
+                                            {/* First */}
+                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                    {'<<'}
+                                                </a>
+                                            </li>
+                                            {/* Previus */}
+                                            <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                            </li>
+                                            {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
+                                                <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
+                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                </li>
+                                            ))}
+                                            {/* Next */}
+                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                            </li>
+                                            {/* Last */}
+                                            <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
+                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                    {">>"}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </Col>
                             </Row>
                         </CardBody>

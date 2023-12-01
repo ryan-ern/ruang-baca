@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../store/auth/actions";
+import { jurusan } from "../../store/actions";
 
 export default function Register() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const auth = useSelector((state) => state.auth)
+    const dataJurusan = useSelector((state) => state.major.response)
 
     const [account, setAccount] = useState({
         username: "",
@@ -22,6 +24,7 @@ export default function Register() {
     });
     useEffect(() => {
         if (auth.isLogin) navigate('/panel');
+        dispatch(jurusan())
     }, [])
     return (
         <>
@@ -73,6 +76,24 @@ export default function Register() {
                                                         className="mb-3"
                                                         style={{ marginRight: "10px" }}
                                                     >
+
+                                                        {/* <label>Jurusan</label>
+                                    <select
+                                        className="form-control bg-light"
+                                        name="jurusan"
+                                        value={data.jurusan}
+                                        onChange={(e) => setData({ ...data, jurusan: e.target.value })}
+                                        required={data.jurusan === ""}
+                                    >
+                                        <option value="">--Pilih Jurusan--</option>
+                                        <option value="lainnya">lainnya</option>
+                                        {Array.isArray(dataJurusan?.data?.jurusan) &&
+                                            dataJurusan?.data?.jurusan.map((item) => (
+                                                <option key={item.id} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                    </select> */}
                                                         <Form.Label>
                               Jurusan <span className="text-danger">*</span>
                                                         </Form.Label>
@@ -85,12 +106,13 @@ export default function Register() {
                                                                 required={account.jurusan === ""}
                                                                 autoComplete="jurusan"
                                                             >
-                                                                <option value={""}>Pilih Jurusan</option>
-                                                                <option value={account.jurusan = "TKJ"}>
-                                                                Teknik Komputer & Jaringan
-                                                                </option>
-                                                                <option value={account.jurusan = "PM"}>Pemasaran</option>
-                                                                <option value={account.jurusan = "AK"}>Akuntansi</option>
+                                                                <option value="">--Pilih Jurusan--</option>
+                                                                {Array.isArray(dataJurusan?.data?.jurusan) &&
+                                                                    dataJurusan?.data?.jurusan.map((item) => (
+                                                                        <option key={item.id} value={item.name}>
+                                                                            {item.name}
+                                                                        </option>
+                                                                    ))}
                                                             </Form.Select>
                                                         </div>
                                                     </Form.Group>

@@ -50,7 +50,7 @@ export default function DashboardAdmin() {
                                         <table  className="mb-0 pt-0">
                                             <tbody>
                                                 <tr>
-                                                    <th className="fs-1">13</th>
+                                                    <th className="fs-1">{dashboardState ? dashboardState.countPinjam : '0'}</th>
                                                     <td rowSpan="2" ><img style={{height:'70px',  background: 'transparent', padding:'0px', marginTop:'20px'}} src={IMAGES.peminjaman1}></img></td>
                                                 </tr>
                                                 <tr>
@@ -74,11 +74,11 @@ export default function DashboardAdmin() {
 
                                         
                                                 <tr>
-                                                    <th className="fs-1">15</th>
+                                                    <th className="fs-1">{dashboardState ? dashboardState.countDenda : '0'}</th>
                                                     <td rowSpan="2" ><img style={{height:'80px',  background: 'transparent', padding:'0px',marginTop:'10px'}} src={IMAGES.pengembalian1}></img></td>
                                                 </tr>
                                                 <tr>
-                                                    <td >Permintaan Pengembalian Buku</td>
+                                                    <td >Pendapatan Total Denda</td>
                                                 </tr>
                                             </tbody>
                                         </table>

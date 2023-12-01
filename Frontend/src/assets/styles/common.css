@@ -12,6 +12,7 @@
   width: 100%;
   margin-bottom: 30px;
 }
+
 @media (max-width: 991px) {
   .image-modal {
     width: 100px;
@@ -23,11 +24,13 @@
   display: flex;
   justify-content: end;
 }
+
 @media (max-width: 768px) {
   .btn-pinjam {
     display: flex;
     justify-content: center;
   }
+
   .judul-buku {
     display: flex;
     justify-content: center;
@@ -151,10 +154,12 @@
 .custom-modal-body {
   padding: 3rem;
 }
+
 @media (max-width: 467px) {
   .custom-modal {
     padding-top: 200px;
   }
+
   .custom-modal-body {
     padding: 1.5rem;
   }
@@ -280,7 +285,7 @@
 }
 
 .custom-theader th:nth-child(1) {
-  width: 5%;
+  width: 25%;
   border-bottom-left-radius: 12px;
   border-top-left-radius: 12px;
 }
@@ -357,8 +362,7 @@
   border-top-right-radius: 12px;
 }
 
-.custom-tbody3 td:nth-child(1),
-.custom-tbody3 td:nth-child(2) {
+.custom-tbody3 td:nth-child(1) {
   text-align: left;
 }
 
@@ -426,6 +430,7 @@
 .custom-theader4 th:nth-child(2) {
   width: 15%;
 }
+
 .custom-theader4 th:nth-child(3) {
   width: 25%;
 }
@@ -502,6 +507,7 @@
 .custom-tbody4 td:nth-child(2) {
   text-align: left;
 }
+
 .custom-tbody td {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -517,6 +523,7 @@
   cursor: default;
   /* Mencegah kursor berubah menjadi ikon klik */
 }
+
 .btn-tbl-detail {
   background: #c9f7f5;
   font-weight: 500;
@@ -527,6 +534,7 @@
   border-radius: 4px;
   margin: 5px;
 }
+
 .btn-tbl-edit {
   background: #fbe1a7;
   font-weight: 500;
@@ -537,6 +545,7 @@
   border-radius: 4px;
   margin: 5px;
 }
+
 .btn-tbl-delete {
   background: #f09696;
   font-weight: 500;
@@ -547,6 +556,7 @@
   border-radius: 4px;
   margin: 5px;
 }
+
 .btn-tbl-info {
   background: #d4d4d4;
   font-weight: 500;
@@ -557,6 +567,7 @@
   border-radius: 4px;
   margin: 5px;
 }
+
 .not-found {
   font-size: 10em;
   margin-bottom: 20px;
@@ -632,7 +643,8 @@
 .password-toggle-icon {
   position: absolute;
   top: 50%;
-  right: 10px; /* Atur posisi kanan sesuai kebutuhan */
+  right: 10px;
+  /* Atur posisi kanan sesuai kebutuhan */
   transform: translateY(-50%);
   cursor: pointer;
 }

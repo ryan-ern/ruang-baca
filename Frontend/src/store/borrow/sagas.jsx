@@ -52,7 +52,7 @@ export function* postDeniedBorrowSaga({payload:{id}}) {
         yield put(postDeniedBorrowFailed(err.response.message))
     }
 }
-export function* DeleteBorrowSaga({payload:{id}}) {
+export function* DeleteBorrowSaga({ payload: id }) {
     try {
         const response = yield call(axios.post, URL_DELETE_BORROW.replace(':id', id))
         yield put(deleteBorrowSuccess(response))

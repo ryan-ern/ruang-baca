@@ -9,7 +9,7 @@ import Wavebot from '../../../components/background/Wavebot';
 // import { account } from '../../../store/account/actions';
 // import ModalEditAccount from '../Account/modal';
 import moment from 'moment';
-import { returnAdmin } from '../../../store/actions';
+import { postAcceptReturn, postResetReturn, returnAdmin } from '../../../store/actions';
 import StatusBadge from '../../../components/Statusbadge';
 
 export default function Vpengembalian() {
@@ -42,13 +42,18 @@ export default function Vpengembalian() {
                 Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
             },
             {
+                Header: 'Telat',
+                accessor: 'terlambat',
+                Cell: ({value}) => (value + " Hari")
+            },
+            {
                 Header: 'Denda',
                 accessor: 'denda',
                 Cell: ({value}) => (value)
             },
             {
                 Header: 'status',
-                accessor: 'status',
+                accessor: 'pengembalian',
                 Cell: ({value}) => <StatusBadge status={value} />,
             },
             {
@@ -57,37 +62,27 @@ export default function Vpengembalian() {
                 disableSortBy: true,
                 Cell: ({row}) => (
                     <div className='text-center'>
-                        {row.original.status !== '-' ? (
+                        {row.original.pengembalian === '-' ? (
+                            <Button
+                                variant='success'
+                                onClick={() => {
+                                    dispatch(postAcceptReturn(row.original.id))
+                                }}
+                                className='btn-tbl-detail'
+                            >
+                                        Terima
+                            </Button>
+                        ) : (
+                            
                             <Button
                                 variant='dark'
                                 onClick={() => {
-                                    // dispatch(deleteBorrow(row.original.id))
+                                    // if(confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postResetReturn(row.original.id))
                                 }}
                                 className='btn-tbl-info'
                             >
                                 Reset
                             </Button>
-                        ) : (
-                            <>
-                                <Button
-                                    variant='success'
-                                    onClick={() => {
-                                        // dispatch(postAcceptBorrow(row.original.id))
-                                    }}
-                                    className='btn-tbl-detail'
-                                >
-                                        Terima
-                                </Button>
-                                <Button
-                                    variant='danger'
-                                    onClick={() => {
-                                        // if (confirm("Yakin Ingin Menolak Peminjaman " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postDeniedBorrow(row.original.id))
-                                    }}
-                                    className='btn-tbl-delete'
-                                >
-                                        Tolak
-                                </Button>
-                            </>
                         )}
                     </div>
                 ),
@@ -117,7 +112,9 @@ export default function Vpengembalian() {
             data,
             initialState:{
                 pageSize:10,
-                sortBy: [{ id: 'created_at', desc: true }],
+                sortBy: [
+                    { id: 'created_at', desc: true },
+                    { id: 'status', desc: true },],
             }
         },
         useGlobalFilter,
