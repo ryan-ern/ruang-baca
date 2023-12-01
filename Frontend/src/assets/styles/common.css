@@ -291,7 +291,7 @@
   width: 25%;
 }
 
-.custom-theader th:nth-child(5) {
+.custom-theader th:last-child {
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
 }

@@ -134,7 +134,7 @@ export default function Jurusan() {
                                         <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data jurusan" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                     </div>
                                     <div className="position-relative">
-                                        <Button className="px-3" variant="success" onClick={() =>{setShowModal(true);setSelectedBook(null)}}>Tambah Jurusan</Button>
+                                        <Button className="btn-table rounded-pill custom-button" variant="success" onClick={() =>{setShowModal(true);setSelectedBook(null)}}>Tambah Jurusan</Button>
                                     </div>
                                 </Col>
                             </Row>
