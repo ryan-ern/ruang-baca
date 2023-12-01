@@ -25,7 +25,6 @@ export const URL_GET_BORROW_ADMIN = '/peminjamanAdmin'
 export const URL_GET_BORROW = '/peminjaman'
 export const URL_POST_BORROW = '/addBorrow/:isbn'
 
-export const URL_GET_RETURN= '/pengembalian'
 
 export const URL_POST_ACCEPT_BORROW = '/acceptPeminjaman/:id'
 export const URL_POST_DENIED_BORROW = '/deniedPeminjaman/:id'
@@ -39,6 +38,8 @@ export const URL_POST_JURUSAN = '/createJurusan'
 export const URL_PATCH_JURUSAN = '/updateJurusan/:id'
 export const URL_DELETE_JURUSAN = '/deleteJurusan/:id'
 
+export const URL_GET_RETURN= '/pengembalian'
 export const URL_GET_RETURN_USER= '/pengembalianUser'
+export const URL_POST_ACCEPT_RETURN = '/pengembalian/:id'
+export const URL_POST_RESET_RETURN = '/resetPengembalian/:id'
 // unfinished
-export const URL_POST_ACCEPT_RETURN= '/pengembalian/:id'

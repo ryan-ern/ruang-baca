@@ -123,7 +123,10 @@ export default function ValidationPinjam() {
             data,
             initialState:{
                 pageSize: 10,
-                sortBy: [{ id: 'created_at', desc: true }],
+                sortBy: [
+                    { id: 'created_at', desc: true },
+                    { id: 'status', desc: true },
+                ],
             },
             
         },

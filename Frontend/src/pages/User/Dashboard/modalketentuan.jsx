@@ -23,7 +23,7 @@ export default function ModalKetentuan({ show, onHide, data}) {
                         <h3>Catatan</h3>
                     </Row>
                     <Row className="ps-4">
-                        {borrowMessage ?
+                        {borrowMessage && borrowMessage?.response?.data?.message ?
                             <Alert className="text-center" dismissible onClose={handleDismiss} variant="danger">{borrowMessage && borrowMessage?.response?.data?.message}</Alert> : null}
                         <p> {ketentuan?.text} </p>
                         {/* {console.log(data)} */}
@@ -43,7 +43,7 @@ export default function ModalKetentuan({ show, onHide, data}) {
                             
                         </Col>
                         <Col className=" d-flex justify-content-center"> 
-                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="sucess" disabled={borrowMessage}
+                            <Button type="submit" className="btn-table rounded-pill custom-button" variant="sucess" disabled={borrowMessage?.response?.data?.message}
                                 onClick={()=>{
                                     dispatch(postBorrow(data, navigate))
                                 }} >

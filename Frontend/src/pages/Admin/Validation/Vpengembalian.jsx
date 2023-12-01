@@ -42,13 +42,18 @@ export default function Vpengembalian() {
                 Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
             },
             {
+                Header: 'Telat',
+                accessor: 'terlambat',
+                Cell: ({value}) => (value + " Hari")
+            },
+            {
                 Header: 'Denda',
                 accessor: 'denda',
                 Cell: ({value}) => (value)
             },
             {
                 Header: 'status',
-                accessor: 'status',
+                accessor: 'pengembalian',
                 Cell: ({value}) => <StatusBadge status={value} />,
             },
             {
@@ -57,7 +62,7 @@ export default function Vpengembalian() {
                 disableSortBy: true,
                 Cell: ({row}) => (
                     <div className='text-center'>
-                        {row.original.status !== '-' ? (
+                        {row.original.pengembalian !== '-' ? (
                             <Button
                                 variant='dark'
                                 onClick={() => {
@@ -108,7 +113,9 @@ export default function Vpengembalian() {
             data,
             initialState:{
                 pageSize:10,
-                sortBy: [{ id: 'created_at', desc: true }],
+                sortBy: [
+                    { id: 'created_at', desc: true },
+                    { id: 'status', desc: true },],
             }
         },
         useGlobalFilter,

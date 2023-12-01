@@ -21,10 +21,6 @@ export default function TableKembali() {
     const columns = useMemo(
         () => [
             {
-                Header: 'No',
-                accessor: (_,index) => index+1
-            },
-            {
                 Header: 'Judul Buku',
                 accessor: 'judul',
                 Cell: ({value}) => (value)
@@ -51,7 +47,7 @@ export default function TableKembali() {
             },
             {
                 Header: 'Status',
-                accessor: 'status',
+                accessor: 'pengembalian',
                 Cell: ({value}) => <StatusBadge status={value} />
             }
         ],
@@ -77,8 +73,8 @@ export default function TableKembali() {
             columns,
             data,
             initialState:{
-                
-                sortBy: [{ id: 'created_at', desc: true }],
+                pageSize:3,
+                sortBy: [{ id: 'updated_at', desc: true }],
             },
         },
         useGlobalFilter,
@@ -100,7 +96,7 @@ export default function TableKembali() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {message ? <Alert dismissible variant='success text-capitalize' onClose={handleDismiss}>{message.message}</Alert> :
+                                    {message ? <Alert dismissible variant='success text-capitalize' onClose={handleDismiss}>{message?.response?.data?.message || 'Pengajuan Peminjaman Sukses'}</Alert> :
                                         null}
                                 </Col>
                             </Row>

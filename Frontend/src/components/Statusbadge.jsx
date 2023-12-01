@@ -14,6 +14,11 @@ const StatusBadge = ({ status }) => {
         badgeText = status;
         textColor = "#1BC5BD"; // Teks untuk status approved
         break;
+    case "sukses":
+        badgeColor = "#C9F7F5"; // Warna untuk status approved
+        badgeText = status;
+        textColor = "#1BC5BD"; // Teks untuk status approved
+        break;
     case "DITOLAK":
         badgeColor = "#F09696"; // Warna untuk status rejected
         badgeText = status;
