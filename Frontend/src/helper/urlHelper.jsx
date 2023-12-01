@@ -41,5 +41,13 @@ export const URL_DELETE_JURUSAN = '/deleteJurusan/:id'
 export const URL_GET_RETURN= '/pengembalian'
 export const URL_GET_RETURN_USER= '/pengembalianUser'
 export const URL_POST_ACCEPT_RETURN = '/pengembalian/:id'
-export const URL_POST_RESET_RETURN = '/resetPengembalian/:id'
 // unfinished
+export const URL_POST_RESET_RETURN = '/resetPengembalian/:id'
+// export const URL_GET_
+
+// /searchJurusan/:jurusan
+// /searchJudul/:judul
+// /searchPeminjamanAdmin/:date
+// /searhPeminjaman/:date
+// /searchPengembalianAdmin/:date
+// /searhPengembalian/:date

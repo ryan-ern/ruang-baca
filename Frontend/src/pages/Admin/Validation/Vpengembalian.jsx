@@ -9,7 +9,7 @@ import Wavebot from '../../../components/background/Wavebot';
 // import { account } from '../../../store/account/actions';
 // import ModalEditAccount from '../Account/modal';
 import moment from 'moment';
-import { postReturn, returnAdmin } from '../../../store/actions';
+import { postAcceptReturn, postResetReturn, returnAdmin } from '../../../store/actions';
 import StatusBadge from '../../../components/Statusbadge';
 
 export default function Vpengembalian() {
@@ -62,28 +62,27 @@ export default function Vpengembalian() {
                 disableSortBy: true,
                 Cell: ({row}) => (
                     <div className='text-center'>
-                        {row.original.pengembalian !== '-' ? (
+                        {row.original.pengembalian === '-' ? (
+                            <Button
+                                variant='success'
+                                onClick={() => {
+                                    dispatch(postAcceptReturn(row.original.id))
+                                }}
+                                className='btn-tbl-detail'
+                            >
+                                        Terima
+                            </Button>
+                        ) : (
+                            
                             <Button
                                 variant='dark'
                                 onClick={() => {
-                                    // dispatch(deleteBorrow(row.original.id))
+                                    // if(confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postResetReturn(row.original.id))
                                 }}
                                 className='btn-tbl-info'
                             >
                                 Reset
                             </Button>
-                        ) : (
-                            <>
-                                <Button
-                                    variant='success'
-                                    onClick={() => {
-                                        dispatch(postReturn(row.original.id))
-                                    }}
-                                    className='btn-tbl-detail'
-                                >
-                                        Terima
-                                </Button>
-                            </>
                         )}
                     </div>
                 ),
