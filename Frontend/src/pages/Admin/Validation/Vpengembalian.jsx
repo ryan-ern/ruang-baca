@@ -77,7 +77,7 @@ export default function Vpengembalian() {
                             <Button
                                 variant='dark'
                                 onClick={() => {
-                                    // if(confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postResetReturn(row.original.id))
+                                    if(confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(postResetReturn(row.original.id))
                                 }}
                                 className='btn-tbl-info'
                             >

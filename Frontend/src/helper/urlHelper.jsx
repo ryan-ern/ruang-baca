@@ -41,13 +41,12 @@ export const URL_DELETE_JURUSAN = '/deleteJurusan/:id'
 export const URL_GET_RETURN= '/pengembalian'
 export const URL_GET_RETURN_USER= '/pengembalianUser'
 export const URL_POST_ACCEPT_RETURN = '/pengembalian/:id'
-// unfinished
 export const URL_POST_RESET_RETURN = '/resetPengembalian/:id'
-// export const URL_GET_
-
-// /searchJurusan/:jurusan
-// /searchJudul/:judul
-// /searchPeminjamanAdmin/:date
-// /searhPeminjaman/:date
-// /searchPengembalianAdmin/:date
-// /searhPengembalian/:date
+// unfinished
+// ALL SEARCH METHOD IS POST
+export const URL_SEARCH_BY_JURUSAN = '/searchJurusan/:jurusan'
+export const URL_SEARCH_BY_JUDUL= '/searchJudul/:judul'
+export const URL_SEARCH_BORROW_BY_DATE= '/searhPeminjaman/:date'
+export const URL_SEARCH_BORROW_BY_DATE_ADMIN = '/searchPeminjamanAdmin/:date'
+export const URL_SEARCH_RETURN_BY_DATE = '/searhPengembalian/:date'
+export const URL_SEARCH_RETURN_BY_DATE_ADMIN = '/searchPengembalianAdmin/:date'

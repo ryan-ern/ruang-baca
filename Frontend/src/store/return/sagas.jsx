@@ -30,20 +30,20 @@ export function* postReturnSaga({payload:{id}}) {
     }
 }
 
-// export function* postResetReturnSaga({ payload: { id } }) {
-//     try {
-//         const response = yield call(axios.post, URL_POST_RESET_RETURN.replace(':id', id))
-//         yield put(postResetReturnSuccess(response))
-//         yield put(returnAdmin())
-//     }
-//     catch (err) {
-//         yield put(postResetReturnFailed(err))
-//     }
-// }
+export function* postResetReturnSaga({ payload: { id } }) {
+    try {
+        const response = yield call(axios.post, URL_POST_RESET_RETURN.replace(':id', id))
+        yield put(postResetReturnSuccess(response))
+        yield put(returnAdmin())
+    }
+    catch (err) {
+        yield put(postResetReturnFailed(err))
+    }
+}
 
 export function* returnSaga() {
-    yield takeEvery(GET_RETURN_ADMIN, getReturnAdminSaga),
-    yield takeEvery(GET_RETURN, getReturnSaga),
+    yield takeEvery(GET_RETURN_ADMIN, getReturnAdminSaga)
+    yield takeEvery(GET_RETURN, getReturnSaga)
     yield takeEvery(POST_ACCEPT_RETURN, postReturnSaga)
-    // yield takeEvery(POST_RESET_RETURN, postResetReturnSaga)
+    yield takeEvery(POST_RESET_RETURN, postResetReturnSaga)
 }
