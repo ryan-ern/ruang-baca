@@ -39,7 +39,7 @@ export default function Vpengembalian() {
             {
                 Header: 'Tenggat Pengembalian',
                 accessor: 'due_date',
-                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY')
+                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
                 Header: 'Telat',
@@ -113,8 +113,9 @@ export default function Vpengembalian() {
             initialState:{
                 pageSize:10,
                 sortBy: [
-                    { id: 'created_at', desc: true },
-                    { id: 'status', desc: true },],
+                    { id: 'pengembalian', desc: false },
+                    { id: 'due_date', desc: false },
+                ],
             }
         },
         useGlobalFilter,

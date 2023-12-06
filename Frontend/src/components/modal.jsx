@@ -47,7 +47,7 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                             e.preventDefault();
                                             // dispatch(postBorrow(data.isbn, navigate))
                                         }}>
-                                            <Button variant="success" onClick={handleClick} className="btn-table rounded-pill custom-button">Pinjam</Button>
+                                            <Button variant="success" disabled={data?.stok_buku === 0} onClick={handleClick} className="btn-table rounded-pill custom-button">Pinjam</Button>
                                         </form>
                                     </Col>
                                 }
@@ -73,6 +73,10 @@ export default function ModalDetailBuku({ show, onHide, data, inv }) {
                                 <Row>
                                     <Col  className="ps-1">Jumlah Halaman</Col>
                                     <Col>: {data?.jumlah_halaman}</Col>
+                                </Row>
+                                <Row>
+                                    <Col  className="ps-1">Stok</Col>
+                                    <Col>: {data?.stok_buku}</Col>
                                 </Row>
                             </Row>
                         </Col>
