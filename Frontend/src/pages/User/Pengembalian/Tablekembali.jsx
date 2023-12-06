@@ -43,7 +43,7 @@ export default function TableKembali() {
             {
                 Header: 'Denda',
                 accessor: 'denda',
-                Cell: ({value}) => ("Rp " + value)
+                Cell: ({value}) => ( value === null ? "-": "Rp "+ value)
             },
             {
                 Header: 'Status',
