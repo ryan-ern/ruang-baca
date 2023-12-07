@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editAccount, postAccountAdmin, postAccountSuper } from "../../../store/account/actions";
 
 export default function ModalAccount({ show, onHide, editdata, add }) {
     const dispatch = useDispatch()
+    const dataJurusan = useSelector((state) => state.major.response)
     const [data, setData] = useState({
         nisn: '',
         name: '',
@@ -134,21 +135,23 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Form.Label>Jurusan</Form.Label>
-                                    {add ? <span className="form-control bg-light mb-4">
-                                        {data.jurusan}
-                                    </span>
-                                        :
-                                        <Form.Control
-                                            type="text"
-                                            name="jurusan"
-                                            placeholder="Masukkan Jurusan"
-                                            className="form-control bg-light mb-4"
-                                            defaultValue={data.jurusan}
-                                            required
-                                            onChange={(e) => setData({...data, jurusan: e.target.value})}
-                                        />
-                                    }
+                                    <label>Jurusan</label>
+                                    <select
+                                        className="form-control bg-light"
+                                        name="jurusan"
+                                        value={data.jurusan}
+                                        onChange={(e) => setData({ ...data, jurusan: e.target.value })}
+                                        required={data.jurusan === ""}
+                                    >
+                                        <option value="">--Pilih Jurusan--</option>
+                                        <option value="lainnya">lainnya</option>
+                                        {Array.isArray(dataJurusan?.data?.jurusan) &&
+                                            dataJurusan?.data?.jurusan.map((item) => (
+                                                <option key={item.id} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                    </select>
                                 </Col>
                             </Row>
                             <Row>

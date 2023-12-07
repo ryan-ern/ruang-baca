@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 import { clearJurusanMessage, deleteJurusan, jurusan } from "../../../store/actions";
 import ModalJurusan from "./modalJurusan";
+import Waveup from '../../../components/background/Wavetop';
+import Wavebot from '../../../components/background/Wavebot';
 
 export default function Jurusan() {
     const dispatch = useDispatch()
@@ -107,6 +109,8 @@ export default function Jurusan() {
 
     return (
         <Container>
+            <Waveup color="#B6D8CF" />
+            <Wavebot color="#B6D8CF" />
             <Row>
                 <Col className='my-5'>
                     <Card className="overflow-hidden p-4 pt-2 pb-2 border-0 shadow-lg rounded-4">
