@@ -9,7 +9,7 @@ import Wavebot from '../../../components/background/Wavebot';
 // import ModalInventory from './modal';
 // import Top from './top';
 import "../../../assets/styles/common.css";
-import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow, getSearchByBorrowDateAdmin } from '../../../store/actions';
+import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow, getSearchByBorrowDateAdmin, resetMessage } from '../../../store/actions';
 import moment from 'moment';
 import StatusBadge from '../../../components/Statusbadge';
 
@@ -142,6 +142,7 @@ export default function ValidationPinjam() {
 
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());
+        dispatch(resetMessage())
     };
 
     return (
