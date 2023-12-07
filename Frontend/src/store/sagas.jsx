@@ -8,6 +8,7 @@ import { borrowSaga } from './borrow/sagas';
 import { returnSaga } from './return/sagas';
 import { finedSaga } from './fined/saga';
 import { majorSaga } from './major/sagas';
+import { searchSaga } from './search/sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -19,6 +20,7 @@ export default function* rootSaga() {
         fork(borrowSaga),
         fork(returnSaga),
         fork(finedSaga),
-        fork(majorSaga)
+        fork(majorSaga),
+        fork(searchSaga)
     ]);
 }

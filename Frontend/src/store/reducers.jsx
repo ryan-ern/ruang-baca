@@ -8,6 +8,7 @@ import borrowReducer from "./borrow/reducer";
 import returnReducer from "./return/reducers";
 import finedReducer from "./fined/reducers";
 import majorReducer from "./major/reducers";
+import searchReducer from "./search/reducers";
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     return: returnReducer,
     fined: finedReducer,
     major: majorReducer,
+    search: searchReducer,
 })
 
 export default rootReducer;
