@@ -1,25 +1,30 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../../../assets/styles/common.css";
-import { Card, } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { jurusan } from "../../../store/actions";
+import { useEffect, useState } from "react";
+import { getSearchByJurusan } from "../../../store/actions";
 
-export default function Carouselcard() {
+export default function Carouselcard({ onSelectedMajorChange }) {
+    const dispatch = useDispatch();
+    const [selectedMajor, setSelectedMajor] = useState(null);
+    const dataJurusan = useSelector((state) => state.major.response);
+
     const handleClick = (index) => {
-    // Fungsi yang akan dijalankan saat card diklik
-        console.log(`Card dengan index ${index} diklik!`);
+        const selectedMajorName = dataJurusan.data.jurusan[index]?.name;
+        setSelectedMajor(selectedMajorName);
+        onSelectedMajorChange(selectedMajorName);
     };
 
-    const dispatch = useDispatch()
-    const dataJurusan = useSelector((state) => state.major.response)
     useEffect(() => {
-        dispatch(jurusan()) 
-    },[])
+        if (selectedMajor) {
+            dispatch(getSearchByJurusan(selectedMajor));
+        }
+    }, [selectedMajor, dispatch]);
+
     const responsive = {
         superLargeDesktop: {
-            // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
             items: 6,
         },
@@ -45,7 +50,7 @@ export default function Carouselcard() {
                         key={index}
                         text="black"
                         className="text-center cardjurusan p-0 m-2 me-3"
-                        onClick={() => handleClick(index)}
+                        onClick={(e) => { e.preventDefault(); handleClick(index)}}
                     >
                         <Card.Body className="cardjurusan-body">
                             <Card.Text className="cardjurusan-text">

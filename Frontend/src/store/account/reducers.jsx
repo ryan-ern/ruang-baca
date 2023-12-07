@@ -1,11 +1,12 @@
-import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_FAILED, GET_ACCOUNT_SUCCESS, POST_ACCOUNT_ADMIN, POST_ACCOUNT_ADMIN_FAILED, POST_ACCOUNT_ADMIN_SUCCESS, POST_ACCOUNT_SUPER, POST_ACCOUNT_SUPER_FAILED, POST_ACCOUNT_SUPER_SUCCESS } from "./actionTypes"
+import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_FAILED, GET_ACCOUNT_SUCCESS, POST_ACCOUNT_ADMIN, POST_ACCOUNT_ADMIN_FAILED, POST_ACCOUNT_ADMIN_SUCCESS, POST_ACCOUNT_SUPER, POST_ACCOUNT_SUPER_FAILED, POST_ACCOUNT_SUPER_SUCCESS, POST_BLOCK, POST_BLOCK_FAILED, POST_BLOCK_SUCCESS, POST_UNBLOCK, POST_UNBLOCK_FAILED, POST_UNBLOCK_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
     response: {},
     delete: { message: null },
     edit: { message: null },
-    add : {message:null}
+    add: { message: null },
+    active: {message: null}
 }
 
 const accountReducer = (state = init_state, action) => {
@@ -34,6 +35,7 @@ const accountReducer = (state = init_state, action) => {
             edit: { message: null },
             delete: { message: null },
             add : {message:null},
+            active : {message:null},
         }
         break
     case DELETE_ACCOUNT_SUCCESS:
@@ -48,6 +50,7 @@ const accountReducer = (state = init_state, action) => {
             edit: { message: null },
             delete: { message: null },
             add : {message:null},
+            active : {message:null},
             loading:true,
         }
         break
@@ -70,6 +73,7 @@ const accountReducer = (state = init_state, action) => {
             edit: { message: null },
             delete: { message: null },
             add : {message:null},
+            active : {message:null},
             loading:true,
         }
         break
@@ -92,6 +96,7 @@ const accountReducer = (state = init_state, action) => {
             edit: { message: null },
             delete: { message: null },
             add : {message:null},
+            active : {message:null},
             loading:true,
         }
         break
@@ -115,6 +120,53 @@ const accountReducer = (state = init_state, action) => {
             edit: { message: null },
             delete: { message: null },
             add : {message:null},
+            active : {message:null},
+        }
+        break
+    case POST_BLOCK:
+        state = {
+            ...state,
+            loading: true,
+            edit: { message: null },
+            delete: { message: null },
+            add : {message:null},
+            active : {message:null},
+        }
+        break
+    case POST_BLOCK_SUCCESS:
+        state = {
+            ...state,
+            loading: false,
+            active: {message:action.payload}
+        }
+        break
+    case POST_BLOCK_FAILED:
+        state = {
+            ...state,
+            loading: false
+        }
+        break
+    case POST_UNBLOCK:
+        state = {
+            ...state,
+            loading: true,
+            edit: { message: null },
+            delete: { message: null },
+            add : {message:null},
+            active : {message:null},
+        }
+        break
+    case POST_UNBLOCK_SUCCESS:
+        state = {
+            ...state,
+            loading: false,
+            active: {message:action.payload}
+        }
+        break
+    case POST_UNBLOCK_FAILED:
+        state = {
+            ...state,
+            loading: false
         }
         break
     default:

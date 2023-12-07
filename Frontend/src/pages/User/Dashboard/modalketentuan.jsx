@@ -1,16 +1,14 @@
-import { useEffect } from "react";
+
 import { Modal, Row, Col, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { clearBorrowMessage, getFined, postBorrow } from "../../../store/actions";
+import { clearBorrowMessage, postBorrow } from "../../../store/actions";
 import { useNavigate } from "react-router-dom";
 
 export default function ModalKetentuan({ show, onHide, data}) {
     const dispatch = useDispatch()
     const ketentuan = useSelector((state) => state.fined.response.denda)
     const borrowMessage = useSelector((state) => state.borrow.add.message)
-    useEffect(()=>{
-        dispatch(getFined())
-    },[])
+
     const navigate = useNavigate();
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());

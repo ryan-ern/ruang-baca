@@ -1,132 +1,143 @@
-import { POST_SEARCH_BY_BORROW_DATE, POST_SEARCH_BY_BORROW_DATE_ADMIN, POST_SEARCH_BY_BORROW_DATE_ADMIN_FAILED, POST_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS, POST_SEARCH_BY_BORROW_DATE_FAILED, POST_SEARCH_BY_BORROW_DATE_SUCCESS, POST_SEARCH_BY_JUDUL, POST_SEARCH_BY_JUDUL_FAILED, POST_SEARCH_BY_JUDUL_SUCCESS, POST_SEARCH_BY_JURUSAN, POST_SEARCH_BY_JURUSAN_FAILED, POST_SEARCH_BY_JURUSAN_SUCCESS, POST_SEARCH_BY_RETURN_DATE, POST_SEARCH_BY_RETURN_DATE_ADMIN, POST_SEARCH_BY_RETURN_DATE_ADMIN_FAILED, POST_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS, POST_SEARCH_BY_RETURN_DATE_FAILED, POST_SEARCH_BY_RETURN_DATE_SUCCESS } from "./actionTypes"
+import { GET_SEARCH_BY_BORROW_DATE, GET_SEARCH_BY_BORROW_DATE_ADMIN, GET_SEARCH_BY_BORROW_DATE_ADMIN_FAILED, GET_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS, GET_SEARCH_BY_BORROW_DATE_FAILED, GET_SEARCH_BY_BORROW_DATE_SUCCESS, GET_SEARCH_BY_JUDUL, GET_SEARCH_BY_JUDUL_FAILED, GET_SEARCH_BY_JUDUL_RESET, GET_SEARCH_BY_JUDUL_SUCCESS, GET_SEARCH_BY_JURUSAN, GET_SEARCH_BY_JURUSAN_FAILED, GET_SEARCH_BY_JURUSAN_SUCCESS, GET_SEARCH_BY_RETURN_DATE, GET_SEARCH_BY_RETURN_DATE_ADMIN, GET_SEARCH_BY_RETURN_DATE_ADMIN_FAILED, GET_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS, GET_SEARCH_BY_RETURN_DATE_FAILED, GET_SEARCH_BY_RETURN_DATE_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
-    response: []
+    response: [],
+    borrow: [],
+    return: []
 }
 
 const searchReducer = (state = init_state, action) => {
     switch (action.type) {
-    case POST_SEARCH_BY_JURUSAN:
+    case GET_SEARCH_BY_JURUSAN:
         state = {
             ...state,
             loading: true
         }
         break
-    case POST_SEARCH_BY_JURUSAN_SUCCESS:
+    case GET_SEARCH_BY_JURUSAN_SUCCESS:
         state = {
             ...state,
             loading: false,
             response: action.payload
         }
         break
-    case POST_SEARCH_BY_JURUSAN_FAILED:
+    case GET_SEARCH_BY_JURUSAN_FAILED:
         state = {
             ...state,
             loading: false,
             response: action.payload
         }
         break
-    case POST_SEARCH_BY_JUDUL:
+    case GET_SEARCH_BY_JUDUL:
         state = {
             ...state,
             loading: true
         }
         break
-    case POST_SEARCH_BY_JUDUL_SUCCESS:
+    case GET_SEARCH_BY_JUDUL_SUCCESS:
         state = {
             ...state,
             loading: false,
             response: action.payload
         }
         break
-    case POST_SEARCH_BY_JUDUL_FAILED:
+    case GET_SEARCH_BY_JUDUL_FAILED:
         state = {
             ...state,
             loading: false,
             response: action.payload
         }
         break
-    case POST_SEARCH_BY_BORROW_DATE:
+    case GET_SEARCH_BY_JUDUL_RESET:
+        state = {
+            ...state,
+            loading: false,
+            response: []
+        }
+        break
+    case GET_SEARCH_BY_BORROW_DATE:
         state = {
             ...state,
             loading: true
         }
         break
-    case POST_SEARCH_BY_BORROW_DATE_SUCCESS:
+    case GET_SEARCH_BY_BORROW_DATE_SUCCESS:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            borrow: action.payload
         }
         break
-    case POST_SEARCH_BY_BORROW_DATE_FAILED:
+    case GET_SEARCH_BY_BORROW_DATE_FAILED:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            borrow: action.payload
         }
         break
-    case POST_SEARCH_BY_BORROW_DATE_ADMIN:
+    case GET_SEARCH_BY_BORROW_DATE_ADMIN:
         state = {
             ...state,
             loading: true
         }
         break
-    case POST_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS:
+    case GET_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            borrow: action.payload
         }
         break
-    case POST_SEARCH_BY_BORROW_DATE_ADMIN_FAILED:
+    case GET_SEARCH_BY_BORROW_DATE_ADMIN_FAILED:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            borrow: action.payload
         }
         break
-    case POST_SEARCH_BY_RETURN_DATE:
+    case GET_SEARCH_BY_RETURN_DATE:
         state = {
             ...state,
             loading: true
         }
         break
-    case POST_SEARCH_BY_RETURN_DATE_SUCCESS:
+    case GET_SEARCH_BY_RETURN_DATE_SUCCESS:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            return: action.payload
         }
         break
-    case POST_SEARCH_BY_RETURN_DATE_FAILED:
+    case GET_SEARCH_BY_RETURN_DATE_FAILED:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            return: action.payload
         }
         break
-    case POST_SEARCH_BY_RETURN_DATE_ADMIN:
+    case GET_SEARCH_BY_RETURN_DATE_ADMIN:
         state = {
             ...state,
             loading: true
         }
         break
-    case POST_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS:
+    case GET_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            resreturnponse: action.payload
         }
         break
-    case POST_SEARCH_BY_RETURN_DATE_ADMIN_FAILED:
+    case GET_SEARCH_BY_RETURN_DATE_ADMIN_FAILED:
         state = {
             ...state,
             loading: false,
-            response: action.payload
+            return: action.payload
         }
         break
+   
+        
     default:
         state = { ...state }
         break

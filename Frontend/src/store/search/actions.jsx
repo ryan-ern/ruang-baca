@@ -1,102 +1,108 @@
-import { POST_SEARCH_BY_BORROW_DATE, POST_SEARCH_BY_BORROW_DATE_ADMIN, POST_SEARCH_BY_BORROW_DATE_ADMIN_FAILED, POST_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS, POST_SEARCH_BY_BORROW_DATE_FAILED, POST_SEARCH_BY_BORROW_DATE_SUCCESS, POST_SEARCH_BY_JUDUL, POST_SEARCH_BY_JUDUL_FAILED, POST_SEARCH_BY_JUDUL_SUCCESS, POST_SEARCH_BY_JURUSAN, POST_SEARCH_BY_JURUSAN_FAILED, POST_SEARCH_BY_JURUSAN_SUCCESS, POST_SEARCH_BY_RETURN_DATE, POST_SEARCH_BY_RETURN_DATE_ADMIN, POST_SEARCH_BY_RETURN_DATE_ADMIN_FAILED, POST_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS, POST_SEARCH_BY_RETURN_DATE_FAILED, POST_SEARCH_BY_RETURN_DATE_SUCCESS } from "./actionTypes"
+import { GET_SEARCH_BY_BORROW_DATE, GET_SEARCH_BY_BORROW_DATE_ADMIN, GET_SEARCH_BY_BORROW_DATE_ADMIN_FAILED, GET_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS, GET_SEARCH_BY_BORROW_DATE_FAILED, GET_SEARCH_BY_BORROW_DATE_SUCCESS, GET_SEARCH_BY_JUDUL, GET_SEARCH_BY_JUDUL_FAILED, GET_SEARCH_BY_JUDUL_RESET, GET_SEARCH_BY_JUDUL_SUCCESS, GET_SEARCH_BY_JURUSAN, GET_SEARCH_BY_JURUSAN_FAILED, GET_SEARCH_BY_JURUSAN_SUCCESS, GET_SEARCH_BY_RETURN_DATE, GET_SEARCH_BY_RETURN_DATE_ADMIN, GET_SEARCH_BY_RETURN_DATE_ADMIN_FAILED, GET_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS, GET_SEARCH_BY_RETURN_DATE_FAILED, GET_SEARCH_BY_RETURN_DATE_SUCCESS } from "./actionTypes"
 
-export const postSearchByJurusan = (jurusan) => ({
-    type: POST_SEARCH_BY_JURUSAN,
+export const getSearchByJurusan = (jurusan) => ({
+    type: GET_SEARCH_BY_JURUSAN,
     payload: {jurusan}
     
 })
-export const postSearchByJurusanSuccess = (respons) => ({
-    type: POST_SEARCH_BY_JURUSAN_SUCCESS,
+export const getSearchByJurusanSuccess = (respons) => ({
+    type: GET_SEARCH_BY_JURUSAN_SUCCESS,
     payload: respons
     
 })
-export const postSearchByJurusanFailed = (message) => ({
-    type: POST_SEARCH_BY_JURUSAN_FAILED,
+export const getSearchByJurusanFailed = (message) => ({
+    type: GET_SEARCH_BY_JURUSAN_FAILED,
     payload: message
 })
 
 
 
-export const postSearchByJudul = (judul) => ({
-    type: POST_SEARCH_BY_JUDUL,
+export const getSearchByJudul = (judul) => ({
+    type: GET_SEARCH_BY_JUDUL,
     payload: {judul}
     
 })
-export const postSearchByJudulSuccess = (respons) => ({
-    type: POST_SEARCH_BY_JUDUL_SUCCESS,
+export const getSearchByJudulSuccess = (respons) => ({
+    type: GET_SEARCH_BY_JUDUL_SUCCESS,
     payload: respons
     
 })
-export const postSearchByJudulFailed = (message) => ({
-    type: POST_SEARCH_BY_JUDUL_FAILED,
+export const getSearchByJudulFailed = (message) => ({
+    type: GET_SEARCH_BY_JUDUL_FAILED,
     payload: message
+})
+export const getSearchByJudulReset= () => ({
+    type: GET_SEARCH_BY_JUDUL_RESET,
+    payload: null
 })
 
 
 
-export const postSearchByBorrowDate = (date) => ({
-    type: POST_SEARCH_BY_BORROW_DATE,
+export const getSearchByBorrowDate = (date) => ({
+    type: GET_SEARCH_BY_BORROW_DATE,
     payload: {date}
     
 })
-export const postSearchByBorrowDateSuccess = (respons) => ({
-    type: POST_SEARCH_BY_BORROW_DATE_SUCCESS,
+export const getSearchByBorrowDateSuccess = (respons) => ({
+    type: GET_SEARCH_BY_BORROW_DATE_SUCCESS,
     payload: respons
     
 })
-export const postSearchByBorrowDateFailed = (message) => ({
-    type: POST_SEARCH_BY_BORROW_DATE_FAILED,
+export const getSearchByBorrowDateFailed = (message) => ({
+    type: GET_SEARCH_BY_BORROW_DATE_FAILED,
     payload: message
 })
 
 
 
-export const postSearchByBorrowDateAdmin = (date) => ({
-    type: POST_SEARCH_BY_BORROW_DATE_ADMIN,
+export const getSearchByBorrowDateAdmin = (date) => ({
+    type: GET_SEARCH_BY_BORROW_DATE_ADMIN,
     payload: {date}
     
 })
-export const postSearchByBorrowDateAdminSuccess = (respons) => ({
-    type: POST_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS,
+export const getSearchByBorrowDateAdminSuccess = (respons) => ({
+    type: GET_SEARCH_BY_BORROW_DATE_ADMIN_SUCCESS,
     payload: respons
     
 })
-export const postSearchByBorrowDateAdminFailed = (message) => ({
-    type: POST_SEARCH_BY_BORROW_DATE_ADMIN_FAILED,
+export const getSearchByBorrowDateAdminFailed = (message) => ({
+    type: GET_SEARCH_BY_BORROW_DATE_ADMIN_FAILED,
     payload: message
 })
 
 
 
-export const postSearchByReturnDate = (date) => ({
-    type: POST_SEARCH_BY_RETURN_DATE,
+export const getSearchByReturnDate = (date) => ({
+    type: GET_SEARCH_BY_RETURN_DATE,
     payload: {date}
     
 })
-export const postSearchByReturnDateSuccess = (respons) => ({
-    type: POST_SEARCH_BY_RETURN_DATE_SUCCESS,
+export const getSearchByReturnDateSuccess = (respons) => ({
+    type: GET_SEARCH_BY_RETURN_DATE_SUCCESS,
     payload: respons
     
 })
-export const postSearchByReturnDateFailed = (message) => ({
-    type: POST_SEARCH_BY_RETURN_DATE_FAILED,
+export const getSearchByReturnDateFailed = (message) => ({
+    type: GET_SEARCH_BY_RETURN_DATE_FAILED,
     payload: message
 })
 
 
 
 
-export const postSearchByReturnDateAdmin = (date) => ({
-    type: POST_SEARCH_BY_RETURN_DATE_ADMIN,
+export const getSearchByReturnDateAdmin = (date) => ({
+    type: GET_SEARCH_BY_RETURN_DATE_ADMIN,
     payload: {date}
     
 })
-export const postSearchByReturnDateAdminSuccess = (respons) => ({
-    type: POST_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS,
+export const getSearchByReturnDateAdminSuccess = (respons) => ({
+    type: GET_SEARCH_BY_RETURN_DATE_ADMIN_SUCCESS,
     payload: respons
     
 })
-export const postSearchByReturnDateAdminFailed = (message) => ({
-    type: POST_SEARCH_BY_RETURN_DATE_ADMIN_FAILED,
+export const getSearchByReturnDateAdminFailed = (message) => ({
+    type: GET_SEARCH_BY_RETURN_DATE_ADMIN_FAILED,
     payload: message
 })
+
+

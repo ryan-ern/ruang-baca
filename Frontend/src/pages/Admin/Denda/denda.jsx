@@ -45,7 +45,7 @@ export default function Fined() {
                                     <Col>
                                         <Form.Label className="mt-3">Denda Harian (Rp.)</Form.Label>
                                         <Form.Control
-                                            type="text"
+                                            type="number"
                                             className="form-control mb-3" placeholder="1000"
                                             defaultValue={finedData?.denda?.nominal}
                                             disabled={editData}

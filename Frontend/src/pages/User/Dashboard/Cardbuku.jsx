@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, Card } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { dashboard } from "../../../store/dashboard/actions";
+import { useSelector } from "react-redux";
 import ModalDetailBuku from "../../../components/modal";
 
 export default function Cardbuku() {
-    const dispatch = useDispatch();
     const books = useSelector((state) => state.book.response.data);
-    useEffect(() => {
-        dispatch(dashboard());
-    }, []);
 
     const [selectedBook, setSelectedBook] = useState(null);
     const [showModal, setShowModal] = useState(false);

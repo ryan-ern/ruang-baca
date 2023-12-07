@@ -9,7 +9,7 @@ import Wavebot from '../../../components/background/Wavebot';
 // import ModalInventory from './modal';
 // import Top from './top';
 import "../../../assets/styles/common.css";
-import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow } from '../../../store/actions';
+import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow, getSearchByBorrowDateAdmin } from '../../../store/actions';
 import moment from 'moment';
 import StatusBadge from '../../../components/Statusbadge';
 
@@ -19,6 +19,8 @@ export default function ValidationPinjam() {
     const editMessage = useSelector((state) => state.borrow.accept.message)
     const createMessage = useSelector((state) => state.borrow.denied.message)
     const deleteMessage = useSelector((state) => state.borrow.delete.message)
+    const searchData = useSelector((state) => state.search.borrow)
+    const searchMessage = useSelector((state) => state.search.borrow.message)
 
     useEffect(() => {
         dispatch(borrowAdmin())
@@ -101,12 +103,13 @@ export default function ValidationPinjam() {
         ],
         [],
     )
-    
-    const data = useMemo(
-        () => (pinjam.response?.data || []),
-        [pinjam.response?.data],
-    );
-
+    const data = useMemo(() => {
+        if (searchData && searchData.data) {
+            return searchData.data;
+        } else {
+            return pinjam.response?.data || [];
+        }
+    }, [pinjam.response?.data, searchData]);
     const {
         getTableProps,
         getTableBodyProps,
@@ -151,13 +154,14 @@ export default function ValidationPinjam() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='info'>{deleteMessage.data.message}</Alert> :
-                                        (editMessage || createMessage) ? (
-                                            <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
-                                                {/* {console.log(editMessage)} */}
-                                                {`${(editMessage && editMessage.message) || (createMessage && createMessage.data.message)} Dengan ISBN : ${((editMessage && editMessage.data.book_isbn) || (createMessage &&  createMessage.data.data.book_isbn))}`}
-                                            </Alert>
-                                        ) : null}
+                                    {searchMessage ? <Alert dismissible onClose={handleDismiss} variant={searchMessage==="success"? 'success': 'danger'}>{searchMessage}</Alert> :
+                                        deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='info'>{deleteMessage.data.message}</Alert> :
+                                            (editMessage || createMessage) ? (
+                                                <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
+                                                    {/* {console.log(editMessage)} */}
+                                                    {`${(editMessage && editMessage.message) || (createMessage && createMessage.data.message)} Dengan ISBN : ${((editMessage && editMessage.data.book_isbn) || (createMessage &&  createMessage.data.data.book_isbn))}`}
+                                                </Alert>
+                                            ) : null}
                                 </Col>
                             </Row>
                             <Row className="mb-2">
@@ -168,7 +172,7 @@ export default function ValidationPinjam() {
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="position-relative mx-3">
-                                        <input type="date" className="form-control" onChange={(e) => console.log(e.target.value)} style={{ backgroundColor: '#f3f6f9' }} />
+                                        <input type="date" className="form-control" onChange={(e) => dispatch(getSearchByBorrowDateAdmin(e.target.value))} style={{ backgroundColor: '#f3f6f9' }} />
                                     </div>
                                     <div className="position-relative">
                                         <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data peminjaman" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />

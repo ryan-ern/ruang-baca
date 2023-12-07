@@ -2,23 +2,57 @@ import "../../../assets/styles/common.css";
 import Cardbuku from "./Cardbuku";
 import Waveup from "../../../components/background/Wavetop";
 import Breadcrumb from "../../../components/Breadcrumb";
-import { Button, Col, Row, Container } from "react-bootstrap";
-import { useState } from "react";
+import { Button, Col, Row, Container, Alert, Card, InputGroup, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import IMAGES from "../../../assets/images";
 import "../../../assets/styles/dashboard.css";
 import Wavebot from "../../../components/background/Wavebot";
 import Carouselcard from "./Carouselcard";
+import { useDispatch, useSelector } from "react-redux";
+import { dashboard, getFined, jurusan, getSearchByJudul, getSearchByJudulReset } from "../../../store/actions";
+import ModalDetailBuku from "../../../components/modal";
 
 export default function Dashboard() {
     const [query, setQuery] = useState("");
+    const [selectedMajor, setSelectedMajor] = useState(null)
+    const dataSearch = useSelector((state) => state.search)
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(getFined())
+        dispatch(dashboard());
+        dispatch(jurusan()) 
+    },[])
+
+
+    const handleSelectedMajorChange = (selectedMajorName) => {
+        setSelectedMajor(selectedMajorName)
+    };
+
+    const [selectedBook, setSelectedBook] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClick = (index) => {
+        setSelectedBook(dataSearch.response.data[index]);
+        setShowModal(true);
+    };
+
+    const handleClose = () => setShowModal(false);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
     };
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        setQuery("");
+        setSelectedMajor(null)
+        dispatch(getSearchByJudulReset())
+    };
+
+
     const handleSearch = (e) => {
         e.preventDefault();
-        // Lakukan aksi pencarian sesuai dengan query
-        console.log("Mencari:", query);
+        dispatch(getSearchByJudul(query))
     };
     return (
         <>
@@ -43,7 +77,7 @@ export default function Dashboard() {
                                 }}
                             >
                                 <h3 className="text-center">
-                  RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
+                                    RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
                                 </h3>
                             </div>
                         </Col>
@@ -59,35 +93,87 @@ export default function Dashboard() {
                                 }}
                             >
                                 <form onSubmit={handleSearch} className="mt-3 mb-3">
-                                    <div className="input-group">
-                                        <input
+                                    <InputGroup>
+                                        <Form.Control
                                             type="text"
-                                            className="form-control"
                                             value={query}
                                             onChange={handleInputChange}
-                                            placeholder="cari disini"
+                                            required
+                                            placeholder="Cari Judul Buku di Sini"
                                         />
-                                        <span className="input-group-addon">
+                                        {dataSearch.response.data?.length > 0 || dataSearch?.response?.message === "Buku Tidak ditemukan" ? (
+                                            <>
+                                                <Button onClick={handleReset} variant="danger" className="btn px-3">
+                                                    Reset
+                                                </Button>
+                                                <Button type="submit" className="btn">
+                                                    Cari
+                                                </Button>
+                                            </>
+                                        ) : (
                                             <Button type="submit" className="btn btn-primary">
-                        cari
+                                                    Cari
                                             </Button>
-                                        </span>
-                                    </div>
+                                        )}
+                                    </InputGroup>
                                 </form>
                             </div>
                         </Col>
                     </Row>
                     <Row>
-                        <Breadcrumb title="" pageTitle="Buku Berdasarkan Jurusan" />
+                        <Breadcrumb title={selectedMajor} pageTitle="Buku Berdasarkan Jurusan" />
                     </Row>
                     <Row>
-                        <Carouselcard />
+                        <Carouselcard onSelectedMajorChange={handleSelectedMajorChange} />
                     </Row>
-
-                    <Row>
-                        <p className="mb-0 mt-3">Buku Populer</p>
-                        <Cardbuku />
-                    </Row>
+                    {dataSearch.response.length === 0?
+                        <Row>
+                            <p className="mb-0 mt-3">Buku Populer</p>
+                            <Cardbuku />
+                        </Row>
+                        :
+                        <div>
+                            <p className="mb-0 mt-3">Hasil Pencarian</p>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexWrap: "wrap",
+                                    justifyContent: "flex-start",
+                                }}
+                            >
+                                {dataSearch.response.data ? (
+                                    dataSearch.response.data?.map((book, index) => (
+                                        <Card
+                                            key={index}
+                                            text="black"
+                                            className="text-center cardbuku p-0 m-2 me-3 mb-5"
+                                            onClick={() => handleClick(index)}
+                                        >
+                                            <Card.Body className="cardbuku-body">
+                                                <Card.Img
+                                                    className=""
+                                                    src={book.cover}
+                                                    style={{
+                                                        borderRadius: "6px",
+                                                        maxHeight: "120px",
+                                                        objectFit: "cover",
+                                                        width: "100%",
+                                                    }}
+                                                />
+                                                <Card.Text className="cardbuku-judul">{book.judul}</Card.Text>
+                                                <Card.Text className="cardbuku-text-author">
+                                                    {book.penulis}
+                                                </Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    ))
+                                ) : (
+                                    <Alert className="mt-2" variant="danger">{dataSearch?.response?.message}</Alert>
+                                )}
+                                <ModalDetailBuku show={showModal} onHide={handleClose} data={selectedBook} />
+                            </div>
+                        </div>
+                    }
                 </Container>
             </div>
         </>

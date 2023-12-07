@@ -1,4 +1,4 @@
-import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_SUCCESS, POST_ACCOUNT_ADMIN, POST_ACCOUNT_ADMIN_FAILED, POST_ACCOUNT_ADMIN_SUCCESS, POST_ACCOUNT_SUPER, POST_ACCOUNT_SUPER_FAILED, POST_ACCOUNT_SUPER_SUCCESS } from "./actionTypes";
+import { CLEAR_ACCOUNT_MESSAGE, DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, EDIT_ACCOUNT, EDIT_ACCOUNT_FAILED, EDIT_ACCOUNT_SUCCESS, GET_ACCOUNT, GET_ACCOUNT_SUCCESS, POST_ACCOUNT_ADMIN, POST_ACCOUNT_ADMIN_FAILED, POST_ACCOUNT_ADMIN_SUCCESS, POST_ACCOUNT_SUPER, POST_ACCOUNT_SUPER_FAILED, POST_ACCOUNT_SUPER_SUCCESS, POST_BLOCK, POST_BLOCK_FAILED, POST_BLOCK_SUCCESS, POST_UNBLOCK, POST_UNBLOCK_FAILED, POST_UNBLOCK_SUCCESS } from "./actionTypes";
 
 export const account = () => ({
     type: GET_ACCOUNT,
@@ -68,5 +68,31 @@ export const postAccountSuperSuccess = (message) => ({
 })
 export const postAccountSuperFailed = (message) => ({
     type: POST_ACCOUNT_SUPER_FAILED,
+    payload: message
+})
+
+
+export const postBlock = (nisn) => ({
+    type: POST_BLOCK,
+    payload: {nisn}
+})
+export const postBlockSuccess = (respons) => ({
+    type: POST_BLOCK_SUCCESS,
+    payload: respons
+})
+export const postBlockFailed = (message) => ({
+    type: POST_BLOCK_FAILED,
+    payload: message
+})
+export const postUnblock = (nisn) => ({
+    type: POST_UNBLOCK,
+    payload: {nisn}
+})
+export const postUnblockSuccess = (respons) => ({
+    type: POST_UNBLOCK_SUCCESS,
+    payload: respons
+})
+export const postUnblockFailed = (message) => ({
+    type: POST_UNBLOCK_FAILED,
     payload: message
 })

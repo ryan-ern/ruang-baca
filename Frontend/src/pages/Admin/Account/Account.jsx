@@ -6,9 +6,10 @@ import {
 } from 'react-table';
 import Waveup from '../../../components/background/Wavetop';
 import Wavebot from '../../../components/background/Wavebot';
-import { account, clearAccountMessage } from '../../../store/account/actions';
+import { account, clearAccountMessage, postBlock, postUnblock } from '../../../store/account/actions';
 import ModalAccount from './modal';
 import ModalKonfirmasi from '../../../components/modalkonfirmasi';
+import moment from 'moment';
 
 export default function Account() {
     const dispatch = useDispatch()
@@ -16,13 +17,11 @@ export default function Account() {
     const editMessage = useSelector((state) => state.account.edit.message)
     const deleteMessage = useSelector((state) => state.account.delete.message)
     const addMessage = useSelector((state) => state.account.add.message)
+    const activeMessage = useSelector((state) => state.account.active.message)
+    // console.log(activeMessage)
     const columns = useMemo(
         () => {
             const baseColumns = [
-                {
-                    Header: 'No',
-                    accessor: (_, index) => index + 1,
-                },
                 {
                     Header: 'NISN',
                     accessor: 'nisn',
@@ -42,6 +41,11 @@ export default function Account() {
                     Header: 'Jurusan',
                     accessor: 'jurusan',
                     Cell: ({ value }) => value,
+                },
+                {
+                    Header: 'Diperbarui',
+                    accessor: 'updated_at',
+                    Cell: ({ value }) => moment(value).format('DD-MM-YYYY'),
                 },
             ];
 
@@ -68,14 +72,29 @@ export default function Account() {
                                 }}
                                 className='btn-tbl-edit'
                             >Edit</Button>
-                            <Button
-                                variant='success'
-                                onClick={() => {
-                                    setSelectedAccount(row.original);
-                                // setShowModal(true);
-                                }}
-                                className='btn-tbl-detail'
-                            >Blokir</Button>
+                            {row.original.status === "blokir"
+                                ?
+                                <Button
+                                    variant='success'
+                                    onClick={() => {
+                                    // setSelectedAccount(row.original);
+                                        if (confirm("Yakin Ingin Aktivasi " + row.original.name)) dispatch(postUnblock(row.original.nisn))
+                                    // console.log(row.original)
+                                    }}
+                                    className='btn-tbl-detail'
+                                >Aktivasi</Button>
+                                :
+                            
+                                <Button
+                                    variant='danger'
+                                    onClick={() => {
+                                    // setSelectedAccount(row.original);
+                                        if (confirm("Yakin Ingin Blokir " + row.original.name)) dispatch(postBlock(row.original.nisn))
+                                    // console.log(row.original)
+                                    }}
+                                    className='btn-tbl-delete'
+                                >Blokir</Button>
+                            }
                             <Button
                                 variant='danger'
                                 onClick={() => {
@@ -115,7 +134,10 @@ export default function Account() {
             columns,
             data,
             initialState:{
-                pageSize:10,
+                pageSize: 10,
+                sortBy: [
+                    { id: 'updated_at', desc: true },
+                ],
             }
         },
         useGlobalFilter,
@@ -160,8 +182,8 @@ export default function Account() {
                             <Row>
                                 <Col className='text-center'>
                                     {addMessage ? <Alert dismissible onClose={handleDismiss} variant='success'>{addMessage && addMessage.data.message}</Alert> :
-                                        (editMessage || deleteMessage) ?
-                                            <Alert variant={editMessage? 'info' : 'success'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
+                                        (editMessage || deleteMessage || activeMessage) ?
+                                            <Alert variant={editMessage? 'info' : 'success'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message || activeMessage && activeMessage.message}</Alert>
                                             :
                                             null
                                     }

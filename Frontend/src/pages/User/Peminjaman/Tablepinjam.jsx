@@ -62,7 +62,7 @@ export default function TablePeminjaman() {
             columns,
             data,
             initialState:{
-                pageSize:3,
+                pageSize:10,
                 sortBy: [{ id: 'created_at', desc: true }],
             },
         },

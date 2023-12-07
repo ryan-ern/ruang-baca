@@ -73,7 +73,7 @@ export default function TableKembali() {
             columns,
             data,
             initialState:{
-                pageSize:3,
+                pageSize:10,
                 sortBy: [{ id: 'updated_at', desc: true }],
             },
         },
