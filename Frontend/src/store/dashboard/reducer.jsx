@@ -1,8 +1,9 @@
-import { GET_DASHBOARD, GET_DASHBOARD_FAILED, GET_DASHBOARD_SUCCESS } from "./actionTypes"
+import { GET_DASHBOARD, GET_DASHBOARD_FAILED, GET_DASHBOARD_SUCCESS, GET_WHATSAPP, GET_WHATSAPP_SUCCESS } from "./actionTypes"
 
 const init_state = {
     loading: false,
-    response:{}
+    response: {},
+    whatsapp: []
 }
 
 const dashboardReducer = (state = init_state, action) => {
@@ -25,6 +26,19 @@ const dashboardReducer = (state = init_state, action) => {
             ...state,
             loading: false,
             response:action.payload,
+        }
+        break
+    case GET_WHATSAPP:
+        state = {
+            ...state,
+            loading:true,
+        }
+        break
+    case GET_WHATSAPP_SUCCESS:
+        state = {
+            ...state,
+            loading: false,
+            whatsapp:action.payload,
         }
         break
     default:

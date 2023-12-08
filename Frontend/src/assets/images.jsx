@@ -15,6 +15,7 @@ const IMAGES = {
     pengembalian1: new URL("./2.png", import.meta.url).href,
     databuku1: new URL("./3.png", import.meta.url).href,
     pengguna1: new URL("./4.png", import.meta.url).href,
+    loader: new URL("./loader.gif", import.meta.url).href,
 };
 
 export default IMAGES;
