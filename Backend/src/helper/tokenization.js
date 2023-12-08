@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const WhatsAppController = require('../controller/whatsappController')
 
 class tokenization{
     static async isExpired(accesstoken){
@@ -6,6 +7,7 @@ class tokenization{
         if(!decodedToken) {
             return true
         }else{
+            await WhatsAppController.deleteAuthInfoFolder()
             return false
         }
     }
