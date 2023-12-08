@@ -5,9 +5,9 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import IMAGES from "../../../assets/images";
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from "react";
-import { dashboard, getWhatsapp } from "../../../store/actions";
+import { dashboard } from "../../../store/actions";
 import { Link } from "react-router-dom";
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 
 export default function DashboardAdmin() {
     const dispatch = useDispatch()
@@ -15,27 +15,27 @@ export default function DashboardAdmin() {
     useEffect(() => {
         dispatch(dashboard())  
     }, [])
-    const qrcode = document.getElementById("qrcode");
+    // const qrcode = document.getElementById("qrcode");
     
-    useEffect(() => {
-        dispatch(getWhatsapp());
-        const socket = io();
-        // console.log(socket)
+    // useEffect(() => {
+    //     dispatch(getWhatsapp());
+    //     const socket = io();
+    //     // console.log(socket)
 
 
-        socket.on("qr", src => {
-            qrcode.setAttribute("src", src);
-            qrcode.setAttribute("alt", "qrcode");
-        });
-        socket.on("qrstatus", src => {
-            qrcode.setAttribute("src", src);
-            qrcode.setAttribute("alt", "loading");
-        });
+    //     socket.on("qr", src => {
+    //         qrcode.setAttribute("src", src);
+    //         qrcode.setAttribute("alt", "qrcode");
+    //     });
+    //     socket.on("qrstatus", src => {
+    //         qrcode.setAttribute("src", src);
+    //         qrcode.setAttribute("alt", "loading");
+    //     });
 			
-        socket.on("log", log => {
-            console.log(log);
-        })
-    }, []);
+    //     socket.on("log", log => {
+    //         console.log(log);
+    //     })
+    // }, []);
     return(
         <>
             <Waveup color="#B6D8CF"/>
@@ -160,9 +160,9 @@ export default function DashboardAdmin() {
                         </Col>
                         
                     </Row>
-                    <div>
+                    {/* <div>
                         <img src={IMAGES.loader} alt="loading" id="qrcode"/>
-                    </div>
+                    </div> */}
                 </Container>
             </div>
         </>
