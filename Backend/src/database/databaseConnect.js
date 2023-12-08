@@ -1,28 +1,27 @@
-const {Client} = require('pg')
+const {Pool} = require('pg')
 
 class Database{
     static async createConnection() {
-        this.client = new Client({
+        this.pool = new Pool({
           user: process.env.db_user,
           host: process.env.db_host,
           database: process.env.db_database,
           password: process.env.db_password,
           port: process.env.db_port,
-          idleTimeoutMillis: 1,
-          max: 10,
-          connectionTimeoutMillis: 2000,
-        });
-    
-      await this.client.connect();
+          /*icreateTimeoutMillis: 8000,
+          acquireTimeoutMillis: 8000,
+          idleTimeoutMillis: 8000,
+          reapIntervalMillis: 1000,
+          createRetryIntervalMillis: 100,*/
+        })
     }
     static async query(sql) {
-      const result = await this.client.query(sql)
+      const result = await this.pool.query(sql)
       return result.rows
     }
     static async close() {
         try {
-          await this.client.end();
-          console.log('Connection to PostgreSQL closed')
+          return await this.pool.end()
         } catch (error) {
           console.error('Error closing connection', error)
         }
