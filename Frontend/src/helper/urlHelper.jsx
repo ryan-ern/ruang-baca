@@ -49,6 +49,8 @@ export const URL_SEARCH_BORROW_BY_DATE= '/searhPeminjaman/:date'
 export const URL_SEARCH_BORROW_BY_DATE_ADMIN = '/searchPeminjamanAdmin/:date'
 export const URL_SEARCH_RETURN_BY_DATE = '/searhPengembalian/:date'
 export const URL_SEARCH_RETURN_BY_DATE_ADMIN = '/searchPengembalianAdmin/:date'
-// unfinished
+
 export const URL_BLOCK_ACCOUNT = '/blok/:nisn'
 export const URL_UNBLOCK_ACCOUNT = '/unblok/:nisn'
+// unfinished
+export const URL_GET_WHATSAPP = '/whatsapp'

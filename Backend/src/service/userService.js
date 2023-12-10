@@ -82,6 +82,26 @@ class userServices{
         await Database.close()
         return user[0]
     }
+    static async blok(nisn){
+        await Database.createConnection()
+        const query = {
+            text: 'UPDATE account set status = $1 where nisn = $2 RETURNING *',
+            values: ['blokir', nisn]
+        }
+        const user = await Database.query(query)
+        await Database.close()
+        return user[0]
+    }
+    static async unblok(nisn){
+        await Database.createConnection()
+        const query = {
+            text: 'UPDATE account set status = $1 where nisn = $2 RETURNING *',
+            values: ['-', nisn]
+        }
+        const user = await Database.query(query)
+        await Database.close()
+        return user[0]
+    }
 }
 
 module.exports = userServices
