@@ -1,6 +1,6 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link, useLocation, } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect,  } from "react";
 import "../../assets/styles/header.css";
 import { useSelector } from "react-redux";
 
@@ -41,6 +41,7 @@ export default function Navigation() {
         }
         if (matchingMenuItem) activate(matchingMenuItem);
     }, [location]);
+   
 
     return (
         <>
@@ -88,20 +89,30 @@ export default function Navigation() {
                                         </li>
                                     ) : null}
 
-                                    {features.includes('Validasi Peminjaman') ? (
+                                    {features.includes('Validasi Peminjaman') && features.includes('Validasi pengembalian') ? (
                                         <li className="nav-item">
-                                            <Link to="/panel/borrow-validation" className="nav-link">
-                                            Validasi Peminjaman
-                                            </Link>
+                                            <NavDropdown
+                                                id="nav-dropdown-dark-example"
+                                                title="Validasi"
+                                                menuVariant="light"
+                                            >
+                                            
+                                                <NavDropdown.Item>
+                                                    <Link to="/panel/borrow-validation" className="nav-link">
+                                                        Validasi Peminjaman
+                                                    </Link>
+                                                </NavDropdown.Item>
+                                            
+                                                <NavDropdown.Item >
+                                                    <Link to="/panel/return-validation" className="nav-link">
+                                                        Validasi Pengembalian
+                                                    </Link>
+                                                </NavDropdown.Item>
+                                            
+                                            </NavDropdown>
                                         </li>
                                     ) : null}
-                                    {features.includes('Validasi pengembalian') ? (
-                                        <li className="nav-item">
-                                            <Link to="/panel/return-validation" className="nav-link">
-                                            Validasi Pengembalian
-                                            </Link>
-                                        </li>
-                                    ) : null}
+                                   
                                     {features.includes('Kontrol Akun') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/account-control" className="nav-link">
@@ -109,20 +120,34 @@ export default function Navigation() {
                                             </Link>
                                         </li>
                                     ) : null}
-                                    {features.includes('Denda') ? (
-                                        <li className="nav-item">
-                                            <Link to="/panel/fined-settings" className="nav-link">
-                                            Pengaturan Denda
-                                            </Link>
-                                        </li>
+                                    
+                                    {features.includes('Denda') && features.includes('jurusan')? (
+                                        <NavDropdown
+                                            id="nav-dropdown-dark-example"
+                                            title="Pengaturan"
+                                            menuVariant="light"
+                                        >
+                                            
+                                            <NavDropdown.Item >
+                                                
+                                                <Link to="/panel/fined-settings" className="nav-link">
+                                                    Pengaturan Denda
+                                                </Link>
+                                                
+                                            </NavDropdown.Item>
+                                            
+                                           
+                                            <NavDropdown.Item >
+                                               
+                                                <Link to="/panel/major-settings" className="nav-link">
+                                                    Pengaturan Jurusan
+                                                </Link>
+                                               
+                                            </NavDropdown.Item>
+                                              
+                                        </NavDropdown>
                                     ) : null}
-                                    {features.includes('jurusan') ? (
-                                        <li className="nav-item">
-                                            <Link to="/panel/major-settings" className="nav-link">
-                                            Jurusan
-                                            </Link>
-                                        </li>
-                                    ) : null}
+
                                 </ul>
                             </Nav>
                             <Navbar.Text className="d-flex">
