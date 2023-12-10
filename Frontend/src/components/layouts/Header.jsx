@@ -89,63 +89,55 @@ export default function Navigation() {
                                         </li>
                                     ) : null}
 
-                                    {features.includes('Validasi Peminjaman') && features.includes('Validasi pengembalian') ? (
+                                    {features.includes('Validasi Peminjaman') ? (
                                         <li className="nav-item">
-                                            <NavDropdown
-                                                id="nav-dropdown-dark-example"
-                                                title="Validasi"
-                                                menuVariant="light"
-                                            >
-                                            
-                                                <NavDropdown.Item>
-                                                    <Link to="/panel/borrow-validation" className="nav-link">
+                                            <Link to="/panel/borrow-validation" className="nav-link">
                                                         Validasi Peminjaman
-                                                    </Link>
-                                                </NavDropdown.Item>
-                                            
-                                                <NavDropdown.Item >
-                                                    <Link to="/panel/return-validation" className="nav-link">
-                                                        Validasi Pengembalian
-                                                    </Link>
-                                                </NavDropdown.Item>
-                                            
-                                            </NavDropdown>
-                                        </li>
-                                    ) : null}
-                                   
-                                    {features.includes('Kontrol Akun') ? (
-                                        <li className="nav-item">
-                                            <Link to="/panel/account-control" className="nav-link">
-                                            Kontrol Akun
                                             </Link>
                                         </li>
                                     ) : null}
+
+                                    {features.includes('Validasi pengembalian')  ? (
+                                        <li className="nav-item">
+                                            <Link to="/panel/return-validation" className="nav-link">
+                                                        Validasi Pengembalian
+                                            </Link>
+                                        </li>
+                                    ) : null}
+
                                     
-                                    {features.includes('Denda') && features.includes('jurusan')? (
-                                        <NavDropdown
-                                            id="nav-dropdown-dark-example"
-                                            title="Pengaturan"
-                                            menuVariant="light"
-                                        >
-                                            
-                                            <NavDropdown.Item >
-                                                
-                                                <Link to="/panel/fined-settings" className="nav-link">
+                                    {features.includes('Denda') && features.includes('jurusan') && features.includes('Kontrol Akun') ? (
+                                        <li className="nav-item">
+                                            <NavDropdown
+                                                id="nav-dropdown-dark-example"
+                                                title="Pengaturan"
+                                                menuVariant="light"
+                                            >
+                                                <NavDropdown.Item>
+                                                    <Link to="/panel/account-control" className="nav-link active">
+                                                    Kontrol Akun
+                                                    </Link>
+                                                </NavDropdown.Item>
+
+                                                <NavDropdown.Item >
+                                                    <Link to="/panel/fined-settings" className="nav-link">
                                                     Pengaturan Denda
-                                                </Link>
-                                                
-                                            </NavDropdown.Item>
-                                            
-                                           
-                                            <NavDropdown.Item >
-                                               
-                                                <Link to="/panel/major-settings" className="nav-link">
+                                                    </Link>                                               
+                                                </NavDropdown.Item>
+                                                                            
+                                                <NavDropdown.Item >                                              
+                                                    <Link to="/panel/major-settings" className="nav-link">
                                                     Pengaturan Jurusan
-                                                </Link>
-                                               
-                                            </NavDropdown.Item>
-                                              
-                                        </NavDropdown>
+                                                    </Link>                                              
+                                                </NavDropdown.Item>  
+
+                                                <NavDropdown.Item >                                              
+                                                    <Link to="#" className="nav-link">
+                                                    Notifikasi WhatsApp
+                                                    </Link>                                              
+                                                </NavDropdown.Item>                                         
+                                            </NavDropdown>
+                                        </li>
                                     ) : null}
 
                                 </ul>
