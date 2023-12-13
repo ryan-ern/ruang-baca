@@ -21,8 +21,11 @@ export default function Dashboard() {
         dispatch(getFined())
         dispatch(dashboard());
         dispatch(jurusan()) 
-    },[])
-
+        const intervalId = setInterval(() => {
+            dispatch(dashboard());
+        }, 10_000);
+        return () => clearInterval(intervalId);
+    }, [dispatch])
 
     const handleSelectedMajorChange = (selectedMajorName) => {
         setSelectedMajor(selectedMajorName)
