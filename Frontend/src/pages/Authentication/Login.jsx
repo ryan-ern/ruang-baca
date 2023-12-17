@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Row, Container, Alert  } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Container, Alert } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Waveup from "../../components/background/Wavetop";
@@ -6,13 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from "../../store/auth/actions";
 import { isEdge } from "react-device-detect";
 
-
-
 export default function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth)
-    const messageError = useSelector((state)=> state.auth?.message?.data)
+    const messageError = useSelector((state) => state.auth?.message?.data)
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -48,14 +46,14 @@ export default function Login() {
                                                     <strong>SMK NEGERI 7 BANDAR LAMPUNG</strong>
                                                 </h5>
                                                 <p className="text-muted">
-                                            Silahkan Sign In
+                                                    Silahkan Sign In
                                                 </p>
                                             </div>
-                                            {messageError?
-                                                <Alert variant="danger">{messageError.message}</Alert>:
-                                                ( auth.message ?
+                                            {messageError ?
+                                                <Alert variant="danger">{messageError.message}</Alert> :
+                                                (auth.message ?
                                                     <Alert variant="danger">{auth.message}</Alert>
-                                                    : null    )
+                                                    : null)
                                             }
                                             <div>
                                                 <Form action="#" onSubmit={(e) => {
@@ -64,7 +62,7 @@ export default function Login() {
                                                 }}>
                                                     <Form.Group className="mb-4">
                                                         <Form.Label>
-                                                    Username<span className="text-danger">*</span>
+                                                            Username<span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative">
                                                             <Form.Control
@@ -85,13 +83,13 @@ export default function Login() {
 
                                                     <Form.Group className="">
                                                         <Form.Label>
-                                                    Password<span className="text-danger">*</span>
+                                                            Password<span className="text-danger">*</span>
                                                         </Form.Label>
                                                         <div className="position-relative auth-pass-inputgroup mb-3">
                                                             <Form.Control
                                                                 className="form-control bg-light border-light mb-5 password-input"
                                                                 placeholder="Masukkan password"
-                                                            
+
                                                                 type={showPassword ? "text" : "password"}
                                                                 id="password"
                                                                 name="password"
@@ -101,13 +99,13 @@ export default function Login() {
                                                                 onChange={(e) => {
                                                                     setAccount({ ...account, password: e.target.value });
                                                                 }}
-                                                                
+
                                                             />
                                                             {!isEdge && (
                                                                 <div className="password-toggle-icon" onClick={handleTogglePassword}>
                                                                     {showPassword ? '🙈' : '👀'}
                                                                 </div>
-                                                            )}                                                           
+                                                            )}
                                                         </div>
                                                     </Form.Group>
                                                     <div className="pb-4">
@@ -116,7 +114,7 @@ export default function Login() {
                                                             type="submit"
                                                             variant="success"
                                                         >
-                                                    Sign In
+                                                            Sign In
                                                         </Button>
                                                     </div>
                                                     <div className="text-center">

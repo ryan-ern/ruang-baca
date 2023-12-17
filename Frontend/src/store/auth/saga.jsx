@@ -1,4 +1,4 @@
-import {call, put, takeEvery} from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import { URL_DELETE_LOGOUT, URL_GET_AUTH, URL_POST_LOGIN, URL_POST_REGISTER } from "../../helper/urlHelper";
 import axios from '../../helper/apiHelper';
 import { authInfo, authInfoFailed, authInfoSuccess, loginFailed, loginSuccess, logoutSuccess, registerFailed, registerSuccess } from './actions';
@@ -56,9 +56,9 @@ export function* logoutSaga({ payload: navigate }) {
 }
 
 export function* authSaga() {
-    yield takeEvery(LOGIN, loginSaga),
-    yield takeEvery(REGISTER, registerSaga),
-    yield takeEvery(LOGOUT, logoutSaga),
+    yield takeEvery(LOGIN, loginSaga)
+    yield takeEvery(REGISTER, registerSaga)
+    yield takeEvery(LOGOUT, logoutSaga)
     yield takeEvery(AUTH_INFO, authInfoSaga)
 }
 

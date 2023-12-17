@@ -5,6 +5,7 @@ import { editAccount, postAccountAdmin, postAccountSuper } from "../../../store/
 
 export default function ModalAccount({ show, onHide, editdata, add }) {
     const dispatch = useDispatch()
+    const [showPassword, setShowPassword] = useState(false);
     const dataJurusan = useSelector((state) => state.major.response)
     const [data, setData] = useState({
         nisn: '',
@@ -14,6 +15,10 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
         password: '',
         wa: '',
     })
+
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const [role, setRole] = useState(null)
 
@@ -55,11 +60,11 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
         <>
             <Modal show={show} onHide={onHide} centered className="custom-modal">
                 {/* <Modal.Header closeButton /> */}
-                <Modal.Body style={{backgroundColor: '#e0f8f2', borderRadius: '25px'}} className="custom-modal-body pb-5">
+                <Modal.Body style={{ backgroundColor: '#e0f8f2', borderRadius: '25px' }} className="custom-modal-body pb-5">
                     <Container>
                         <Row>
                             <Col>
-                                <h4>{add? "Tambah Data Super / Admin" : "Edit Data Akun" }</h4>
+                                <h4>{add ? "Tambah Data Super / Admin" : "Edit Data Akun"}</h4>
                             </Col>
                         </Row>
                         <Form onSubmit={(e) => {
@@ -96,21 +101,21 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                         className="form-control bg-light mb-4"
                                         defaultValue={data.nisn}
                                         required
-                                        onChange={(e) => setData({...data, nisn: e.target.value})}
+                                        onChange={(e) => setData({ ...data, nisn: e.target.value })}
                                     />
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <Form.Label>Username</Form.Label>
-                                    { add ? <Form.Control
+                                    {add ? <Form.Control
                                         type="text"
                                         name="username"
                                         placeholder="Masukkan Username"
                                         className="form-control bg-light mb-4"
                                         defaultValue={data.username}
                                         required
-                                        onChange={(e) => setData({...data, username: e.target.value})}
+                                        onChange={(e) => setData({ ...data, username: e.target.value })}
                                     />
                                         :
                                         <span className="form-control bg-light mb-4">
@@ -129,7 +134,7 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                         className="form-control bg-light mb-4"
                                         defaultValue={data.name}
                                         required
-                                        onChange={(e) => setData({...data, name: e.target.value})}
+                                        onChange={(e) => setData({ ...data, name: e.target.value })}
                                     />
                                 </Col>
                             </Row>
@@ -137,7 +142,7 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                 <Col>
                                     <label>Jurusan</label>
                                     <select
-                                        className="form-control bg-light"
+                                        className="form-control bg-light mb-4"
                                         name="jurusan"
                                         value={data.jurusan}
                                         onChange={(e) => setData({ ...data, jurusan: e.target.value })}
@@ -174,7 +179,7 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                     />
                                 </Col>
                             </Row>
-                            {editdata? null :
+                            {editdata ? null :
                                 <Row>
                                     <Col>
                                         <Form.Label>Role</Form.Label>
@@ -189,17 +194,24 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                             }
                             <Row>
                                 <Col>
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        name="password"
-                                        placeholder="Masukkan Password"
-                                        autoComplete="password"
-                                        className="form-control bg-light mb-4"
-                                        defaultValue={data.password}
-                                        required
-                                        onChange={(e) => setData({...data, password: e.target.value})}
-                                    />
+                                    <Form.Group className="">
+                                        <Form.Label>Password</Form.Label>
+                                        <div className="position-relative auth-pass-inputgroup mb-3">
+                                            <Form.Control
+                                                type={showPassword ? "text" : "password"}
+                                                name="password"
+                                                placeholder="Masukkan Password"
+                                                autoComplete="password"
+                                                className="form-control password-input bg-light mb-4"
+                                                defaultValue={data.password}
+                                                required
+                                                onChange={(e) => setData({ ...data, password: e.target.value })}
+                                            />
+                                            <div className="password-toggle-icon" onClick={handleTogglePassword}>
+                                                {showPassword ? '🙈' : '👀'}
+                                            </div>
+                                        </div>
+                                    </Form.Group>
                                 </Col>
                             </Row>
                             <Row>
@@ -208,7 +220,7 @@ export default function ModalAccount({ show, onHide, editdata, add }) {
                                         <div className="d-flex flex-wrap gap-2">
                                             <Button onClick={onHide} variant="danger" className="btn-table rounded-pill">Batal</Button>
                                             <Button type="submit" className="btn-table rounded-pill custom-button" variant="success">
-                                                {add? 'Tambah data':  "Edit Data"}
+                                                {add ? 'Tambah data' : "Edit Data"}
                                             </Button>
                                         </div>
                                     </div>
