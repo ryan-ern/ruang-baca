@@ -8,6 +8,7 @@ class inventoryController{
     static async addBook(req, res){
         try{
             const payload = req.body
+            payload.isbn = payload.isbn.replace(/\/|\//g, '-')
             const name = req.file.filename
             if(!name) throw new Error ('File not Found')
             const pathname = path.join(__dirname, 'uploads', name);
