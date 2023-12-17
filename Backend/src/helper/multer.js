@@ -8,9 +8,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const bookTitle = req.body.judul
-    const token = req.headers.authorization
-    const decodedToken = jwt.verify(token, process.env.JWT_TOKEN)
-    const name = decodedToken.username
+    const jurusan = req.body.name
+    const name = req.body.username
     if(bookTitle){
       const fileExtension = path.extname(file.originalname).toLowerCase()
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -20,6 +19,11 @@ const storage = multer.diskStorage({
       const fileExtension = path.extname(file.originalname).toLowerCase()
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       const filename = name + '-' + uniqueSuffix + fileExtension;
+      cb(null, filename) 
+    }else if(jurusan){
+      const fileExtension = path.extname(file.originalname).toLowerCase()
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      const filename = jurusan + '-' + uniqueSuffix + fileExtension;
       cb(null, filename) 
     }else{
       const fileExtension = path.extname(file.originalname).toLowerCase()

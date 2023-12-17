@@ -31,6 +31,12 @@ const path = require('path')
 
 const whatsappService = require('../service/whatsappService');
 
+const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
+
+let sock;
+let qr;
+let soket;
+
 
 const whatsappController = require('../controller/whatsappController');
 
@@ -102,20 +108,9 @@ routes.get('/time', timer.showTimestamp)
 //show image
 
 //wa
-routes.get('/whatsapp',async (req, res) =>{ 
-    try {
-        await whatsappController.connectToWhatsApp();
 
-        if (whatsappController.isConnected()) {
-            whatsappController.updateQR("connected", req, res);
-        } else if (whatsappController.qr) {
-            whatsappController.updateQR("qr", req, res);
-        }
 
-        res?.send('WhatsApp connection initiated.');
-    } catch (error) {
-        console.error('Error connecting to WhatsApp:', error);
-        res?.status(500).send('Error connecting to WhatsApp.');
-    }
-})
+
+
+
 module.exports = routes

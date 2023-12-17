@@ -20,7 +20,6 @@ const fs = require('fs')
 const path = require('path')
 
 const whatsappService = require('../service/whatsappService');
-const kode = require('../helper/whatsappSend')
 
 const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) })
 
@@ -131,7 +130,7 @@ class WhatsAppController{
         const { state, saveCreds } = await useMultiFileAuthState('auth_info')
         let { version, isLatest } = await fetchLatestBaileysVersion()
         sock = makeWASocket({
-            printQRInTerminal: true,
+            printQRInTerminal: false,
             auth: state,
             logger: log({ level: "silent" }),
             version: [2, 2323, 4],
@@ -193,17 +192,17 @@ class WhatsAppController{
                 return
             }
     
-        });
+        })
         sock.ev.on("creds.update", saveCreds)
         io.on("connection", async (socket) => {
             soket = socket;
-            // console.log(sock)
+            console.log(soket)
             if (await this.isConnected) {
                 await this.updateQR("connected");
             } else if (qr) {
                 await this.updateQR("qr");
             }
-        });  
+        })
     } 
 }
 

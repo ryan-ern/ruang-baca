@@ -77,7 +77,7 @@ class dashboardService{
         }
         const count = await Database.query(query)
         await Database.close()
-        return count
+        return count[0]
     }
     static async searchJudul(judul){
         await Database.createConnection()

@@ -214,6 +214,7 @@ class accountControlController{
         try{
             const username = await accountControlService.findUsername(req.params.username)
             if(!username) throw new Error ('User not Found')
+            const count = await accountControlController.findData
 
             const pathname = path.join(ROOT, 'uploads', username.profile)
             if(username.profile != 'default.jpg' && fs.existsSync(pathname)) {

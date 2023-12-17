@@ -102,6 +102,9 @@ class accountControlService{
         await Database.close()
         return message
     }
+    static async findData(id){
+        await Database
+    }
 }
 
 module.exports = accountControlService

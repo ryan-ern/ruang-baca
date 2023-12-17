@@ -70,7 +70,7 @@ class returnService{
         const currentDate =  moment(now).format()
         await Database.createConnection()
         const query = {
-            text: 'UPDATE borrow SET due_date=$1, pengembalian=$2, denda = $3 WHERE id = $4 RETURNING *',
+            text: 'UPDATE borrow SET updated_at=$1, pengembalian=$2, denda = $3 WHERE id = $4 RETURNING *',
             values: [currentDate, 'sukses', denda, id]
         }
         const pengembalian = await Database.query(query)
@@ -85,11 +85,10 @@ class returnService{
     static async resetPengembalian(id, jumlah, isbn){
         const now = new Date().getTime()
         const currentDate =  moment(now).format()
-        const dueDate = moment(now).add(3, 'days').format()
         await Database.createConnection()
         const query ={
-            text:'UPDATE borrow SET status = $1, updated_at = $2, due_date = $3, pengembalian = $4 WHERE id = $5 RETURNING *',
-            values: ['SUKSES', currentDate, dueDate, '-', id]
+            text:'UPDATE borrow SET status = $1, updated_at = $2, pengembalian = $3 WHERE id = $4 RETURNING *',
+            values: ['SUKSES', currentDate, '-', id]
         }
         const borrow = await Database.query(query)
         const newQuery = {
