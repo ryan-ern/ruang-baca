@@ -1,5 +1,5 @@
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
-import { Link, useLocation, } from "react-router-dom";
+import { Link, useLocation, useNavigate, } from "react-router-dom";
 import { useEffect,  } from "react";
 import "../../assets/styles/header.css";
 import { useSelector } from "react-redux";
@@ -27,6 +27,8 @@ export default function Navigation() {
     function activate(item) {
         item.classList.add("active");
     }
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         let matchingMenuItem = null;
@@ -107,34 +109,34 @@ export default function Navigation() {
 
                                     
                                     {features.includes('Denda') && features.includes('jurusan') && features.includes('Kontrol Akun') ? (
-                                        <li className="nav-item">
+                                        <li className="nav-item"> 
                                             <NavDropdown
-                                                id="nav-dropdown-dark-example"
+                                                id="dropdown-basic"
                                                 title="Pengaturan"
                                                 menuVariant="light"
                                             >
                                                 <NavDropdown.Item>
-                                                    <Link to="/panel/account-control" className="nav-link active">
+                                                    <span onClick={()=>navigate('/panel/account-control')} className="nav-link">
                                                     Kontrol Akun
-                                                    </Link>
+                                                    </span>
                                                 </NavDropdown.Item>
 
                                                 <NavDropdown.Item >
-                                                    <Link to="/panel/fined-settings" className="nav-link">
+                                                    <span onClick={()=>navigate('/panel/fined-settings')} className="nav-link ">
                                                     Pengaturan Denda
-                                                    </Link>                                               
+                                                    </span>                                               
                                                 </NavDropdown.Item>
                                                                             
                                                 <NavDropdown.Item >                                              
-                                                    <Link to="/panel/major-settings" className="nav-link">
+                                                    <span onClick={()=>navigate('/panel/major-settings')}  className="nav-link ">
                                                     Pengaturan Jurusan
-                                                    </Link>                                              
+                                                    </span>                                              
                                                 </NavDropdown.Item>  
 
                                                 <NavDropdown.Item >                                              
-                                                    <Link to="#" className="nav-link">
+                                                    <span onClick={()=>navigate('#')}  className="nav-link">
                                                     Notifikasi WhatsApp
-                                                    </Link>                                              
+                                                    </span>                                              
                                                 </NavDropdown.Item>                                         
                                             </NavDropdown>
                                         </li>
