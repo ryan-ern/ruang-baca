@@ -31,7 +31,7 @@ export default function Cardbuku() {
                     <Card
                         key={index}
                         text="black"
-                        className="text-center cardbuku p-0 m-2 me-3 mb-5"
+                        className="text-center cardbuku pb-1 m-2 me-3 mb-5"
                         onClick={() => handleClick(index)}
                     >
                         <Card.Body className="cardbuku-body">

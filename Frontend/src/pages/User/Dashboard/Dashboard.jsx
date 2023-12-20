@@ -109,12 +109,12 @@ export default function Dashboard() {
                                                 <Button onClick={handleReset} variant="danger" className="btn px-3">
                                                     Reset
                                                 </Button>
-                                                <Button type="submit" className="btn">
+                                                <Button type="submit" className="btnsearch btn-primary">
                                                     Cari
                                                 </Button>
                                             </>
                                         ) : (
-                                            <Button type="submit" className="btn btn-primary">
+                                            <Button type="submit" className="btnsearch btn-primary">
                                                     Cari
                                             </Button>
                                         )}

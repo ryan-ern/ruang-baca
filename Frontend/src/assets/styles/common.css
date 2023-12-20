@@ -87,6 +87,7 @@
 
 .cardbuku-body {
   padding: 5px;
+  overflow: hidden;
 }
 
 .cardbuku-judul {
@@ -209,6 +210,17 @@
   padding: 0;
   height: 40px;
 
+  /* line-height: 60px; */
+}
+
+.btn {
+  padding: 0;
+  height: 40px;
+  border: none;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
   /* line-height: 60px; */
 }
 
