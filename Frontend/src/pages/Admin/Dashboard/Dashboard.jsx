@@ -5,9 +5,8 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import IMAGES from "../../../assets/images";
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from "react";
-import { dashboard, getWhatsapp } from "../../../store/actions";
+import { dashboard } from "../../../store/actions";
 import { Link } from "react-router-dom";
-import { io } from 'socket.io-client';
 
 export default function DashboardAdmin() {
     const dispatch = useDispatch()
@@ -15,25 +14,9 @@ export default function DashboardAdmin() {
     // const whatsappState = useSelector((state) => state.book.whatsapp)
     // console.log(whatsappState)
     useEffect(() => {
-        const socket = io(import.meta.env.VITE_BASE_URL)
-        const qrcode = document.getElementById("qrcode");
-        socket.on("qr", src => {
-            qrcode.setAttribute("src", src);
-            qrcode.setAttribute("alt", "qrcode");
-        });
-        // socket.on("qrstatus", src => {
-        //     qrcode.setAttribute("src", src);
-        //     qrcode.setAttribute("alt", IMAGES.loader);
-        // });
-
-        socket.on("log", log => {
-            if (log === 'WhatsApp terhubung!') {
-                qrcode.setAttribute("src", IMAGES.check);
-                qrcode.setAttribute("alt", log);
-            }
-        })
+    
         dispatch(dashboard());
-        dispatch(getWhatsapp());
+        // dispatch(getWhatsapp());
 
         const intervalId = setInterval(() => {
             dispatch(dashboard());
@@ -164,11 +147,7 @@ export default function DashboardAdmin() {
                                 </Card>
                             </Link>
                         </Col>
-
                     </Row>
-                    <div id="qrcode-container">
-                        <img src={IMAGES.loader} alt="loading" id="qrcode" />
-                    </div>
                 </Container>
             </div>
         </>

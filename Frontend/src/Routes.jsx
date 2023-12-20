@@ -21,6 +21,7 @@ import ValidationPinjam from "./pages/Admin/Validation/Vpinjam";
 import Vpengembalian from "./pages/Admin/Validation/vpengembalian";
 import Fined from "./pages/Admin/Denda/denda";
 import Jurusan from "./pages/Admin/Jurusan";
+import WhatsappSettings from "./pages/Admin/Whatsapp/Whatsapp";
 
 /**
  * Admin
@@ -74,6 +75,7 @@ export default function RoutesApp() {
                         <Route path="/panel/major-settings" element={<UseFeature allow="jurusan" />}>
                             <Route index element={<Jurusan />}/>    
                         </Route>
+                        <Route path="/panel/whatsapp-settings" element={<WhatsappSettings/>}/>                       
                         <Route path="/panel/profil" element={<Profil/>}/>                       
                     </Route>
                     {/* Not Found */}

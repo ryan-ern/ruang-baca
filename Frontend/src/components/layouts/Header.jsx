@@ -134,7 +134,7 @@ export default function Navigation() {
                                                 </NavDropdown.Item>  
 
                                                 <NavDropdown.Item >                                              
-                                                    <span onClick={()=>navigate('#')}  className="nav-link">
+                                                    <span onClick={()=>navigate('/panel/whatsapp-settings')}  className="nav-link">
                                                     Notifikasi WhatsApp
                                                     </span>                                              
                                                 </NavDropdown.Item>                                         
