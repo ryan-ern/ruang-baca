@@ -64,14 +64,14 @@ export default function Dashboard() {
             <div className="py-4">
                 <Container>
                     <Row>
-                        <Col xs={1}>
+                        <Col sm={12} lg={1} className="text-center mb-2">
                             <img
                                 src={IMAGES.logo}
                                 alt="Logo SMKN 7 Bandar Lampung"
                                 width={50}
                             />
                         </Col>
-                        <Col>
+                        <Col sm={12} lg={10} >
                             <div
                                 style={{
                                     display: "flex",
@@ -86,7 +86,6 @@ export default function Dashboard() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={1}></Col>
                         <Col>
                             <div
                                 style={{
@@ -141,7 +140,7 @@ export default function Dashboard() {
                                 style={{
                                     display: "flex",
                                     flexWrap: "wrap",
-                                    justifyContent: "flex-start",
+                                    justifyContent: "center",
                                 }}
                             >
                                 {dataSearch.response.data ? (
@@ -151,6 +150,10 @@ export default function Dashboard() {
                                             text="black"
                                             className="text-center cardbuku p-0 m-2 me-3 mb-5"
                                             onClick={() => handleClick(index)}
+                                            style={{
+                                                flex: "1 1 auto",
+                                                maxWidth: '120px'
+                                            }}
                                         >
                                             <Card.Body className="cardbuku-body">
                                                 <Card.Img
@@ -171,7 +174,7 @@ export default function Dashboard() {
                                         </Card>
                                     ))
                                 ) : (
-                                    <Alert className="mt-2" variant="danger">{dataSearch?.response?.message}</Alert>
+                                    <Alert className="mt-2 w-100 text-center" variant="danger">{dataSearch?.response?.message}</Alert>
                                 )}
                                 <ModalDetailBuku show={showModal} onHide={handleClose} data={selectedBook} />
                             </div>

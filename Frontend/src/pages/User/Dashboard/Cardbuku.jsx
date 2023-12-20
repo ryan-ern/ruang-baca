@@ -21,7 +21,7 @@ export default function Cardbuku() {
             style={{
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "flex-start",
+                justifyContent: "center",
             }}
         >
             {books?.length === 0 ? (
@@ -36,7 +36,6 @@ export default function Cardbuku() {
                     >
                         <Card.Body className="cardbuku-body">
                             <Card.Img
-                                className=""
                                 src={book.cover}
                                 style={{
                                     borderRadius: "6px",

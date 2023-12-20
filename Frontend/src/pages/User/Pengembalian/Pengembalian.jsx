@@ -13,14 +13,14 @@ export default function Peminjaman() {
             <div className="py-4">
                 <Container>
                     <Row>
-                        <Col xs={1}>
+                        <Col sm={12} lg={1} className="text-center mb-2">
                             <img
                                 src={IMAGES.logo}
                                 alt="Logo SMKN 7 Bandar Lampung"
                                 width={50}
                             />
                         </Col>
-                        <Col>
+                        <Col sm={12} lg={10} >
                             <div
                                 style={{
                                     display: "flex",
@@ -29,13 +29,12 @@ export default function Peminjaman() {
                                 }}
                             >
                                 <h3 className="text-center">
-                  RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
+                                    RUANG BACA <br /> SMK NEGERI 7 BANDAR LAMPUNG
                                 </h3>
                             </div>
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={1}></Col>
                         <Col>
                             <div
                                 style={{
