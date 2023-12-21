@@ -31,9 +31,9 @@ export default function WhatsappSettings() {
             <Wavebot color="#B6D8CF" />
             <Row className="py-4">
                 <Col>
-                    <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
+                    <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4 text-center">
                         <Card.Body>
-                            <div className="text-center">
+                            <div className="text-center mb-5">
                                 <h4>Silahkan Scan QR Whatsapp</h4>
                                 <h6 className="text-danger">Jika QR tidak keluar selama 20 detik<br/> silahkan refresh website</h6>
                             </div>
