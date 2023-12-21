@@ -1,253 +1,84 @@
-<div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
 
-  <h3 align="center">Ruang Baca</h3>
+  <h1 align="center">Ruang Baca</h1>
 
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
-  </p>
+  <h3 align="center">
+    Tugas Besar Projek Teknologi Informasi <br/>
+    Perpustakaan SMK Negeri 7 Bandar Lampung
+  </h3>
 </div>
 
+## Deskripsi Umum
+"RUANG BACA" adalah sebuah platform perpustakaan digital yang memungkinkan pengguna, baik admin maupun anggota perpustakaan, untuk melakukan berbagai aktivitas terkait manajemen perpustakaan. Platform ini menawarkan layanan peminjaman dan pengembalian buku, manajemen inventaris, serta pengingat melalui WhatsApp untuk batas waktu peminjaman dan informasi denda.
 
+## Fitur Utama
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+### 1. Peminjaman dan Pengembalian
+- **Pengguna (User):** Anggota perpustakaan dapat melakukan peminjaman dan pengembalian buku melalui antarmuka yang ramah pengguna di situs web.
+- **Admin:** Admin memiliki kontrol penuh terhadap peminjaman dan pengembalian, memungkinkan mereka untuk mengelola inventaris dengan efisien.
 
+### 2. Manajemen Inventaris
+- **Pengguna:** Pengguna dapat menjelajahi katalog buku, melihat detail buku, dan memeriksa ketersediaan.
+- **Admin:** Admin dapat menambahkan, mengedit, atau menghapus buku dari inventaris. Mereka juga dapat melacak status peminjaman dan pengembalian.
 
+### 3. Pengingat Melalui WhatsApp
+- **Sistem Pengingat:** Platform ini terhubung dengan layanan WhatsApp untuk memberikan pengingat kepada pengguna melalui pesan WhatsApp terkait batas waktu peminjaman dan informasi denda.
+- **Automatisasi:** Dengan menggunakan layanan WhatsApp, pengguna akan menerima pemberitahuan secara otomatis sebelum atau pada saat jatuh tempo pengembalian buku.
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+### 4. Denda
+- **Perhitungan Denda:** Sistem menghitung denda berdasarkan batas waktu pengembalian yang terlewat.
+- **Informasi Denda:** Pengguna menerima informasi mengenai jumlah denda yang harus dibayarkan melalui pesan WhatsApp
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+## Teknologi yang Digunakan
+- **Backend:** Menggunakan <b>Node.js, Express, Socket.io dan PostgreSQL.</b>
+- **Frontend:** Menggunakan <b>React JS, Vite, Socker.io Client, Boostraps, Axios dan Redux Saga.</b>
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+## Keuntungan
+- **Pelayanan Efisien:** Memudahkan pengguna dan admin dalam manajemen perpustakaan secara efisien.
+- **Pemberitahuan Real-time:** Pemberitahuan melalui WhatsApp memberikan layanan real-time untuk pengingat batas waktu dan denda.
+- **Inventaris yang Terkelola Baik:** Admin dapat dengan mudah mengelola inventaris dan melacak status peminjaman.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+## Persyaratan
+ - Node JS ^18.14
+ - PostgreSQL ^16.1
+ - Yarn atau NPM
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Cara Menggunakan Frontend
+- Clone repository ini
+- Masuk folder frontend
+- Ubah nama file `.env.example` menjadi `.env`
+- Ubah isi `.env` dengan URL Backend
+- Buka terminal dan jalankan `yarn` untuk install library
+- Tunggu Hingga instalasi selesai dan jalankan `yarn dev`
+- Buka Browser dan jalankan `http://localhost:8000`
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
+## Cara Menggunakan Backend
+- Ubah isi dari .env
+    - database connection
+    - jwt random random for jwt token
+    - expire time for short period
+    - expire time for long period
+    - url that you use
+- Install Library dengan `npm install`
+- Buat folder `uploads` untuk menyimpan gambar
+- Berikan file `default.jpg` pada folder uploads
+- Jalankan Backend dengan `node index.js`
 <!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+## Lisensi
+Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE.txt` untuk informasi lebih lanjut.
 
 
 
 <!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
+## Kontribusi
+| Nama |  Contributor |
+| :---: |  :---: |
+| **[Hans Bonatua Batubara](https://github.com/Hans299)**   | Projek Manajer |
+| **[Dean Andhika Ramadhan](https://github.com/deanandhkr)**  | UI/UX Desainer |
+| **[Ryan Ernanda](https://github.com/ryan-ern)**  | Fullstack Developer |
+| **[Imam Windharko](https://github.com/windharko)**   | Backend Developer |
+| **[Indra Jaya Putra](https://github.com/indraphy)**   | Frontend Developer |
+| **[Muhammad Hadi Arsa](https://github.com/HadiAr20)**   | Technical Writer |
+| **[Hanif Putra Agusta](https://github.com/hanif354-bayte)**    | Technical Writer |
+| **[Abi Luthfi Ramdan F](https://github.com/Abiluthfi)**    | Website Tester |
