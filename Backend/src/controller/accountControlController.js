@@ -214,7 +214,8 @@ class accountControlController{
         try{
             const username = await accountControlService.findUsername(req.params.username)
             if(!username) throw new Error ('User not Found')
-            const count = await accountControlController.findData
+            const count = await accountControlService.findData(username.nisn)
+            if(count.count>1) throw new Error('Tidak Bisa Menghapus data, Masih terdapat data pada peminjaman buku')
 
             const pathname = path.join(ROOT, 'uploads', username.profile)
             if(username.profile != 'default.jpg' && fs.existsSync(pathname)) {

@@ -8,6 +8,7 @@ const {
 } = require("@adiwajshing/baileys");
 
 const whatsappService = require('./src/service/whatsappService')
+const dendaService = require('./src/service/returnService')
 
 const log = (pino = require("pino"));
 const { session } = { "session": "auth_info" };
@@ -23,12 +24,20 @@ const path =  require('path')
 const bodyParser = require('body-parser')
 const moment = require('moment')
 const socketIO = require('socket.io')
+const fs = require('fs')
 
 require("dotenv").config()
 
 const app = require("express")()
 const server = require("http").createServer(app)
-const io = socketIO(server, { path: '/socket.io' });
+const io = socketIO(server, { 
+    cors:{
+        origin: 'http://localhost:5173',
+        methods: ['GET', 'POST'],
+        credentials : true,
+    }, 
+    path: '/socket.io' 
+});
 const now = new Date().getTime()
 const timeServer = {
     timestamp : now,
@@ -59,68 +68,6 @@ app.get("/", (_, res) => {
 })
 
 app.get('/whatsapp',async (req, res) =>{ 
-    /*if(a){
-        try{
-            const data = await whatsappService.getData();
-            try {
-                if (!data || !data.length) {
-                    res.status(500).json({
-                        status: false,
-                        response: 'Data not provided!',
-                    });
-                } else {
-                    const messages = [];
-    
-                    for (const item of data) {
-                        const number = item.wa;
-                        const name = item.name;
-                        const pesankirim = `hello ${name} lagi nyoba.`;
-    
-                        if (!number || !pesankirim) {
-                            messages.push(`Invalid data for number: ${number}`);
-                            continue;
-                        }
-    
-                        const numberWA = '62' + number.substring(1) + "@s.whatsapp.net";
-    
-                        if (isConnected()) {
-                            const exists = sock.onWhatsApp(numberWA);
-    
-                            if (exists?.jid || (exists && exists[0]?.jid)) {
-                                const result = sock.sendMessage(exists.jid || exists[0].jid, { text: pesankirim });
-                                messages.push(result);
-                            } else {
-                                messages.push(`Nomor ${number} tidak terdaftar.`);
-                            }
-                        } else {
-                            messages.push('WhatsApp belum terhubung.');
-                        }
-                    }
-    
-                    res.status(200).json({
-                        status: true,
-                        response: messages,
-                    })
-                }
-            } catch (err) {
-                console.error('Error in whatsappSend:', err);
-                return res.status(500).json({
-                    status: false,
-                    response: 'An error occurred in whatsappSend',
-                });
-            }
-        }catch(err){
-            console.error('Error in whatsappSend:', err);
-            if (res) {
-                res.status(200).json({
-                    status: true,
-                    response: 'QR Code scanned successfully.',
-                });
-            } else {
-                console.error('Response object is undefined.');
-            }
-        }
-    }*/
     res.sendFile("./assets/index.html", {
         root: __dirname,
     });
@@ -237,35 +184,70 @@ const updateQR = async (data, res) => {
           soket?.emit("qrstatus", "./assets/check.svg");
           soket?.emit("log", "WhatsApp terhubung!");
             const data = await whatsappService.getData();
+            const denda = await dendaService.getDenda();
             if (!data || !data.length) {
-                    break
-            } else {
+                break;
+            }else {
                 const messages = [];
     
                 for (const item of data) {
+                    const judul = item.judul;
                     const number = item.wa;
                     const name = item.name;
-                    const pesankirim = `hello ${name} lagi nyoba.`;
-    
-                    if (!number || !pesankirim) {
-                        messages.push(`Invalid data for number: ${number}`);
-                        continue;
-                    }
+                    const update = moment(item.updated_at).format('DD-MM-YYYY');
+                    const due = moment(item.due_date).format('DD-MM-YYYY');
+                    const tanggal = moment(new Date().getTime()).diff(item.due_date, 'hours')
+                    const many =  tanggal/24
+                    const terlambat = Math.round(many)
+                    if(terlambat<=0){
+                        const pesankirim = `halo ${name} buku dengan judul ${judul} lagi kamu pinjam di tanggal ${update} dengan tanggal pengembalian ${due}`;
 
-                    const numberWA = '62' + number.substring(1) + "@s.whatsapp.net";
     
-                    if (isConnected()) {
-                        const exists = sock.onWhatsApp(numberWA);
-
-                        if (exists?.jid || (exists && exists[0]?.jid)) {
-                            const result = sock.sendMessage(exists.jid || exists[0].jid, { text: pesankirim });
-                            messages.push(result);
-                        } else {
-                            messages.push(`Nomor ${number} tidak terdaftar.`);
+                        if (!number || !pesankirim) {
+                            messages.push(`Invalid data for number: ${number}`);
+                            continue;
                         }
-                    } else {
-                        messages.push('WhatsApp belum terhubung.');
+
+                        const numberWA = '62' + number.substring(1) + "@s.whatsapp.net";
+        
+                        if (isConnected()) {
+                            const exists = await sock.onWhatsApp(numberWA);
+                            if (exists?.jid || (exists && exists[0]?.jid)) {
+                                const result = await sock.sendMessage(exists.jid || exists[0].jid, { text: pesankirim });
+                                messages.push(result);
+                                console.log('berhasil');
+                            } else {
+                                messages.push(`Nomor ${number} tidak terdaftar.`);
+                            }
+                        } else {
+                            messages.push('WhatsApp belum terhubung.');
+                        }
+                    }else{
+                        const uang = terlambat*denda.nominal
+                        const pesankirim = `maaf terhadap saudara ${name} buku dengan judul ${judul} sudah melebihi batas waktu peminjaman pada tanggal pengembalian ${due} dan denda sekarang sebesar ${uang}`;
+
+    
+                        if (!number || !pesankirim) {
+                            messages.push(`Invalid data for number: ${number}`);
+                            continue;
+                        }
+
+                        const numberWA = '62' + number.substring(1) + "@s.whatsapp.net";
+        
+                        if (isConnected()) {
+                            const exists = await sock.onWhatsApp(numberWA);
+                            if (exists?.jid || (exists && exists[0]?.jid)) {
+                                const result = await sock.sendMessage(exists.jid || exists[0].jid, { text: pesankirim });
+                                messages.push(result);
+                                console.log('berhasil');
+                            } else {
+                                messages.push(`Nomor ${number} tidak terdaftar.`);
+                            }
+                        } else {
+                            messages.push('WhatsApp belum terhubung.');
+                        }
                     }
+                    
                 }
             }
           break;

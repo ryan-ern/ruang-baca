@@ -103,7 +103,14 @@ class accountControlService{
         return message
     }
     static async findData(id){
-        await Database
+        await Database.createConnection()
+        const query = {
+            text: 'select count(*) from borrow where user_nisn = $1 AND pengembalian = $2 and (status = $3 or status = $4)',
+            values: [id, '-', 'SUKSES', 'PROSES']
+        }
+        const data = await Database.query(query)
+        await Database.close()
+        return data
     }
 }
 
