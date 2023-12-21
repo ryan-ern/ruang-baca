@@ -51,7 +51,7 @@
 - Ubah isi `.env` dengan URL Backend
 - Buka terminal dan jalankan `yarn` untuk install library
 - Tunggu Hingga instalasi selesai dan jalankan `yarn dev`
-- Buka Browser dan jalankan `http://localhost:8000`
+- Buka Browser dan jalankan `http://localhost:5173`
 
 ## Cara Menggunakan Backend
 - Ubah isi dari .env
