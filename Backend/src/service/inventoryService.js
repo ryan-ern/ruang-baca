@@ -97,6 +97,16 @@ class inventoryService{
         await Database.close()
         return message
     }
+    static async findData(isbn){
+        await Database.createConnection()
+        const query = {
+            text: 'select count(*) from borrow where book_isbn = $1 AND pengembalian = $2 and (status = $3 or status = $4)',
+            values: [isbn, '-', 'SUKSES', 'PROSES']
+        }
+        const data = await Database.query(query)
+        await Database.close()
+        return data
+    }
 }
 
 module.exports = inventoryService
