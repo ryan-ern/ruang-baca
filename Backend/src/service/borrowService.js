@@ -91,8 +91,8 @@ class borrowService{
     static async countUserBorrow(userId){
         await Database.createConnection()
         const query = {
-            text: 'SELECT COUNT(*) FROM borrow where user_nisn = $1 AND status = $2 OR status = $3 AND pengembalian = $4',
-            values : [userId, 'PROSES', 'SUKSES','-']
+            text: 'SELECT COUNT(*) FROM borrow where user_nisn = $1 AND pengembalian = $2 AND (status = $3 OR status = $4) ',
+            values : [userId, '-', 'PROSES', 'SUKSES']
         }
         const count = await Database.query(query)
         await Database.close()

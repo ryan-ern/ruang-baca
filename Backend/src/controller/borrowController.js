@@ -15,7 +15,7 @@ class borrowController{
             if(!buku) throw new Error ('Data buku tidak ditemukan')
             if(buku.ready<=0) throw new Error ('Maaf Buku sudah habis')
             const data = await borrowService.countUserBorrow(user)
-            //if(data.count>=3) throw new Error ("Maaf sudah melebihi batas peminjaman")
+            if(data.count>=3) throw new Error ("Maaf sudah melebihi batas peminjaman")
             if(isbn == "undefined") throw new Error ('Maaf isbn tidak valid')
             const book = await borrowService.addBorrow(user, isbn, buku.ready-1)
             const response = {

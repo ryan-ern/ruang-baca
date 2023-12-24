@@ -206,7 +206,8 @@ class userController{
                     "Validasi pengembalian",
                     "Kontrol Akun",
                     "Denda",
-                    "jurusan"
+                    "jurusan",
+                    "whatsapp",
                 ]
                 const response = {
                     status:200, 
@@ -247,10 +248,12 @@ class userController{
             const payload = req.body
             if(!payload.name || !payload.username || !payload.wa) throw new Error ('Data tidak boleh kosong')
             if(payload.username != data.username) throw new Error ('Maaf username tidak bisa diedit')
+            console.log(req.file)
             if (req.file){
-                const pathname = path.join(ROOT, 'uploads', data.profile)
                 const name = req.file.filename
                 if(data.profile != null){
+                    const pathname = path.join(ROOT, 'uploads', data.profile)
+                    console.log(pathname)
                     if(data.profile !== 'default.jpg'){
                         fs.unlinkSync(pathname)
                     }

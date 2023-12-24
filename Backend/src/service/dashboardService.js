@@ -4,7 +4,28 @@ class dashboardService{
     static async allBook(){
         await Database.createConnection()
         const query = {
-            text: 'SELECT isbn, judul, penerbit, penulis, tahun_terbit, jumlah_halaman, stok_buku, cover, sinopsis, jurusan, ready from buku ORDER BY jurusan ASC'
+            text: `SELECT
+            b.isbn,
+            b.judul,
+            b.penerbit,
+            b.penulis,
+            b.tahun_terbit,
+            b.jumlah_halaman,
+            b.stok_buku,
+            b.cover,
+            b.sinopsis,
+            b.jurusan,
+            b.ready,
+            COUNT(br.id) AS borrow_count
+          FROM
+            buku b
+          LEFT JOIN
+            borrow br ON b.isbn = br.book_isbn
+          GROUP BY
+            b.isbn, b.judul, b.penerbit, b.penulis, b.tahun_terbit, b.jumlah_halaman,
+            b.stok_buku, b.cover, b.sinopsis, b.jurusan, b.ready
+          ORDER BY
+            borrow_count DESC, b.jurusan ASC;`
         }
         const buku = await Database.query(query)
         await Database.close()

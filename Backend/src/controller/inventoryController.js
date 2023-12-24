@@ -94,8 +94,8 @@ class inventoryController{
             const payload = req.body
             if (req.file){
                 const name = req.file.filename
-                if(book.cover != 'default.jpg'){
-                    const pathname = path.join(ROOT, 'uploads', book.cover)
+                if(data.cover != 'default.jpg'){
+                    const pathname = path.join(ROOT, 'uploads', data.cover)
                     if(fs.existsSync(pathname)) {
                         fs.unlinkSync(pathname)
                     }
@@ -160,8 +160,8 @@ class inventoryController{
             const isbnReplace = isbn.replace(/%20|%20/g, ' ')
             const book = await inventoryService.findIsbn(isbnReplace)
             if(!book) throw new Error ('Book not Found')
-            const count =  await inventoryService.findData(isbnReplace)
-            if(count.count >1) throw new Error('Tidak Bisa Menghapus data, Masih terdapat data pada peminjaman buku')
+            const number =  await inventoryService.findData(isbnReplace)
+            if(number[0].count>=1) throw new Error('Tidak Bisa Menghapus data, Masih terdapat data pada peminjaman buku')
             if(book.cover != 'default.jpg'){
                 const pathname = path.join(ROOT, 'uploads', book.cover)
                 if(fs.existsSync(pathname)) {
