@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "../../helper/apiHelper";
 import { URL_DELETE_INVENTORY, URL_EDIT_INVENTORY, URL_GET_INVENTORY, URL_POST_INVENTORY } from "../../helper/urlHelper";
-import {deleteInventoryFailed, deleteInventorySuccess, editInventoryFailed, editInventorySuccess, inventory, inventoryFailed, inventorySuccess, postInventoryFailed, postInventorySuccess} from './actions'
+import {deleteInventorySuccess, editInventoryFailed, editInventorySuccess, inventory, inventoryFailed, inventorySuccess, postInventoryFailed, postInventorySuccess} from './actions'
 import { DELETE_INVENTORY, EDIT_INVENTORY, GET_INVENTORY, POST_INVENTORY } from "./actionTypes";
 
 export function* postInventorySaga({payload: {data, onHide}}) {
@@ -31,8 +31,7 @@ export function* deleteInventorySaga({payload: {isbn, onHide}}) {
         yield call(onHide)
         yield put(inventory())
     } catch (err) {
-        yield put(deleteInventoryFailed(err.response.data))
-        yield call(onHide)
+        //
     }
 }
 

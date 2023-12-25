@@ -10,7 +10,6 @@ import { account, clearAccountMessage, postBlock, postUnblock } from '../../../s
 import ModalAccount from './modal';
 import ModalKonfirmasi from '../../../components/modalkonfirmasi';
 import moment from 'moment';
-import { jurusan } from '../../../store/actions';
 
 export default function Account() {
     const dispatch = useDispatch()
@@ -166,7 +165,6 @@ export default function Account() {
 
     useEffect(() => {
         dispatch(account())
-        dispatch(jurusan())
     }, [])
 
     const handleDismiss = () => {

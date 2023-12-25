@@ -7,7 +7,7 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 
 export default function WhatsappSettings() {
     useEffect(() => {
-        const socket = io(import.meta.env.VITE_SOCK_URL)
+        const socket = io(import.meta.env.VITE_BASE_URL)
         const qrcode = document.getElementById("qrcode");
         socket.on("qr", src => {
             qrcode.setAttribute("src", src);
@@ -29,16 +29,16 @@ export default function WhatsappSettings() {
         <Container>
             <Waveup color="#B6D8CF" />
             <Wavebot color="#B6D8CF" />
-            <Row className="py-4 d-flex justify-content-center">
-                <Col lg={6} sm={12}>
+            <Row className="py-4">
+                <Col>
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4 text-center">
                         <Card.Body>
                             <div className="text-center mb-5">
                                 <h4>Silahkan Scan QR Whatsapp</h4>
-                                <h6 className="text-danger">Jika QR tidak keluar selama 20 detik silahkan refresh website. Jika status perangkat sudah sukses, silahkan refresh website untuk mengirim pesan.</h6>
+                                <h6 className="text-danger">Jika QR tidak keluar selama 20 detik<br/> silahkan refresh website</h6>
                             </div>
                             <div id="qrcode-container">
-                                <img src={IMAGES.loader} alt="loading" id="qrcode" width='100%' />
+                                <img src={IMAGES.loader} alt="loading" id="qrcode" />
                             </div>
                         </Card.Body>
                     </Card>
