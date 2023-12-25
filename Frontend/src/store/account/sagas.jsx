@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "../../helper/apiHelper";
 import { URL_BLOCK_ACCOUNT, URL_DELETE_ACCOUNT, URL_EDIT_ACCOUNT, URL_GET_ACCOUNT, URL_POST_ADMIN, URL_POST_SUPERADMIN, URL_UNBLOCK_ACCOUNT } from "../../helper/urlHelper";
-import { account, accountFailed, accountSuccess, deleteAccountSuccess, editAccountSuccess, postAccountAdminSuccess, postAccountSuperSuccess, postBlockSuccess, postUnblockSuccess } from "./actions";
+import { account, accountFailed, accountSuccess, deleteAccountFailed, deleteAccountSuccess, editAccountSuccess, postAccountAdminSuccess, postAccountSuperSuccess, postBlockSuccess, postUnblockSuccess } from "./actions";
 import { DELETE_ACCOUNT, EDIT_ACCOUNT, GET_ACCOUNT, POST_ACCOUNT_ADMIN, POST_ACCOUNT_SUPER, POST_BLOCK, POST_UNBLOCK } from "./actionTypes";
 
 export function* getAccountSaga() {
@@ -21,7 +21,8 @@ export function* deleteAccountSaga({ payload: { username, onHide } }) {
         yield put(account())
     }
     catch (err) {
-        //
+        yield put(deleteAccountFailed(err.response.data))
+        yield call(onHide)
     }
 }
 export function* editAccountSaga({ payload: { username, data, onHide } }) {
