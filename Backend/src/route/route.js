@@ -1,55 +1,26 @@
 const express = require('express')
-const user =  require('../controller/userController')
+const user = require('../controller/userController')
 const userUtil = require('../util/userUtil')
 const dashboard = require('../controller/dashboardController')
 const accountControl = require('../controller/accountControlController')
 const inventory = require('../controller/inventoryController')
-const borrow =  require('../controller/borrowController')
+const borrow = require('../controller/borrowController')
 const returner = require('../controller/returnController')
 const upload = require('../helper/multer')
 const timer = require('../helper/timestamp')
 const routes = express.Router()
-const socketIO = require('socket.io')
-const http = require('http')
 
-const app = express()
-const server = http.createServer(app)
-const io = socketIO(server)
-
-const { default: makeWASocket,
-    DisconnectReason,
-    fetchLatestBaileysVersion,
-    isJidBroadcast,
-    makeInMemoryStore,
-    useMultiFileAuthState, } = require("@adiwajshing/baileys")
-const qrcode = require("qrcode")
-const log = (pino = require("pino"))
-const { session } = { "session": "auth_info" }
-const { Boom } = require("@hapi/boom")
-const fs = require('fs')
-const path = require('path')
-
-const whatsappService = require('../service/whatsappService');
-
-const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }) });
-
-let sock;
-let qr;
-let soket;
-
-
-const whatsappController = require('../controller/whatsappController');
 
 //User do
 routes.post('/register', user.register)
 routes.post('/login', userUtil.isBlok, user.login)
-routes.delete('/logout',userUtil.isLogin, user.logout)
+routes.delete('/logout', userUtil.isLogin, user.logout)
 routes.get('/profile', userUtil.isLogin, user.profile)
 routes.patch('/profile', userUtil.isLogin, upload.single('file'), user.editProfile)
 
 //Dashboard for siswa and admin
 routes.get('/dashboard', userUtil.isLogin, dashboard.dashboard)
-routes.get('/searchJudul/:judul', userUtil.isLogin,dashboard.searchByJudul)
+routes.get('/searchJudul/:judul', userUtil.isLogin, dashboard.searchByJudul)
 routes.get('/searchJurusan/:jurusan', userUtil.isLogin, dashboard.searchByJurusan)
 
 //menu userControl for admin and super admin

@@ -1,7 +1,7 @@
-const Database = require ('../database/databaseConnect')
+const Database = require('../database/databaseConnect')
 
-class whatsappService{
-    static async getData(){
+class whatsappService {
+    static async getData() {
         await Database.createConnection()
         const query = {
             text: `SELECT borrow.id, borrow.user_nisn, borrow.book_isbn, borrow.status, borrow.created_at, borrow.updated_at, borrow.due_date, buku.judul, account.wa, account.name
