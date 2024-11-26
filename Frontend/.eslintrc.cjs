@@ -15,7 +15,7 @@ module.exports = {
         'max-len': 'off',
         camelcase: 'off',
         'no-alert': 'off',
-        indent: ['error', 4],
+        indent: 'off',
         'no-plusplus': 'off',
         'no-param-reassign': 0,
         'linebreak-style': 'off',

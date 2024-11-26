@@ -48,6 +48,7 @@ routes.post('/acceptPeminjaman/:id', userUtil.isLogin, userUtil.isAdmin, borrow.
 routes.post('/deniedPeminjaman/:id', userUtil.isLogin, userUtil.isAdmin, borrow.deniedBorrow)
 routes.post('/resetPeminjaman/:id', userUtil.isLogin, userUtil.isAdmin, borrow.resetBorrow)
 routes.delete('/deletePeminjaman/:id', userUtil.isLogin, borrow.deleteBorrow)
+routes.post('/downloadBorrow', userUtil.isLogin, borrow.downloadBorrow)
 
 //denda
 routes.get('/denda', userUtil.isLogin, returner.getDenda)

@@ -30,22 +30,24 @@ export const URL_POST_ACCEPT_BORROW = '/acceptPeminjaman/:id'
 export const URL_POST_DENIED_BORROW = '/deniedPeminjaman/:id'
 export const URL_DELETE_BORROW = '/resetPeminjaman/:id'
 
+export const URL_DOWNLOAD_BORROW = '/downloadBorrow'
+
 export const URL_GET_FINED = "/denda"
-export const URL_PUT_FINED= "/denda"
+export const URL_PUT_FINED = "/denda"
 
 export const URL_GET_JURUSAN = '/jurusan'
 export const URL_POST_JURUSAN = '/createJurusan'
 export const URL_PATCH_JURUSAN = '/updateJurusan/:id'
 export const URL_DELETE_JURUSAN = '/deleteJurusan/:id'
 
-export const URL_GET_RETURN= '/pengembalian'
-export const URL_GET_RETURN_USER= '/pengembalianUser'
+export const URL_GET_RETURN = '/pengembalian'
+export const URL_GET_RETURN_USER = '/pengembalianUser'
 export const URL_POST_ACCEPT_RETURN = '/pengembalian/:id'
 export const URL_POST_RESET_RETURN = '/resetPengembalian/:id'
 
 export const URL_SEARCH_BY_JURUSAN = '/searchJurusan/:jurusan'
-export const URL_SEARCH_BY_JUDUL= '/searchJudul/:judul'
-export const URL_SEARCH_BORROW_BY_DATE= '/searhPeminjaman/:date'
+export const URL_SEARCH_BY_JUDUL = '/searchJudul/:judul'
+export const URL_SEARCH_BORROW_BY_DATE = '/searhPeminjaman/:date'
 export const URL_SEARCH_BORROW_BY_DATE_ADMIN = '/searchPeminjamanAdmin/:date'
 export const URL_SEARCH_RETURN_BY_DATE = '/searhPengembalian/:date'
 export const URL_SEARCH_RETURN_BY_DATE_ADMIN = '/searchPengembalianAdmin/:date'

@@ -35,33 +35,33 @@ export default function Inventory() {
             {
                 Header: 'Judul Buku',
                 accessor: 'judul',
-                Cell: ({value}) => (value)
+                Cell: ({ value }) => (value)
             },
             {
                 Header: 'ISBN',
                 accessor: 'isbn',
-                Cell: ({value}) => (value),
+                Cell: ({ value }) => (value),
             },
             {
                 Header: 'Penerbit',
                 accessor: 'penerbit',
-                Cell: ({value}) => (value),
+                Cell: ({ value }) => (value),
             },
             {
                 Header: 'Tahun Terbit',
                 accessor: 'tahun_terbit',
-                Cell: ({value}) => (value),
+                Cell: ({ value }) => (value),
             },
             {
                 Header: 'Stok',
                 accessor: 'stok_buku',
-                Cell: ({value}) => (value),
+                Cell: ({ value }) => (value),
             },
             {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({row}) => (
+                Cell: ({ row }) => (
                     <div className='text-center'>
                         <Button
                             variant='success'
@@ -84,7 +84,7 @@ export default function Inventory() {
                             onClick={() => {
                                 setSelectedBook(row.original.isbn);
                                 setShowModalDelete(true);
-                                
+
                             }}
                             className='btn-tbl-delete'
                         >Delete</Button>
@@ -101,7 +101,7 @@ export default function Inventory() {
         ],
         [],
     )
-    
+
     const data = useMemo(
         () => (inv.response?.data || []),
         [inv.response.data],
@@ -121,15 +121,15 @@ export default function Inventory() {
         {
             columns,
             data,
-            initialState:{
-                pageSize:10,
+            initialState: {
+                pageSize: 10,
             }
         },
         useGlobalFilter,
         useSortBy,
         usePagination,
     )
-    
+
     const { globalFilter } = state
 
     const [showModal, setShowModal] = useState(false);
@@ -174,51 +174,62 @@ export default function Inventory() {
                                     </div>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
-                                    <Top/>
+                                    <Top />
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
-                                        <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader3'>
-                                                {headerGroups.map((headerGroup) => (
-                                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                                        {headerGroup.headers.map((column) => {
-                                                            const sortIcon = column.isSortedDesc ? "🔼": "🔽";
-                                                            return (
-                                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{backgroundColor:'#f3f6f9'}}>
-                                                                    {column.render('Header')}
-                                                                    <span>{column.isSorted ? sortIcon : ''}</span>
-                                                                </th>
-                                                            );
-                                                        })}
-                                                    </tr>
-                                                ))}
+                                        <table {...getTableProps()} className="table align-middle table-nowrap table-hover">
+                                            <thead className="custom-theader3">
+                                                {headerGroups.map((headerGroup) => {
+                                                    const { key: headerKey, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+                                                    return (
+                                                        <tr key={headerKey} {...restHeaderGroupProps}>
+                                                            {headerGroup.headers.map((column) => {
+                                                                const { key: columnKey, ...restColumnProps } = column.getHeaderProps(column.getSortByToggleProps());
+                                                                const sortIcon = column.isSortedDesc ? "🔼" : "🔽";
+                                                                return (
+                                                                    <th key={columnKey} {...restColumnProps} style={{ backgroundColor: '#f3f6f9' }}>
+                                                                        {column.render('Header')}
+                                                                        <span>{column.isSorted ? sortIcon : ''}</span>
+                                                                    </th>
+                                                                );
+                                                            })}
+                                                        </tr>
+                                                    );
+                                                })}
                                             </thead>
                                             {page.length === 0 ? (
-                                                <tbody >
-                                                    <tr>
-                                                        <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(inv.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                <tbody>
+                                                    <tr key="empty">
+                                                        <td key="empty" colSpan={headerGroups[0].headers.length} className="text-center">
+                                                            {inv.loading ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
+                                                <tbody {...getTableBodyProps()} className="text-center custom-tbody4">
                                                     {page.map((row) => {
                                                         prepareRow(row);
+                                                        const { key: rowKey, ...restRowProps } = row.getRowProps();
                                                         return (
-                                                            <tr {...row.getRowProps()}>
-                                                                {row.cells.map((cell) => (
-                                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                                ))}
+                                                            <tr key={rowKey} {...restRowProps}>
+                                                                {row.cells.map((cell) => {
+                                                                    const { key: cellKey, ...restCellProps } = cell.getCellProps();
+                                                                    return (
+                                                                        <td key={cellKey} {...restCellProps}>
+                                                                            {cell.render('Cell')}
+                                                                        </td>
+                                                                    );
+                                                                })}
                                                             </tr>
                                                         );
                                                     })}
                                                 </tbody>
                                             )}
                                         </table>
+
                                     </div>
                                 </Col>
                             </Row>
@@ -228,26 +239,26 @@ export default function Inventory() {
                                         <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(0)} tabIndex="-1">
                                                     {'<<'}
                                                 </a>
                                             </li>
                                             {/* Previus */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
                                             </li>
                                             {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
                                                 <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
-                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                    <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(index)}>{index + 1}</a>
                                                 </li>
                                             ))}
                                             {/* Next */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
                                             </li>
                                             {/* Last */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(pageCount - 1)}>
                                                     {">>"}
                                                 </a>
                                             </li>

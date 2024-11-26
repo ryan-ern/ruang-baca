@@ -17,29 +17,29 @@ export default function Jurusan() {
     const messagePatch = useSelector((state) => state.major.patch)
     useEffect(() => {
         dispatch(jurusan())
-    },[])
+    }, [])
 
     const columns = useMemo(
         () => [
             {
                 Header: 'No',
-                accessor: (_,index) => index+1
+                accessor: (_, index) => index + 1
             },
             {
                 Header: 'Nama Jurusan',
                 accessor: 'name',
-                Cell: ({value}) => (value)
+                Cell: ({ value }) => (value)
             },
             {
                 Header: 'Icon Jurusan',
                 accessor: 'photo',
-                Cell: ({value}) => <img src={value} alt='icon' width="50px"/>
+                Cell: ({ value }) => <img src={value} alt='icon' width="50px" />
             },
             {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({row}) => (
+                Cell: ({ row }) => (
                     <div className='text-center'>
                         <>
                             <Button
@@ -50,7 +50,7 @@ export default function Jurusan() {
                                 }}
                                 className='btn-tbl-detail'
                             >
-                                        Edit
+                                Edit
                             </Button>
                             <Button
                                 variant='danger'
@@ -59,7 +59,7 @@ export default function Jurusan() {
                                 }}
                                 className='btn-tbl-delete'
                             >
-                                        Hapus
+                                Hapus
                             </Button>
                         </>
                     </div>
@@ -69,7 +69,7 @@ export default function Jurusan() {
         [],
     )
     const data = useMemo(
-        () => (dataJurusan?.data?.jurusan|| []),
+        () => (dataJurusan?.data?.jurusan || []),
         [dataJurusan?.data?.jurusan]
     );
 
@@ -87,8 +87,8 @@ export default function Jurusan() {
         {
             columns,
             data,
-            initialState:{
-                pageSize:10,
+            initialState: {
+                pageSize: 10,
             }
         },
         useGlobalFilter,
@@ -138,50 +138,63 @@ export default function Jurusan() {
                                         <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari data jurusan" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />
                                     </div>
                                     <div className="position-relative">
-                                        <Button className="btn-table rounded-pill custom-button" variant="success" onClick={() =>{setShowModal(true);setSelectedBook(null)}}>Tambah Jurusan</Button>
+                                        <Button className="btn-table rounded-pill custom-button" variant="success" onClick={() => { setShowModal(true); setSelectedBook(null) }}>Tambah Jurusan</Button>
                                     </div>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
-                                        <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader align-middle'>
-                                                {headerGroups.map((headerGroup) => (
-                                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                                        {headerGroup.headers.map((column, index) => {
-                                                            return (
-                                                                <th style={{backgroundColor:'#f3f6f9'}} key={index}>
-                                                                    {column.render('Header')}
-                                                                </th>
-                                                            );
-                                                        })}
-                                                    </tr>
-                                                ))}
+                                        <table {...getTableProps()} className="table align-middle table-nowrap table-hover">
+                                            <thead className="custom-theader5   text-center">
+                                                {headerGroups.map((headerGroup) => {
+                                                    const { key: headerKey, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+                                                    return (
+                                                        <tr key={headerKey} {...restHeaderGroupProps}>
+                                                            {headerGroup.headers.map((column) => {
+                                                                const { key: columnKey, ...restColumnProps } = column.getHeaderProps(column.getSortByToggleProps());
+                                                                const sortIcon = column.isSortedDesc ? "🔼" : "🔽";
+                                                                return (
+                                                                    <th key={columnKey} {...restColumnProps} style={{ backgroundColor: '#f3f6f9' }}>
+                                                                        {column.render('Header')}
+                                                                        <span>{column.isSorted ? sortIcon : ''}</span>
+                                                                    </th>
+                                                                );
+                                                            })}
+                                                        </tr>
+                                                    );
+                                                })}
                                             </thead>
                                             {page.length === 0 ? (
                                                 <tbody>
-                                                    <tr>
-                                                        <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(dataPinjam.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                    <tr key="empty">
+                                                        <td key="empty" colSpan={headerGroups[0].headers.length} className="text-center">
+                                                            {dataPinjam.loading ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
+                                                <tbody {...getTableBodyProps()} className="text-center custom-tbody5">
                                                     {page.map((row) => {
                                                         prepareRow(row);
+                                                        const { key: rowKey, ...restRowProps } = row.getRowProps();
                                                         return (
-                                                            <tr {...row.getRowProps()}>
-                                                                {row.cells.map((cell) => (
-                                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                                ))}
+                                                            <tr key={rowKey} {...restRowProps}>
+                                                                {row.cells.map((cell) => {
+                                                                    const { key: cellKey, ...restCellProps } = cell.getCellProps();
+                                                                    return (
+                                                                        <td key={cellKey} {...restCellProps}>
+                                                                            {cell.render('Cell')}
+                                                                        </td>
+                                                                    );
+                                                                })}
                                                             </tr>
                                                         );
                                                     })}
                                                 </tbody>
                                             )}
                                         </table>
+
                                     </div>
                                 </Col>
                             </Row>
@@ -191,26 +204,26 @@ export default function Jurusan() {
                                         <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(0)} tabIndex="-1">
                                                     {'<<'}
                                                 </a>
                                             </li>
                                             {/* Previus */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
                                             </li>
                                             {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
                                                 <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
-                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                    <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(index)}>{index + 1}</a>
                                                 </li>
                                             ))}
                                             {/* Next */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
                                             </li>
                                             {/* Last */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(pageCount - 1)}>
                                                     {">>"}
                                                 </a>
                                             </li>

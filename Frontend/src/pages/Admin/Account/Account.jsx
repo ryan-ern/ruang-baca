@@ -77,20 +77,20 @@ export default function Account() {
                                 <Button
                                     variant='success'
                                     onClick={() => {
-                                    // setSelectedAccount(row.original);
+                                        // setSelectedAccount(row.original);
                                         if (confirm("Yakin Ingin Aktivasi " + row.original.name)) dispatch(postUnblock(row.original.nisn))
-                                    // console.log(row.original)
+                                        // console.log(row.original)
                                     }}
                                     className='btn-tbl-detail'
                                 >Aktivasi</Button>
                                 :
-                            
+
                                 <Button
                                     variant='danger'
                                     onClick={() => {
-                                    // setSelectedAccount(row.original);
+                                        // setSelectedAccount(row.original);
                                         if (confirm("Yakin Ingin Blokir " + row.original.name)) dispatch(postBlock(row.original.nisn))
-                                    // console.log(row.original)
+                                        // console.log(row.original)
                                     }}
                                     className='btn-tbl-delete'
                                 >Blokir</Button>
@@ -100,7 +100,7 @@ export default function Account() {
                                 onClick={() => {
                                     setSelectedAccount(row.original.username);
                                     setShowModalDelete(true);
-                                
+
                                 }}
                                 className='btn-tbl-delete'
                             >Delete</Button>
@@ -113,7 +113,7 @@ export default function Account() {
         },
         [acc.response.message]
     );
-    
+
     const data = useMemo(
         () => (acc.response?.data || []),
         [acc.response.data],
@@ -133,7 +133,7 @@ export default function Account() {
         {
             columns,
             data,
-            initialState:{
+            initialState: {
                 pageSize: 10,
                 sortBy: [
                     { id: 'updated_at', desc: true },
@@ -144,7 +144,7 @@ export default function Account() {
         useSortBy,
         usePagination,
     )
-    
+
     const { globalFilter } = state
 
     const [showModal, setShowModal] = useState(false);
@@ -183,7 +183,7 @@ export default function Account() {
                                 <Col className='text-center'>
                                     {addMessage ? <Alert dismissible onClose={handleDismiss} variant='success'>{addMessage && addMessage.data.message}</Alert> :
                                         (editMessage || deleteMessage || activeMessage) ?
-                                            <Alert variant={editMessage? 'info' : 'success'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message || activeMessage && activeMessage.message}</Alert>
+                                            <Alert variant={editMessage ? 'info' : 'success'} dismissible onClose={handleDismiss}>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message || activeMessage && activeMessage.message}</Alert>
                                             :
                                             null
                                     }
@@ -202,46 +202,56 @@ export default function Account() {
                                 </Col>
                                 {acc.response.message === 'Anda Admin' ? null :
                                     <Col className='d-flex justify-content-end'>
-                                        <Button onClick={() => { setAddAccount('tambah'); setShowModal(true);}} className="btn-table rounded-pill custom-button" variant="sucess">Tambah Admin</Button>
+                                        <Button onClick={() => { setAddAccount('tambah'); setShowModal(true); }} className="btn-table rounded-pill custom-button" variant="sucess">Tambah Admin</Button>
                                     </Col>
                                 }
                             </Row>
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
-                                        <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader5'>
-                                                {headerGroups.map((headerGroup) => (
-                                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                                        {headerGroup.headers.map((column) => {
-                                                            const sortIcon = column.isSortedDesc ? "🔼": "🔽";
-                                                            return (
-                                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{backgroundColor:'#f3f6f9'}}>
-                                                                    {column.render('Header')}
-                                                                    <span>{column.isSorted ? sortIcon : ''}</span>
-                                                                </th>
-                                                            );
-                                                        })}
-                                                    </tr>
-                                                ))}
+                                        <table {...getTableProps()} className="table align-middle table-nowrap table-hover">
+                                            <thead className="custom-theader5">
+                                                {headerGroups.map((headerGroup) => {
+                                                    const { key: headerKey, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+                                                    return (
+                                                        <tr key={headerKey} {...restHeaderGroupProps}>
+                                                            {headerGroup.headers.map((column) => {
+                                                                const { key: columnKey, ...restColumnProps } = column.getHeaderProps(column.getSortByToggleProps());
+                                                                const sortIcon = column.isSortedDesc ? "🔼" : "🔽";
+                                                                return (
+                                                                    <th key={columnKey} {...restColumnProps} style={{ backgroundColor: '#f3f6f9' }}>
+                                                                        {column.render('Header')}
+                                                                        <span>{column.isSorted ? sortIcon : ''}</span>
+                                                                    </th>
+                                                                );
+                                                            })}
+                                                        </tr>
+                                                    );
+                                                })}
                                             </thead>
                                             {page.length === 0 ? (
                                                 <tbody>
-                                                    <tr>
-                                                        <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(acc.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                    <tr key="empty">
+                                                        <td key="empty" colSpan={headerGroups[0].headers.length} className="text-center">
+                                                            {acc.loading ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-start'>
+                                                <tbody {...getTableBodyProps()} className="text-center custom-tbody4">
                                                     {page.map((row) => {
                                                         prepareRow(row);
+                                                        const { key: rowKey, ...restRowProps } = row.getRowProps();
                                                         return (
-                                                            <tr {...row.getRowProps()}>
-                                                                {row.cells.map((cell) => (
-                                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                                ))}
+                                                            <tr key={rowKey} {...restRowProps}>
+                                                                {row.cells.map((cell) => {
+                                                                    const { key: cellKey, ...restCellProps } = cell.getCellProps();
+                                                                    return (
+                                                                        <td key={cellKey} {...restCellProps}>
+                                                                            {cell.render('Cell')}
+                                                                        </td>
+                                                                    );
+                                                                })}
                                                             </tr>
                                                         );
                                                     })}
@@ -257,26 +267,26 @@ export default function Account() {
                                         <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(0)} tabIndex="-1">
                                                     {'<<'}
                                                 </a>
                                             </li>
                                             {/* Previus */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
                                             </li>
                                             {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
                                                 <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
-                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                    <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(index)}>{index + 1}</a>
                                                 </li>
                                             ))}
                                             {/* Next */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
                                             </li>
                                             {/* Last */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(pageCount - 1)}>
                                                     {">>"}
                                                 </a>
                                             </li>

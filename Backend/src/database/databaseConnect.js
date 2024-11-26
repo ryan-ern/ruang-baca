@@ -21,7 +21,7 @@ class Database {
     }
     static async close() {
         try {
-            return await this.pool.end()
+            return this.pool.end(() => { });
         } catch (error) {
             console.error('Error closing connection', error)
         }

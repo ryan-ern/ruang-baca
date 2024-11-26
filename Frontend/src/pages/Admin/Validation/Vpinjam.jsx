@@ -9,9 +9,10 @@ import Wavebot from '../../../components/background/Wavebot';
 // import ModalInventory from './modal';
 // import Top from './top';
 import "../../../assets/styles/common.css";
-import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow, getSearchByBorrowDateAdmin, resetMessage } from '../../../store/actions';
+import { borrowAdmin, clearBorrowMessage, deleteBorrow, postAcceptBorrow, postDeniedBorrow, getSearchByBorrowDateAdmin, resetMessage, downloadBorrow } from '../../../store/actions';
 import moment from 'moment';
 import StatusBadge from '../../../components/Statusbadge';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
 
 export default function ValidationPinjam() {
     const dispatch = useDispatch()
@@ -19,6 +20,7 @@ export default function ValidationPinjam() {
     const editMessage = useSelector((state) => state.borrow.accept.message)
     const createMessage = useSelector((state) => state.borrow.denied.message)
     const deleteMessage = useSelector((state) => state.borrow.delete.message)
+    const downloadMessage = useSelector((state) => state.borrow.download.message)
     const searchData = useSelector((state) => state.search.borrow)
     const searchMessage = useSelector((state) => state.search.borrow.message)
 
@@ -31,44 +33,44 @@ export default function ValidationPinjam() {
             {
                 Header: 'Nama',
                 accessor: 'name',
-                Cell: ({value}) => (value)
+                Cell: ({ value }) => (value)
             },
             {
                 Header: 'Judul Buku',
                 accessor: 'judul',
-                Cell: ({value}) => (value)
+                Cell: ({ value }) => (value)
             },
             {
                 Header: 'ISBN',
                 accessor: 'book_isbn',
-                Cell: ({value}) => (value),
+                Cell: ({ value }) => (value),
             },
             {
                 Header: 'Tanggal Peminjaman',
                 accessor: 'created_at',
-                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm'),
+                Cell: ({ value }) => moment(value).format('DD-MM-YYYY HH:mm'),
             },
             {
                 Header: 'Tanggal Pengembalian',
                 accessor: 'due_date',
-                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm'),
+                Cell: ({ value }) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm'),
             },
             {
                 Header: 'status',
                 accessor: 'status',
-                Cell: ({value}) => <StatusBadge status={value} />,
+                Cell: ({ value }) => <StatusBadge status={value} />,
             },
             {
                 Header: 'Aksi',
                 id: 'actions',
                 disableSortBy: true,
-                Cell: ({row}) => (
+                Cell: ({ row }) => (
                     <div className='text-center'>
                         {row.original.status === 'SUKSES' || row.original.status === 'DITOLAK' ? (
                             <Button
                                 variant='dark'
                                 onClick={() => {
-                                    if(confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(deleteBorrow(row.original.id))
+                                    if (confirm("Yakin Ingin Reset Status " + row.original.name + " Dengan Judul " + row.original.judul)) dispatch(deleteBorrow(row.original.id))
                                     // console.log(row.original)
                                 }}
                                 className='btn-tbl-info'
@@ -84,7 +86,7 @@ export default function ValidationPinjam() {
                                     }}
                                     className='btn-tbl-detail'
                                 >
-                                        Terima
+                                    Terima
                                 </Button>
                                 <Button
                                     variant='danger'
@@ -93,7 +95,7 @@ export default function ValidationPinjam() {
                                     }}
                                     className='btn-tbl-delete'
                                 >
-                                        Tolak
+                                    Tolak
                                 </Button>
                             </>
                         )}
@@ -124,26 +126,37 @@ export default function ValidationPinjam() {
         {
             columns,
             data,
-            initialState:{
+            initialState: {
                 pageSize: 10,
                 sortBy: [
                     { id: 'created_at', desc: true },
                     { id: 'status', desc: true },
                 ],
             },
-            
+
         },
         useGlobalFilter,
         useSortBy,
         usePagination,
     )
-    
+
     const { globalFilter } = state
 
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());
         dispatch(resetMessage())
     };
+
+    const handleDownload = (event, picker) => {
+        if (picker.startDate && picker.endDate) {
+            const startDate = picker.startDate.format('YYYY-MM-DD');
+            const endDate = picker.endDate.format('YYYY-MM-DD');
+            dispatch(downloadBorrow(startDate, endDate));
+        } else {
+            console.error('Date range is not properly selected');
+        }
+    };
+
 
     return (
         <Container>
@@ -155,14 +168,15 @@ export default function ValidationPinjam() {
                         <CardBody>
                             <Row>
                                 <Col className='text-center'>
-                                    {searchMessage ? <Alert dismissible onClose={handleDismiss} variant={searchMessage==="success"? 'success': 'danger'}>{searchMessage}</Alert> :
+                                    {searchMessage ? <Alert dismissible onClose={handleDismiss} variant={searchMessage === "success" ? 'success' : 'danger'}>{searchMessage}</Alert> :
                                         deleteMessage ? <Alert dismissible onClose={handleDismiss} variant='info'>{deleteMessage.data.message}</Alert> :
-                                            (editMessage || createMessage) ? (
-                                                <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
-                                                    {/* {console.log(editMessage)} */}
-                                                    {`${(editMessage && editMessage.message) || (createMessage && createMessage.data.message)} Dengan ISBN : ${((editMessage && editMessage.data.book_isbn) || (createMessage &&  createMessage.data.data.book_isbn))}`}
-                                                </Alert>
-                                            ) : null}
+                                            downloadMessage ? <Alert dismissible onClose={handleDismiss} variant='danger'>{downloadMessage}</Alert> :
+                                                (editMessage || createMessage) ? (
+                                                    <Alert dismissible onClose={handleDismiss} variant={createMessage ? 'success' : 'info'}>
+                                                        {/* {console.log(editMessage)} */}
+                                                        {`${(editMessage && editMessage.message) || (createMessage && createMessage.data.message)} Dengan ISBN : ${((editMessage && editMessage.data.book_isbn) || (createMessage && createMessage.data.data.book_isbn))}`}
+                                                    </Alert>
+                                                ) : null}
                                 </Col>
                             </Row>
                             <Row className="mb-2">
@@ -172,6 +186,12 @@ export default function ValidationPinjam() {
                                     </div>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
+                                    <div className="position-relative">
+                                        {/* <button type="button" className="btn-table rounded-pill custom-button" onClick={() => dispatch(downloadBorrow())}>Download</button> */}
+                                        <DateRangePicker onApply={handleDownload} initialSettings={{ showDropdowns: true }}>
+                                            <button className="btn-table rounded-pill custom-button">Download</button>
+                                        </DateRangePicker>
+                                    </div>
                                     <div className="position-relative mx-3">
                                         <input type="date" className="form-control" onChange={(e) => dispatch(getSearchByBorrowDateAdmin(e.target.value))} style={{ backgroundColor: '#f3f6f9' }} />
                                     </div>
@@ -183,39 +203,49 @@ export default function ValidationPinjam() {
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
-                                        <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader3'>
-                                                {headerGroups.map((headerGroup) => (
-                                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                                        {headerGroup.headers.map((column) => {
-                                                            const sortIcon = column.isSortedDesc ? "🔼": "🔽";
-                                                            return (
-                                                                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{backgroundColor:'#f3f6f9'}}>
-                                                                    {column.render('Header')}
-                                                                    <span>{column.isSorted ? sortIcon : ''}</span>
-                                                                </th>
-                                                            );
-                                                        })}
-                                                    </tr>
-                                                ))}
+                                        <table {...getTableProps()} className="table align-middle table-nowrap table-hover">
+                                            <thead className="custom-theader3">
+                                                {headerGroups.map((headerGroup) => {
+                                                    const { key: headerKey, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+                                                    return (
+                                                        <tr key={headerKey} {...restHeaderGroupProps}>
+                                                            {headerGroup.headers.map((column) => {
+                                                                const { key: columnKey, ...restColumnProps } = column.getHeaderProps(column.getSortByToggleProps());
+                                                                const sortIcon = column.isSortedDesc ? "🔼" : "🔽";
+                                                                return (
+                                                                    <th key={columnKey} {...restColumnProps} style={{ backgroundColor: '#f3f6f9' }}>
+                                                                        {column.render('Header')}
+                                                                        <span>{column.isSorted ? sortIcon : ''}</span>
+                                                                    </th>
+                                                                );
+                                                            })}
+                                                        </tr>
+                                                    );
+                                                })}
                                             </thead>
                                             {page.length === 0 ? (
-                                                <tbody >
-                                                    <tr>
-                                                        <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(pinjam.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                <tbody>
+                                                    <tr key="empty">
+                                                        <td key="empty" colSpan={headerGroups[0].headers.length} className="text-center">
+                                                            {pinjam.loading ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
+                                                <tbody {...getTableBodyProps()} className="text-center custom-tbody4">
                                                     {page.map((row) => {
                                                         prepareRow(row);
+                                                        const { key: rowKey, ...restRowProps } = row.getRowProps();
                                                         return (
-                                                            <tr {...row.getRowProps()}>
-                                                                {row.cells.map((cell) => (
-                                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                                ))}
+                                                            <tr key={rowKey} {...restRowProps}>
+                                                                {row.cells.map((cell) => {
+                                                                    const { key: cellKey, ...restCellProps } = cell.getCellProps();
+                                                                    return (
+                                                                        <td key={cellKey} {...restCellProps}>
+                                                                            {cell.render('Cell')}
+                                                                        </td>
+                                                                    );
+                                                                })}
                                                             </tr>
                                                         );
                                                     })}
@@ -231,26 +261,26 @@ export default function ValidationPinjam() {
                                         <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(0)} tabIndex="-1">
                                                     {'<<'}
                                                 </a>
                                             </li>
                                             {/* Previus */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
                                             </li>
                                             {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
                                                 <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
-                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                    <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(index)}>{index + 1}</a>
                                                 </li>
                                             ))}
                                             {/* Next */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
                                             </li>
                                             {/* Last */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(pageCount - 1)}>
                                                     {">>"}
                                                 </a>
                                             </li>
@@ -262,6 +292,6 @@ export default function ValidationPinjam() {
                     </Card>
                 </Col>
             </Row>
-        </Container>
+        </Container >
     )
 }
