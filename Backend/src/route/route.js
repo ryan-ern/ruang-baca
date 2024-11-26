@@ -61,6 +61,7 @@ routes.post('/pengembalian/:id', userUtil.isLogin, userUtil.isAdmin, returner.ac
 routes.post('/resetPengembalian/:id', userUtil.isLogin, userUtil.isAdmin, returner.resetPengembalian)
 routes.get('/searchPengembalianAdmin/:date', userUtil.isLogin, userUtil.isAdmin, returner.searchPengembalianAdmin)
 routes.get('/searhPengembalian/:date', userUtil.isLogin, returner.searchPengembalian)
+routes.post('/downloadReturn', userUtil.isLogin, returner.downloadReturn)
 
 //blokir
 routes.post('/blok/:nisn', userUtil.isLogin, userUtil.isAdmin, user.blok)

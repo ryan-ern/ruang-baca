@@ -1,5 +1,5 @@
 import { useEffect, useMemo, } from 'react'
-import { Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
+import { Alert, Button, Card, CardBody, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     useTable, useSortBy, useGlobalFilter, usePagination,
@@ -9,8 +9,9 @@ import Wavebot from '../../../components/background/Wavebot';
 // import { account } from '../../../store/account/actions';
 // import ModalEditAccount from '../Account/modal';
 import moment from 'moment';
-import { postAcceptReturn, postResetReturn, returnAdmin } from '../../../store/actions';
+import { downloadReturn, postAcceptReturn, postResetReturn, returnAdmin } from '../../../store/actions';
 import StatusBadge from '../../../components/Statusbadge';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
 
 export default function Vpengembalian() {
     const dispatch = useDispatch()
@@ -18,6 +19,7 @@ export default function Vpengembalian() {
 
     // const editMessage = useSelector((state) => state.account.edit.message)
     // const deleteMessage = useSelector((state) => state.account.delete.message)
+    const downloadMessage = useSelector((state) => state.return.download.message)
     const columns = useMemo(
         () => [
 
@@ -138,6 +140,15 @@ export default function Vpengembalian() {
         dispatch(returnAdmin())
     }, [])
 
+    const handleDownload = (event, picker) => {
+        if (picker.startDate && picker.endDate) {
+            const startDate = picker.startDate.format('YYYY-MM-DD');
+            const endDate = picker.endDate.format('YYYY-MM-DD');
+            dispatch(downloadReturn(startDate, endDate));
+        } else {
+            console.error('Date range is not properly selected');
+        }
+    };
 
     return (
         <Container>
@@ -147,20 +158,23 @@ export default function Vpengembalian() {
                 <Col className='my-5'>
                     <Card className="overflow-hidden p-4 border-0 shadow-lg rounded-4">
                         <CardBody>
-                            {/* <Row>
+                            <Row>
                                 <Col className='text-center'>
-                                    {(editMessage || deleteMessage) ?
-                                        <Alert variant={editMessage? 'success' : 'danger'} dismissible>{editMessage && editMessage.data.message || deleteMessage && deleteMessage.message}</Alert>
-                                        :
-                                        null
+                                    {(downloadMessage) ?
+                                        <Alert variant={'danger'} dismissible>{downloadMessage} </Alert> : null
                                     }
                                 </Col>
-                            </Row> */}
+                            </Row>
                             <Row className="mb-2">
                                 <Col>
                                     <b>Validasi Pengembalian</b>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
+                                    <div className="position-relative mx-3">
+                                        <DateRangePicker onApply={handleDownload} initialSettings={{ showDropdowns: true }}>
+                                            <button className="btn-table rounded-pill custom-button">Download</button>
+                                        </DateRangePicker>
+                                    </div>
                                     <div className="mb-2 d-inline-block">
                                         <div className="position-relative">
                                             <input type="text" value={globalFilter || ''} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Cari NISN atau Judul" className="form-control" style={{ backgroundColor: '#f3f6f9' }} />

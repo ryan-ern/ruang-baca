@@ -31,6 +31,7 @@ export const URL_POST_DENIED_BORROW = '/deniedPeminjaman/:id'
 export const URL_DELETE_BORROW = '/resetPeminjaman/:id'
 
 export const URL_DOWNLOAD_BORROW = '/downloadBorrow'
+export const URL_DOWNLOAD_RETURN = '/downloadReturn'
 
 export const URL_GET_FINED = "/denda"
 export const URL_PUT_FINED = "/denda"

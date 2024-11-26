@@ -187,7 +187,6 @@ export default function ValidationPinjam() {
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
                                     <div className="position-relative">
-                                        {/* <button type="button" className="btn-table rounded-pill custom-button" onClick={() => dispatch(downloadBorrow())}>Download</button> */}
                                         <DateRangePicker onApply={handleDownload} initialSettings={{ showDropdowns: true }}>
                                             <button className="btn-table rounded-pill custom-button">Download</button>
                                         </DateRangePicker>
