@@ -16,39 +16,39 @@ export default function TableKembali() {
 
     useEffect(() => {
         dispatch(returnUser())
-    },[])
+    }, [])
 
     const columns = useMemo(
         () => [
             {
                 Header: 'Judul Buku',
                 accessor: 'judul',
-                Cell: ({value}) => (value)
+                Cell: ({ value }) => (value)
             },
             {
                 Header: 'Tanggal Pinjam',
                 accessor: 'created_at',
-                Cell: ({value}) => moment(value).format('DD-MM-YYYY HH:mm')
+                Cell: ({ value }) => moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
                 Header: 'Tenggat Pengembalian',
                 accessor: 'due_date',
-                Cell: ({value}) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm')
+                Cell: ({ value }) => value === '-' ? value : moment(value).format('DD-MM-YYYY HH:mm')
             },
             {
                 Header: 'Keterlambatan',
                 accessor: 'terlambat',
-                Cell: ({value}) => (value + " Hari") 
+                Cell: ({ value }) => (value + " Hari")
             },
             {
                 Header: 'Denda',
                 accessor: 'denda',
-                Cell: ({value}) => ( value === null ? "-": "Rp "+ value)
+                Cell: ({ value }) => (value === null ? "-" : "Rp " + value)
             },
             {
                 Header: 'Status',
                 accessor: 'pengembalian',
-                Cell: ({value}) => <StatusBadge status={value} />
+                Cell: ({ value }) => <StatusBadge status={value} />
             }
         ],
         [],
@@ -72,8 +72,8 @@ export default function TableKembali() {
         {
             columns,
             data,
-            initialState:{
-                pageSize:10,
+            initialState: {
+                pageSize: 10,
                 sortBy: [{ id: 'updated_at', desc: true }],
             },
         },
@@ -83,7 +83,7 @@ export default function TableKembali() {
     )
 
     const { globalFilter } = state
-    
+
     const handleDismiss = () => {
         dispatch(clearBorrowMessage());
     };
@@ -115,37 +115,49 @@ export default function TableKembali() {
                             <Row>
                                 <Col>
                                     <div className='table-responsive'>
-                                        <table {...getTableProps()} className='table align-middle table-nowrap table-hover'>
-                                            <thead className='custom-theader align-middle'>
-                                                {headerGroups.map((headerGroup) => (
-                                                    <tr {...headerGroup.getHeaderGroupProps()}>
-                                                        {headerGroup.headers.map((column, index) => {
-                                                            return (
-                                                                <th style={{backgroundColor:'#f3f6f9'}} key={index}>
-                                                                    {column.render('Header')}
-                                                                </th>
-                                                            );
-                                                        })}
-                                                    </tr>
-                                                ))}
+                                        <table {...getTableProps()} className="table align-middle table-nowrap table-hover">
+                                            <thead className="custom-theader">
+                                                {headerGroups.map((headerGroup) => {
+                                                    const { key: headerKey, ...restHeaderGroupProps } = headerGroup.getHeaderGroupProps();
+                                                    return (
+                                                        <tr key={headerKey} {...restHeaderGroupProps}>
+                                                            {headerGroup.headers.map((column) => {
+                                                                const { key: columnKey, ...restColumnProps } = column.getHeaderProps(column.getSortByToggleProps());
+                                                                const sortIcon = column.isSortedDesc ? "🔼" : "🔽";
+                                                                return (
+                                                                    <th key={columnKey} {...restColumnProps} style={{ backgroundColor: '#f3f6f9' }}>
+                                                                        {column.render('Header')}
+                                                                        <span>{column.isSorted ? sortIcon : ''}</span>
+                                                                    </th>
+                                                                );
+                                                            })}
+                                                        </tr>
+                                                    );
+                                                })}
                                             </thead>
                                             {page.length === 0 ? (
                                                 <tbody>
-                                                    <tr>
-                                                        <td colSpan={headerGroups[0].headers.length} className="text-center">
-                                                            {(dataPinjam.loading) ? 'Memuat data...' : 'Tidak ada data.'}
+                                                    <tr key="empty">
+                                                        <td key="empty" colSpan={headerGroups[0].headers.length} className="text-center">
+                                                            {dataPinjam.loading ? 'Memuat data...' : 'Tidak ada data.'}
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             ) : (
-                                                <tbody {...getTableBodyProps()} className='text-center custom-tbody3'>
+                                                <tbody {...getTableBodyProps()} className="text-center custom-tbody3">
                                                     {page.map((row) => {
                                                         prepareRow(row);
+                                                        const { key: rowKey, ...restRowProps } = row.getRowProps();
                                                         return (
-                                                            <tr {...row.getRowProps()}>
-                                                                {row.cells.map((cell) => (
-                                                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                                ))}
+                                                            <tr key={rowKey} {...restRowProps}>
+                                                                {row.cells.map((cell) => {
+                                                                    const { key: cellKey, ...restCellProps } = cell.getCellProps();
+                                                                    return (
+                                                                        <td key={cellKey} {...restCellProps}>
+                                                                            {cell.render('Cell')}
+                                                                        </td>
+                                                                    );
+                                                                })}
                                                             </tr>
                                                         );
                                                     })}
@@ -161,26 +173,26 @@ export default function TableKembali() {
                                         <ul className="pagination pagination-sm justify-content-end mb-2">
                                             {/* First */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(0)} tabIndex="-1">
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(0)} tabIndex="-1">
                                                     {'<<'}
                                                 </a>
                                             </li>
                                             {/* Previus */}
                                             <li className={`page-item ${state.pageIndex === 0 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex - 1)} tabIndex="-1">{'<'}</a>
                                             </li>
                                             {Array.from({ length: pageCount }, (_, index) => index + 1).map((key, index) => (
                                                 <li key={key} className={`page-item ${index === state.pageIndex ? 'active' : ''}`}>
-                                                    <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(index)}>{index + 1}</a>
+                                                    <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(index)}>{index + 1}</a>
                                                 </li>
                                             ))}
                                             {/* Next */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(state.pageIndex + 1)}>{'>'}</a>
                                             </li>
                                             {/* Last */}
                                             <li className={`page-item ${state.pageIndex === pageCount - 1 ? 'hide-pagination' : ''}`}>
-                                                <a className="page-link" style={{cursor: 'pointer'}} onClick={() => gotoPage(pageCount - 1)}>
+                                                <a className="page-link" style={{ cursor: 'pointer' }} onClick={() => gotoPage(pageCount - 1)}>
                                                     {">>"}
                                                 </a>
                                             </li>
