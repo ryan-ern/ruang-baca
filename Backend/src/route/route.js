@@ -8,6 +8,7 @@ const borrow = require('../controller/borrowController')
 const returner = require('../controller/returnController')
 const upload = require('../helper/multer')
 const timer = require('../helper/timestamp')
+const presentController = require('../controller/presentController')
 const routes = express.Router()
 
 
@@ -74,7 +75,11 @@ routes.post('/createJurusan', userUtil.isLogin, userUtil.isAdmin, upload.single(
 routes.patch('/updateJurusan/:id', userUtil.isLogin, userUtil.isAdmin, upload.single('photo'), dashboard.updateJurusan)
 routes.delete('/deleteJurusan/:id', userUtil.isLogin, userUtil.isAdmin, dashboard.deleteJurusan)
 
-
+// daftar kehadiran
+routes.get("/generate-barcode", userUtil.isLogin, userUtil.isAdmin, presentController.generateBarcode);
+routes.get("/userPresent", userUtil.isLogin, userUtil.isAdmin, presentController.getPresent);
+routes.post("/scan", userUtil.isLogin, presentController.scanBarcode);
+routes.post('/downloadPresent', userUtil.isLogin, presentController.downloadPresent)
 
 //serverTime
 routes.get('/time', timer.showTimestamp)

@@ -55,5 +55,11 @@ export const URL_SEARCH_RETURN_BY_DATE_ADMIN = '/searchPengembalianAdmin/:date'
 
 export const URL_BLOCK_ACCOUNT = '/blok/:nisn'
 export const URL_UNBLOCK_ACCOUNT = '/unblok/:nisn'
+
+export const URL_GENERATE_BARCODE = '/generate-barcode'
+export const URL_SCAN = '/scan'
+export const URL_GET_PRESENT = '/userPresent'
+export const URL_DOWNLOAD_PRESENT = '/downloadPresent'
+
 // unfinished
 export const URL_GET_WHATSAPP = '/whatsapp'

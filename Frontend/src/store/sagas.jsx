@@ -9,6 +9,7 @@ import { returnSaga } from './return/sagas';
 import { finedSaga } from './fined/saga';
 import { majorSaga } from './major/sagas';
 import { searchSaga } from './search/sagas';
+import { presentSaga } from './present/sagas';
 
 export default function* rootSaga() {
     yield all([
@@ -21,6 +22,7 @@ export default function* rootSaga() {
         fork(returnSaga),
         fork(finedSaga),
         fork(majorSaga),
-        fork(searchSaga)
+        fork(searchSaga),
+        fork(presentSaga),
     ]);
 }

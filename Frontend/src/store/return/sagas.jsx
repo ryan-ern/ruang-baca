@@ -58,7 +58,7 @@ export function* DownloadSaga({ payload: { startDate, endDate } }) {
         yield put(returnAdmin());
     } catch (err) {
         const errorMessage = err.response?.data?.message || "Data tidak ditemukan, sehingga gagal mendownload data";
-        // Tangani error dengan memberikan log atau dispatch failure action
+
         yield put(downloadReturnFailed(errorMessage));
     }
 }

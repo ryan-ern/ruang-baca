@@ -1,6 +1,6 @@
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link, useLocation, useNavigate, } from "react-router-dom";
-import { useEffect,  } from "react";
+import { useEffect, } from "react";
 import "../../assets/styles/header.css";
 import { useSelector } from "react-redux";
 
@@ -43,7 +43,7 @@ export default function Navigation() {
         }
         if (matchingMenuItem) activate(matchingMenuItem);
     }, [location]);
-   
+
 
     return (
         <>
@@ -59,10 +59,10 @@ export default function Navigation() {
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto" id="navigation">
                                 <ul className="navbar-nav">
-                                    {features.includes('Dashboard Siswa')|| features.includes('Dashboard Admin')?(
+                                    {features.includes('Dashboard Siswa') || features.includes('Dashboard Admin') ? (
                                         <li className="nav-item">
                                             <Link to="/panel" className="nav-link active">
-                                            Beranda
+                                                Beranda
                                             </Link>
                                         </li>
                                     ) : null}
@@ -70,15 +70,15 @@ export default function Navigation() {
                                     {features.includes('Peminjaman') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/peminjaman" className="nav-link">
-                                            Peminjaman
+                                                Peminjaman
                                             </Link>
                                         </li>
                                     ) : null}
-                                    
+
                                     {features.includes('Pengembalian') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/pengembalian" className="nav-link">
-                                            Pengembalian
+                                                Pengembalian
                                             </Link>
                                         </li>
                                     ) : null}
@@ -86,7 +86,7 @@ export default function Navigation() {
                                     {features.includes('Inventory') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/inventory" className="nav-link">
-                                            inventaris
+                                                inventaris
                                             </Link>
                                         </li>
                                     ) : null}
@@ -94,50 +94,56 @@ export default function Navigation() {
                                     {features.includes('Validasi Peminjaman') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/borrow-validation" className="nav-link">
-                                                        Validasi Peminjaman
+                                                Validasi Peminjaman
                                             </Link>
                                         </li>
                                     ) : null}
 
-                                    {features.includes('Validasi pengembalian')  ? (
+                                    {features.includes('Validasi pengembalian') ? (
                                         <li className="nav-item">
                                             <Link to="/panel/return-validation" className="nav-link">
-                                                        Validasi Pengembalian
+                                                Validasi Pengembalian
                                             </Link>
                                         </li>
                                     ) : null}
 
-                                    
+                                    <li className="nav-item">
+                                        <Link to="/panel/daily-present" className="nav-link">
+                                            Scan Kehadiran
+                                        </Link>
+                                    </li>
+
+
                                     {features.includes('Denda') && features.includes('jurusan') && features.includes('Kontrol Akun') ? (
-                                        <li className="nav-item"> 
+                                        <li className="nav-item">
                                             <NavDropdown
                                                 id="dropdown-basic"
                                                 title="Pengaturan"
                                                 menuVariant="light"
                                             >
                                                 <NavDropdown.Item>
-                                                    <span onClick={()=>navigate('/panel/account-control')} className="nav-link">
-                                                    Kontrol Akun
+                                                    <span onClick={() => navigate('/panel/account-control')} className="nav-link">
+                                                        Kontrol Akun
                                                     </span>
                                                 </NavDropdown.Item>
 
                                                 <NavDropdown.Item >
-                                                    <span onClick={()=>navigate('/panel/fined-settings')} className="nav-link ">
-                                                    Pengaturan Denda
-                                                    </span>                                               
+                                                    <span onClick={() => navigate('/panel/fined-settings')} className="nav-link ">
+                                                        Pengaturan Denda
+                                                    </span>
                                                 </NavDropdown.Item>
-                                                                            
-                                                <NavDropdown.Item >                                              
-                                                    <span onClick={()=>navigate('/panel/major-settings')}  className="nav-link ">
-                                                    Pengaturan Jurusan
-                                                    </span>                                              
-                                                </NavDropdown.Item>  
 
-                                                <NavDropdown.Item >                                              
-                                                    <span onClick={()=>navigate('/panel/whatsapp-settings')}  className="nav-link">
-                                                    Notifikasi WhatsApp
-                                                    </span>                                              
-                                                </NavDropdown.Item>                                         
+                                                <NavDropdown.Item >
+                                                    <span onClick={() => navigate('/panel/major-settings')} className="nav-link ">
+                                                        Pengaturan Jurusan
+                                                    </span>
+                                                </NavDropdown.Item>
+
+                                                <NavDropdown.Item >
+                                                    <span onClick={() => navigate('/panel/whatsapp-settings')} className="nav-link">
+                                                        Notifikasi WhatsApp
+                                                    </span>
+                                                </NavDropdown.Item>
                                             </NavDropdown>
                                         </li>
                                     ) : null}

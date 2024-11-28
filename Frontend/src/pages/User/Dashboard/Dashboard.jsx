@@ -11,16 +11,18 @@ import Carouselcard from "./Carouselcard";
 import { useDispatch, useSelector } from "react-redux";
 import { dashboard, getFined, jurusan, getSearchByJudul, getSearchByJudulReset } from "../../../store/actions";
 import ModalDetailBuku from "../../../components/modal";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
     const [query, setQuery] = useState("");
     const [selectedMajor, setSelectedMajor] = useState(null)
     const dataSearch = useSelector((state) => state.search)
     const dispatch = useDispatch()
-    useEffect(()=>{
+    const navigate = useNavigate();
+    useEffect(() => {
         dispatch(getFined())
         dispatch(dashboard());
-        dispatch(jurusan()) 
+        dispatch(jurusan())
         const intervalId = setInterval(() => {
             dispatch(dashboard());
         }, 10_000);
@@ -114,11 +116,21 @@ export default function Dashboard() {
                                             </>
                                         ) : (
                                             <Button type="submit" className="btnsearch btn-primary">
-                                                    Cari
+                                                Cari
                                             </Button>
                                         )}
                                     </InputGroup>
                                 </form>
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+
+                            >
+                                <Button variant="success" className="rounded-pill px-3" style={{ background: '#009688' }} onClick={() => navigate("/panel/daily-present")}>Lakukan Scan Kehadiran</Button>
                             </div>
                         </Col>
                     </Row>
@@ -128,7 +140,7 @@ export default function Dashboard() {
                     <Row>
                         <Carouselcard onSelectedMajorChange={handleSelectedMajorChange} />
                     </Row>
-                    {dataSearch.response.length === 0?
+                    {dataSearch.response.length === 0 ?
                         <Row>
                             <p className="mb-0 mt-3">Buku Populer</p>
                             <Cardbuku />

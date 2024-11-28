@@ -9,6 +9,7 @@ import returnReducer from "./return/reducers";
 import finedReducer from "./fined/reducers";
 import majorReducer from "./major/reducers";
 import searchReducer from "./search/reducers";
+import presentReducer from "./present/reducers";
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     fined: finedReducer,
     major: majorReducer,
     search: searchReducer,
+    present: presentReducer
 })
 
 export default rootReducer;

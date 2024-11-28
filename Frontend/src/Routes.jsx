@@ -22,6 +22,7 @@ import Vpengembalian from "./pages/Admin/Validation/vpengembalian";
 import Fined from "./pages/Admin/Denda/denda";
 import Jurusan from "./pages/Admin/Jurusan";
 import WhatsappSettings from "./pages/Admin/Whatsapp/Whatsapp";
+import Present from "./pages/Admin/Present";
 
 /**
  * Admin
@@ -49,34 +50,37 @@ export default function RoutesApp() {
                         </Authenticated>
                     }>
                         <Route path="/panel" element={<UseFeature allow={featureAllow} />}>
-                            <Route index element={dashboardElement}/>    
+                            <Route index element={dashboardElement} />
                         </Route>
                         <Route path="/panel/peminjaman" element={<UseFeature allow="Peminjaman" />}>
-                            <Route index element={<Peminjaman />}/>    
+                            <Route index element={<Peminjaman />} />
                         </Route>
                         <Route path="/panel/pengembalian" element={<UseFeature allow="Pengembalian" />}>
-                            <Route index element={<Pengembalian />}/>    
+                            <Route index element={<Pengembalian />} />
                         </Route>
                         <Route path="/panel/inventory" element={<UseFeature allow="Inventory" />}>
-                            <Route index element={<Inventory />}/>    
+                            <Route index element={<Inventory />} />
                         </Route>
                         <Route path="/panel/borrow-validation" element={<UseFeature allow="Validasi Peminjaman" />}>
-                            <Route index element={<ValidationPinjam />}/>    
+                            <Route index element={<ValidationPinjam />} />
                         </Route>
                         <Route path="/panel/return-validation" element={<UseFeature allow="Validasi pengembalian" />}>
-                            <Route index element={<Vpengembalian />}/>    
+                            <Route index element={<Vpengembalian />} />
                         </Route>
                         <Route path="/panel/account-control" element={<UseFeature allow="Kontrol Akun" />}>
-                            <Route index element={<Account />}/>    
+                            <Route index element={<Account />} />
                         </Route>
                         <Route path="/panel/fined-settings" element={<UseFeature allow="Denda" />}>
-                            <Route index element={<Fined />}/>    
+                            <Route index element={<Fined />} />
                         </Route>
                         <Route path="/panel/major-settings" element={<UseFeature allow="jurusan" />}>
-                            <Route index element={<Jurusan />}/>    
+                            <Route index element={<Jurusan />} />
                         </Route>
-                        <Route path="/panel/whatsapp-settings" element={<WhatsappSettings/>}/>                       
-                        <Route path="/panel/profil" element={<Profil/>}/>                       
+                        <Route path="/panel/whatsapp-settings" element={<WhatsappSettings />} />
+                        <Route path="/panel/daily-present">
+                            <Route index element={<Present />} />
+                        </Route>
+                        <Route path="/panel/profil" element={<Profil />} />
                     </Route>
                     {/* Not Found */}
                     {/* <Route path="/404" element={<Page404 />} />*/}
