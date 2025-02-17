@@ -3,7 +3,10 @@ const returnService = require("../service/returnService")
 const moment = require('moment')
 const jwt = require('jsonwebtoken')
 const borrowService = require("../service/borrowService")
+var Holidays = require('date-holidays')
 const ExcelJS = require('exceljs')
+
+const hd = new Holidays("ID");
 
 class returnController {
     static async getDenda(req, res) {
@@ -44,51 +47,67 @@ class returnController {
             return res.status(400).send(response)
         }
     }
+
+    static isNonWorkingDay(date) {
+        const dayOfWeek = moment(date).isoWeekday();
+        const isSunday = dayOfWeek === 7;
+        const isHoliday = hd.isHoliday(moment(date).format("YYYY-MM-DD"));
+        return isSunday || isHoliday;
+    }
+
+    static calculateLateDays(dueDate, returnDate) {
+        let lateDays = 0;
+        let currentDate = moment(dueDate).add(1, 'days');
+
+        while (currentDate.isBefore(returnDate, 'day')) {
+            if (!this.isNonWorkingDay(currentDate)) {
+                lateDays++;
+            }
+            currentDate.add(1, 'days');
+        }
+
+        return lateDays;
+    }
+
+
     static async getReturn(req, res) {
         try {
-            const datas = await returnService.getAllReturn()
-            const denda = await returnService.getDenda()
+            const datas = await returnService.getAllReturn();
+            const denda = await returnService.getDenda();
+
             datas.forEach(data => {
-                data.updated_at = moment(data.updated_at).format()
-                if (data.due_date != null && data.due_date != '-') {
-                    data.due_date = moment(data.due_date).format()
-                    if (data.pengembalian == '-') {
-                        const tanggal = moment(new Date().getTime()).diff(data.due_date, 'hours')
-                        const many = tanggal / 24
-                        data.terlambat = Math.round(many)
-                        if (data.terlambat <= 0) {
-                            data.denda = 0
-                            data.terlambat = 0
-                        } else {
-                            data.denda = data.terlambat * denda.nominal
-                        }
+                data.updated_at = moment(data.updated_at).format();
+                if (data.due_date && data.due_date !== '-') {
+                    data.due_date = moment(data.due_date).format();
+
+                    if (data.pengembalian === '-') {
+                        const lateDays = returnController.calculateLateDays(data.due_date, moment());
+                        data.terlambat = lateDays;
+                        data.denda = lateDays > 0 ? lateDays * denda.nominal : 0;
                     } else {
-                        const tanggal = moment(data.updated_at).diff(data.due_date, 'hours')
-                        const many = tanggal / 24
-                        data.terlambat = Math.round(many)
-                        if (data.terlambat <= 0) {
-                            data.terlambat = 0
-                        }
+                        const lateDays = returnController.calculateLateDays(data.due_date, moment(data.updated_at));
+                        data.terlambat = lateDays;
                     }
                 } else {
-                    data.due_date = '-'
+                    data.due_date = '-';
                 }
-            })
+            });
+
             const response = {
                 status: 200,
                 message: 'success',
                 data: datas,
-            }
-            return res.status(200).send(response)
+            };
+            return res.status(200).send(response);
         } catch (err) {
-            const message = err.message.replace(/['"]+/g, '')
             const response = {
                 status: 400,
-                message: message,
-            }
-            return res.status(400).send(response)
+                message: err.message.replace(/['"]+/g, ''),
+            };
+            return res.status(400).send(response);
         }
     }
+
     static async getReturnUser(req, res) {
         try {
             const token = req.headers.authorization
@@ -97,31 +116,22 @@ class returnController {
             const datas = await returnService.getReturn(decodedToken.nisn)
             const denda = await returnService.getDenda()
             datas.forEach(data => {
-                data.updated_at = moment(data.updated_at).format()
-                if (data.due_date != null && data.due_date != '-') {
-                    data.due_date = moment(data.due_date).format()
-                    if (data.pengembalian == '-') {
-                        const tanggal = moment(new Date().getTime()).diff(data.due_date, 'hours')
-                        const many = tanggal / 24
-                        data.terlambat = Math.round(many)
-                        if (data.terlambat <= 0) {
-                            data.denda = 0
-                            data.terlambat = 0
-                        } else {
-                            data.denda = data.terlambat * denda.nominal
-                        }
+                data.updated_at = moment(data.updated_at).format();
+                if (data.due_date && data.due_date !== '-') {
+                    data.due_date = moment(data.due_date).format();
+
+                    if (data.pengembalian === '-') {
+                        const lateDays = returnController.calculateLateDays(data.due_date, moment());
+                        data.terlambat = lateDays;
+                        data.denda = lateDays > 0 ? lateDays * denda.nominal : 0;
                     } else {
-                        const tanggal = moment(data.updated_at).diff(data.due_date, 'hours')
-                        const many = tanggal / 24
-                        data.terlambat = Math.round(many)
-                        if (data.terlambat <= 0) {
-                            data.terlambat = 0
-                        }
+                        const lateDays = returnController.calculateLateDays(data.due_date, moment(data.updated_at));
+                        data.terlambat = lateDays;
                     }
                 } else {
-                    data.due_date = '-'
+                    data.due_date = '-';
                 }
-            })
+            });
             const response = {
                 status: 200,
                 message: 'success',
