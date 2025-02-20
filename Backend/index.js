@@ -23,6 +23,7 @@ const cors = require('cors');
 const routes = require('./src/route/route');
 const cookieParser = require('cookie-parser');
 const moment = require('moment');
+const Holidays = require('date-holidays');
 require("dotenv").config();
 
 const io = require("socket.io")(server, {
@@ -42,6 +43,8 @@ const timeServer = {
     moment: moment().format(),
     string: moment().format('YYYY-M-D HH:mm:ss'),
 };
+
+const hd = new Holidays("ID");
 
 // Middleware
 app.use(express.json({ limit: '20mb' }));
@@ -195,17 +198,42 @@ const updateQR = async (data) => {
     }
 };
 
+async function isNonWorkingDay(date) {
+    const dayOfWeek = moment(date).isoWeekday();
+    const isSunday = dayOfWeek === 7;
+    const isHoliday = hd.isHoliday(moment(date).format("YYYY-MM-DD"));
+    return isSunday || isHoliday;
+};
+
+async function calculateLateDays(dueDate, returnDate) {
+    let lateDays = 0;
+    let currentDate = moment(dueDate).add(1, 'days');
+
+    while (currentDate.isBefore(returnDate, 'day')) {
+        if (!(await isNonWorkingDay(currentDate))) {
+            lateDays++;
+        }
+        currentDate.add(1, 'days');
+    }
+
+    return lateDays;
+};
+
+function formatRupiah(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
 async function handleMessages(data, denda) {
     if (!data || !data.length) return;
 
     for (const item of data) {
         const { judul, wa: number, name, updated_at, due_date } = item;
-        const dueDiffHours = moment().diff(due_date, 'hours');
-        const terlambat = Math.round(dueDiffHours / 24);
+        const terlambat = await calculateLateDays(due_date, moment());
+
         const pesan =
             terlambat <= 0
-                ? `Halo ${name}, buku "${judul}" yang kamu pinjam pada ${moment(updated_at).format('DD-MM-YYYY')} harus dikembalikan pada ${moment(due_date).format('DD-MM-YYYY')}.`
-                : `Maaf ${name}, buku "${judul}" melewati batas waktu. Denda saat ini: Rp${terlambat * denda.nominal}.`;
+                ? `Halo ${name}, buku \"${judul}\" yang kamu pinjam pada ${moment(updated_at).format('DD-MM-YYYY')} harus dikembalikan pada ${moment(due_date).format('DD-MM-YYYY')}.`
+                : `Maaf ${name}, buku \"${judul}\" melewati batas waktu. Denda saat ini: Rp${formatRupiah(terlambat * denda.nominal)}.`;
 
         if (!number || !pesan) continue;
 
@@ -223,6 +251,7 @@ async function handleMessages(data, denda) {
         }
     }
 }
+
 
 
 connectToWhatsApp()

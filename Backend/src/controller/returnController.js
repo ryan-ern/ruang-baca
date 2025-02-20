@@ -3,7 +3,7 @@ const returnService = require("../service/returnService")
 const moment = require('moment')
 const jwt = require('jsonwebtoken')
 const borrowService = require("../service/borrowService")
-var Holidays = require('date-holidays')
+const Holidays = require('date-holidays')
 const ExcelJS = require('exceljs')
 
 const hd = new Holidays("ID");
@@ -154,16 +154,11 @@ class returnController {
             if (!data) throw new Error('Maaf data tidak ditemukan')
             const denda = await returnService.getDenda()
             const buku = await inventoryService.findIsbn(data.book_isbn)
-            if (data.due_date != '-') {
-                const tanggal = moment(new Date().getTime()).diff(data.due_date, 'hours')
-                const many = tanggal / 24
-                data.round = Math.round(many)
-                if (data.round <= 0) {
-                    data.denda = data.denda + 0
-                } else {
-                    data.denda = (data.round * denda.nominal)
-                }
+            if (data.due_date !== '-') {
+                const lateDays = returnController.calculateLateDays(data.due_date, moment());
+                data.denda = lateDays > 0 ? lateDays * denda.nominal : 0;
             }
+
             const pengembalian = await returnService.acceptReturn(data.denda, req.params.id, buku.ready + 1, buku.isbn)
             const response = {
                 status: 200,

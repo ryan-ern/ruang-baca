@@ -1,0 +1,11 @@
+{
+    "watch": [
+        "."
+    ],
+    "ignore": [
+        "auth_info/*"
+    ],
+    "ext": "js,json",
+    "exec": "node index.js",
+    "delay": "3000"
+}
