@@ -14,6 +14,7 @@ const routes = express.Router()
 
 //User do
 routes.post('/register', user.register)
+routes.post('/forgot', user.forgot)
 routes.post('/login', userUtil.isBlok, user.login)
 routes.delete('/logout', userUtil.isLogin, user.logout)
 routes.get('/profile', userUtil.isLogin, user.profile)

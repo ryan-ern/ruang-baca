@@ -10,6 +10,7 @@ export default function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth)
+    console.log(auth)
     const messageError = useSelector((state) => state.auth?.message?.data)
 
     const [showPassword, setShowPassword] = useState(false);
@@ -55,6 +56,11 @@ export default function Login() {
                                                     <Alert variant="danger">{auth.message}</Alert>
                                                     : null)
                                             }
+                                            {
+                                                auth.response?.message ?
+                                                    <Alert variant="success">{auth.response.message}</Alert>
+                                                    : null
+                                            }
                                             <div>
                                                 <Form action="#" onSubmit={(e) => {
                                                     e.preventDefault();
@@ -85,9 +91,9 @@ export default function Login() {
                                                         <Form.Label>
                                                             Password<span className="text-danger">*</span>
                                                         </Form.Label>
-                                                        <div className="position-relative auth-pass-inputgroup mb-3">
+                                                        <div className="position-relative auth-pass-inputgroup">
                                                             <Form.Control
-                                                                className="form-control bg-light border-light mb-5 password-input"
+                                                                className="form-control bg-light border-light password-input"
                                                                 placeholder="Masukkan password"
 
                                                                 type={showPassword ? "text" : "password"}
@@ -108,6 +114,9 @@ export default function Login() {
                                                             )}
                                                         </div>
                                                     </Form.Group>
+                                                    <div className="float-end mt-4 mb-3" onClick={() => navigate('/forgot')}>
+                                                        Lupa Password?
+                                                    </div>
                                                     <div className="pb-4">
                                                         <Button
                                                             className="btn custom-button w-100 rounded-pill"

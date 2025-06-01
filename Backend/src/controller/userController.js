@@ -59,6 +59,44 @@ class userController {
             return res.status(400).send(response)
         }
     }
+
+    static async forgot(req, res) {
+        const { wa } = req.body;
+
+        try {
+            if (!wa) throw new Error('Nomor HP tidak boleh kosong');
+
+            // Cari user berdasarkan nomor WhatsApp
+            const user = await userService.findwa(wa);
+            if (!user) throw new Error('Nomor HP tidak ditemukan');
+            if (user.forgot === true) throw new Error('Akun ini sudah pernah meminta ubah password');
+
+            // Update user untuk menandai bahwa dia mengakses "forgot"
+            const updatedUser = await userService.updateForgot(wa, true);
+
+            const response = {
+                status: 200,
+                message: 'Akun ditemukan dan permintaan ubah password berhasil dikirim',
+                forgot: true,
+                user: {
+                    username: updatedUser.username,
+                    wa: updatedUser.wa
+                }
+            };
+
+            return res.status(200).send(response);
+        } catch (err) {
+            const message = err.message.replace(/['"]+/g, '');
+            const response = {
+                status: 400,
+                message: message,
+                forgot: false
+            };
+
+            return res.status(400).send(response);
+        }
+    }
+
     static async login(req, res) {
         const payload = req.body
         try {

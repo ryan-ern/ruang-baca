@@ -51,6 +51,7 @@ class accountControlService {
         await Database.close()
         return user[0]
     }
+
     static async findUsernameForEdit(username) {
         await Database.createConnection()
         const query = {
@@ -80,12 +81,13 @@ class accountControlService {
         password,
         wa,
         accesstoken,
-        refreshtoken
+        refreshtoken,
+        forgot
     ) {
         await Database.createConnection()
         const query = {
-            text: 'UPDATE account SET nisn = $1, name = $2, username = $3, jurusan = $4, password = $5, wa = $6, updated_at = $7, access_token = $8, refresh_token = $9 WHERE username = $10 RETURNING *',
-            values: [nisn, name, username, jurusan, password, wa, new Date(), accesstoken, refreshtoken, id]
+            text: 'UPDATE account SET nisn = $1, name = $2, username = $3, jurusan = $4, password = $5, wa = $6, updated_at = $7, access_token = $8, refresh_token = $9, forgot = $10 WHERE username = $11 RETURNING *',
+            values: [nisn, name, username, jurusan, password, wa, new Date(), accesstoken, refreshtoken, forgot, id]
         }
         const user = await Database.query(query)
         await Database.close()

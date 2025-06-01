@@ -18,7 +18,6 @@ export default function Account() {
     const deleteMessage = useSelector((state) => state.account.delete.message)
     const addMessage = useSelector((state) => state.account.add.message)
     const activeMessage = useSelector((state) => state.account.active.message)
-    // console.log(activeMessage)
     const columns = useMemo(
         () => {
             const baseColumns = [
@@ -41,6 +40,11 @@ export default function Account() {
                     Header: 'Jurusan',
                     accessor: 'jurusan',
                     Cell: ({ value }) => value,
+                },
+                {
+                    Header: 'Password',
+                    accessor: 'forgot',
+                    Cell: ({ value }) => value === true ? <span className='badge bg-danger'>Lupa</span> : <span>-</span>,
                 },
                 {
                     Header: 'Diperbarui',
@@ -219,7 +223,7 @@ export default function Account() {
                                                                 const { key: columnKey, ...restColumnProps } = column.getHeaderProps(column.getSortByToggleProps());
                                                                 const sortIcon = column.isSortedDesc ? "🔼" : "🔽";
                                                                 return (
-                                                                    <th key={columnKey} {...restColumnProps} style={{ backgroundColor: '#f3f6f9' }}>
+                                                                    <th key={columnKey} {...restColumnProps} className='text-center' style={{ backgroundColor: '#f3f6f9' }}>
                                                                         {column.render('Header')}
                                                                         <span>{column.isSorted ? sortIcon : ''}</span>
                                                                     </th>

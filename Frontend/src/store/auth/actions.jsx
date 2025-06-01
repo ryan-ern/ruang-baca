@@ -1,7 +1,10 @@
 import {
     LOGIN, LOGIN_SUCCESS, LOGIN_FAILED,
-    LOGOUT, LOGOUT_SUCCESS, 
-    REGISTER, REGISTER_SUCCESS, REGISTER_FAILED, AUTH_INFO, AUTH_INFO_SUCCESS, AUTH_INFO_FAILED
+    LOGOUT, LOGOUT_SUCCESS,
+    REGISTER, REGISTER_SUCCESS, REGISTER_FAILED, AUTH_INFO, AUTH_INFO_SUCCESS, AUTH_INFO_FAILED,
+    FORGOT,
+    FORGOT_SUCCESS,
+    FORGOT_FAILED
 } from "./actionTypes";
 
 /**
@@ -9,7 +12,7 @@ import {
  */
 export const register = (account, navigate) => ({
     type: REGISTER,
-    payload: {account,navigate}
+    payload: { account, navigate }
 })
 export const registerSuccess = (respons) => ({
     type: REGISTER_SUCCESS,
@@ -26,7 +29,7 @@ export const registerFailed = (message) => ({
 
 export const login = (account, navigate) => ({
     type: LOGIN,
-    payload: {account,navigate}
+    payload: { account, navigate }
 })
 
 export const loginSuccess = (respons) => ({
@@ -36,6 +39,24 @@ export const loginSuccess = (respons) => ({
 
 export const loginFailed = (message) => ({
     type: LOGIN_FAILED,
+    payload: message
+})
+/**
+ * Forgot
+ */
+
+export const forgot = (data, navigate) => ({
+    type: FORGOT,
+    payload: { data, navigate }
+})
+
+export const forgotSuccess = (respons) => ({
+    type: FORGOT_SUCCESS,
+    payload: respons
+})
+
+export const forgotFailed = (message) => ({
+    type: FORGOT_FAILED,
     payload: message
 })
 

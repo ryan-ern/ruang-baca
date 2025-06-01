@@ -23,6 +23,7 @@ import Fined from "./pages/Admin/Denda/denda";
 import Jurusan from "./pages/Admin/Jurusan";
 import WhatsappSettings from "./pages/Admin/Whatsapp/Whatsapp";
 import Present from "./pages/Admin/Present";
+import Forgot from "./pages/Authentication/Forgot";
 
 /**
  * Admin
@@ -43,6 +44,7 @@ export default function RoutesApp() {
                     <Route path="" element={<Login />} />
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/forgot" element={<Forgot />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/panel" element={
                         <Authenticated>

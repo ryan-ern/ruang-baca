@@ -252,8 +252,6 @@ async function handleMessages(data, denda) {
     }
 }
 
-
-
 connectToWhatsApp()
     .catch(err => console.log("unexpected error: " + err));
 const PORT = process.env.PORT || 8000;
